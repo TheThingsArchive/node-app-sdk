@@ -10,7 +10,7 @@ npm install --save ttn
 
 ## Example
 
-An [example](dist/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
+An [example](src/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
 
 ## Documentation
 
