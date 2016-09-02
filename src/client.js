@@ -8,7 +8,7 @@
   const Client = class Client extends EventEmitter {
     constructor(broker, appEUI, appAccessKey) {
       super();
-      if (!broker.includes('.')) {
+      if (broker.indexOf('.') === -1) {
         broker += '.thethings.network';
       }
       this.appEUI = appEUI;
@@ -22,8 +22,8 @@
       this.client.on('error', this._error.bind(this));
     }
 
-    end() {
-      this.client.end.apply(this.client, arguments);
+    end(...args) {
+      this.client.end(...args);
     }
 
     downlink(devEUI, payload, ttl, port) {
