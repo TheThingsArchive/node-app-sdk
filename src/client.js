@@ -8,8 +8,11 @@
   const Client = class Client extends EventEmitter {
     constructor(broker, appEUI, appAccessKey) {
       super();
+      if (!broker.includes('.')) {
+        broker += '.thethings.network';
+      }
       this.appEUI = appEUI;
-      this.legacy = (broken === 'staging.thethingsnetwork.org');
+      this.legacy = (broker === 'staging.thethingsnetwork.org');
       this.client = mqtt.connect(util.format('mqtt://%s', broker), {
         username: appEUI,
         password: appAccessKey
@@ -20,7 +23,7 @@
     }
 
     end() {
-      this.client.end();
+      this.client.end.apply(this.client, arguments);
     }
 
     downlink(devEUI, payload, ttl, port) {
@@ -37,8 +40,10 @@
       this.client.publish(topic, message);
     }
 
-    _connected() {
-      super.emit('connect');
+    _connected(connack) {
+      super.emit('connect', {
+        connack: connack
+      });
       this.client.subscribe(['+/devices/+/activations', '+/devices/+/up']);
     }
 
