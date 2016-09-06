@@ -26,7 +26,7 @@ client.on('message', function(data) {
 
 	// respond to every third message
 	if (data.counter % 3 === 0) {
-		console.log('[DEBUG]', 'Downlink');
+		console.log('[DEBUG]', 'Sending');
 
 		var payload = new Buffer('4869', 'hex');
 		client.send(data.dev_id, payload, data.port);
