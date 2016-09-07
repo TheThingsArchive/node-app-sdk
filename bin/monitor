@@ -28,10 +28,10 @@ client.on('error', function(err) {
 	console.error('[ERROR]', err.message);
 });
 
-client.on('activation', function(e) {
-	console.log('[INFO] ', 'Activation:', e.devEUI);
+client.on('activation', function(data) {
+	console.log('[INFO] ', 'Activation:', data);
 });
 
-client.on('message', function(msg) {
-	console.info('[INFO] ', 'Message:', JSON.stringify(msg, null, 2));
+client.on('message', function(data) {
+	console.info('[INFO] ', 'Message:', JSON.stringify(data, null, 2));
 });
