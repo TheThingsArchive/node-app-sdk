@@ -1,16 +1,14 @@
-'use strict';
-
 const mqtt = require('mqtt');
 const util = require('util');
 const EventEmitter = require('events');
 
 const Client = class Client extends EventEmitter {
-  constructor(broker, appEUI, appAccessKey) {
+  constructor(region, appId, appAccessKey) {
     super();
-    this.appEUI = appEUI;
-
+    var broker = (region.indexOf('.') !== -1) ? region : region + '.thethings.network';
+    this.appId = appId;
     this.client = mqtt.connect(util.format('mqtt://%s', broker), {
-      username: appEUI,
+      username: appId,
       password: appAccessKey
     });
     this.client.on('connect', this._connected.bind(this));
@@ -18,42 +16,37 @@ const Client = class Client extends EventEmitter {
     this.client.on('error', this._error.bind(this));
   }
 
-  end() {
-    this.client.end();
+  end(...args) {
+    this.client.end(...args);
   }
 
-  downlink(devEUI, payload, ttl, port) {
-    var topic = util.format('%s/devices/%s/down', this.appEUI, devEUI);
+  send(devId, payload, port) {
+    var topic = util.format('%s/devices/%s/down', this.appId, devId);
+    var payload_raw = payload.toString('base64');
     var message = JSON.stringify({
-      payload: payload.toString('base64'),
-      ttl: ttl || '1h',
+      payload_raw: payload_raw,
       port: port || 1
     });
     this.client.publish(topic, message);
   }
 
-  _connected() {
-    super.emit('connect');
+  _connected(connack) {
+    super.emit('connect', connack);
     this.client.subscribe(['+/devices/+/activations', '+/devices/+/up']);
   }
 
   _handleMessage(topic, message) {
     var parts = topic.split('/');
+    var devId = parts[2];
     var payload = JSON.parse(message.toString());
     switch (parts[3]) {
       case 'activations':
-        super.emit('activation', {
-          devEUI: parts[2]
-        });
+        super.emit('activation', payload);
         break;
       case 'up':
-        super.emit('uplink', {
-          devEUI: parts[2],
-          fields: payload.fields || { raw: payload.payload },
-          counter: payload.counter,
-          port: payload.port,
-          metadata: payload.metadata[0]
-        });
+        super.emit('message', Object.assign({
+          dev_id: devId
+        }, payload));
         break;
     }
   }
@@ -61,6 +54,6 @@ const Client = class Client extends EventEmitter {
   _error(err) {
     super.emit('error', err);
   }
-}
+};
 
 module.exports = Client;

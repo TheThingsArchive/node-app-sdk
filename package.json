@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "monitor": "node bin/monitor",
     "compile": "babel src --presets babel-preset-es2015 --out-dir dist",
     "prepublish": "npm run compile"
   },
@@ -20,10 +21,10 @@
   "homepage": "https://github.com/TheThingsNetwork/node-ttn#readme",
   "tonicExampleFilename": "dist/example.js",
   "dependencies": {
-    "mqtt": "^1.10.0"
+    "mqtt": "^1.14.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.9.0",
+    "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.14.0"
   }
 }
