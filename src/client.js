@@ -5,19 +5,19 @@ const EventEmitter = require('events');
 const Client = class Client extends EventEmitter {
   constructor(region, appId, appAccessKey) {
     super();
-    var broker = (region.indexOf('.') !== -1) ? region : region + '.thethings.network';
+    this.url = util.format('mqtt://%s', (region.indexOf('.') !== -1) ? region : region + '.thethings.network');
     this.appId = appId;
-    this.client = mqtt.connect(util.format('mqtt://%s', broker), {
+    this.mqtt = mqtt.connect(this.url, {
       username: appId,
       password: appAccessKey
     });
-    this.client.on('connect', this._connected.bind(this));
-    this.client.on('message', this._handleMessage.bind(this));
-    this.client.on('error', this._error.bind(this));
+    this.mqtt.on('connect', this._connected.bind(this));
+    this.mqtt.on('message', this._handleMessage.bind(this));
+    this.mqtt.on('error', this._error.bind(this));
   }
 
   end(...args) {
-    this.client.end(...args);
+    this.mqtt.end(...args);
   }
 
   send(devId, payload, port) {
@@ -27,12 +27,12 @@ const Client = class Client extends EventEmitter {
       payload_raw: payload_raw,
       port: port || 1
     });
-    this.client.publish(topic, message);
+    this.mqtt.publish(topic, message);
   }
 
   _connected(connack) {
     super.emit('connect', connack);
-    this.client.subscribe(['+/devices/+/activations', '+/devices/+/up']);
+    this.mqtt.subscribe(['+/devices/+/activations', '+/devices/+/up']);
   }
 
   _handleMessage(topic, message) {
@@ -41,11 +41,15 @@ const Client = class Client extends EventEmitter {
     var payload = JSON.parse(message.toString());
     switch (parts[3]) {
       case 'activations':
-        super.emit('activation', payload);
+        super.emit('activation', Object.assign({
+          dev_id: devId,
+          app_id: this.appId
+        }, payload));
         break;
       case 'up':
         super.emit('message', Object.assign({
-          dev_id: devId
+          dev_id: devId,
+          app_id: this.appId
         }, payload));
         break;
     }

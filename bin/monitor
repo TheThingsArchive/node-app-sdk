@@ -12,6 +12,14 @@ console.log('[DEBUG]', 'Application Access Key:', accessKey);
 
 var client = new ttn.Client(region, appId, accessKey);
 
+console.log('[DEBUG]', 'URL:', client.url);
+
+client.mqtt.on('reconnect', console.log.bind(this, '[DEBUG]', 'MQTT Event:', 'reconnect'));
+client.mqtt.on('close', console.log.bind(this, '[DEBUG]', 'MQTT Event:', 'close'));
+// client.mqtt.on('offline', console.log.bind(this, '[DEBUG]', 'MQTT Event:', 'offline'));
+// client.mqtt.on('packetsent', console.log.bind(this, '[DEBUG]', 'MQTT Event:', 'packetsent'));
+// client.mqtt.on('packetreceive', console.log.bind(this, '[DEBUG]', 'MQTT Event:', 'packetreceive'));
+
 client.on('connect', function(connack) {
 	console.log('[DEBUG]', 'Connect:', connack);
 });

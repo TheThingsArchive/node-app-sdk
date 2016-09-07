@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "monitor": "node bin/monitor",
+    "monitor": "npm run compile && node bin/monitor",
     "compile": "babel src --presets babel-preset-es2015 --out-dir dist",
     "prepublish": "npm run compile"
   },

@@ -10,11 +10,17 @@ npm install --save ttn
 
 ## Documentation
 
-A Quick Start and full API Reference can be found in [The Things Network Documentation](https://www.thethingsnetwork.org/docs/node-js/).
+A Quick Start and full API Reference can be found in [The Things Network Documentation](https://www.thethingsnetwork.org/docs/refactor/node-js/).
 
 ## Example
 
 An [example](src/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
+
+> **NOTE:** By default Tonic uses the stable version. To use this refactor version use:
+>
+> ```js
+> var ttn = require('ttn@2.0.0-1');
+> ```
 
 ### Monitor
 
@@ -66,8 +72,6 @@ npm run monitor eu HELLO-WORLD 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
   }
 }
 ```
-
-
 
 ## Release Policies
 
