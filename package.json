@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/TheThingsNetwork/node-ttn.git"
+    "url": "git://github.com/TheThingsNetwork/node-app-lib.git"
   },
   "author": "Johan Stokking <johan@thethingsnetwork.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheThingsNetwork/node-ttn/issues"
+    "url": "https://github.com/TheThingsNetwork/node-app-lib/issues"
   },
-  "homepage": "https://github.com/TheThingsNetwork/node-ttn#readme",
+  "homepage": "https://github.com/TheThingsNetwork/node-app-lib#readme",
   "tonicExampleFilename": "dist/example.js",
   "dependencies": {
     "mqtt": "^1.14.1"

@@ -29,7 +29,7 @@ For a quick example run [bin/monitor](bin/monitor) and pass region, application 
 ```bash
 npm run monitor eu HELLO-WORLD 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
 
-> ttn@2.0.0 monitor ~/node-ttn
+> ttn@2.0.0 monitor ~/node-app-lib
 > node bin/monitor "eu" "HELLO-WORLD" "4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo="
 
 [DEBUG] Region: eu
