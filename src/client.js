@@ -22,12 +22,15 @@ const Client = class Client extends EventEmitter {
 
   send(devId, payload, port) {
     var topic = util.format('%s/devices/%s/down', this.appId, devId);
-    var payload_raw = payload.toString('base64');
-    var message = JSON.stringify({
-      payload_raw: payload_raw,
+    var message = {
       port: port || 1
-    });
-    this.mqtt.publish(topic, message);
+    };
+    if (payload instanceof Buffer) {
+      message.payload_raw = payload.toString('base64');
+    } else {
+      message.payload_fields = payload;
+    }
+    this.mqtt.publish(topic, JSON.stringify(message));
   }
 
   _connected(connack) {
