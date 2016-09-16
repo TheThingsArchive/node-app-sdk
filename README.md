@@ -16,7 +16,7 @@ A Quick Start and full API Reference can be found in [The Things Network Documen
 
 An [example](src/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
 
-> **NOTE:** By default Tonic uses the stable version. To use this refactor version use:
+> **NOTE:** By default Tonic uses the stable version. For this refactor version use:
 >
 > ```js
 > var ttn = require('ttn@2.0.0-1');
@@ -33,7 +33,7 @@ npm run monitor eu HELLO-WORLD 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
 > node bin/monitor "eu" "HELLO-WORLD" "4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo="
 
 [DEBUG] Region: eu
-[DEBUG] Application ID: HELLO-WORLD
+[DEBUG] Application ID: hello-world
 [DEBUG] Application Access Key: 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
 [DEBUG] Connect: Packet {
   cmd: 'connack',
@@ -46,12 +46,12 @@ npm run monitor eu HELLO-WORLD 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
   sessionPresent: false,
   returnCode: 0 }
 [INFO] Message: {
-  "dev_id": "MY-UNO",
+  "dev_id": "my-uno",
   "port": 1,
   "counter": 63,
-  "payload_raw": "SGVsbG8=",
+  "payload_raw": "AQ==",
   "payload_fields": {
-    "message": "Hello"
+    "led": true
   },
   "metadata": {
     "time": "2016-09-06T13:39:51.11186125Z",

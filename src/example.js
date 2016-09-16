@@ -24,11 +24,18 @@ client.on('message', function(data) {
 
 client.on('message', function(data) {
 
-	// respond to every third message
+	// Respond to every third message
 	if (data.counter % 3 === 0) {
-		console.log('[DEBUG]', 'Sending');
 
-		var payload = new Buffer('4869', 'hex');
+		// Toggle the LED
+		var payload = {
+			led: !!message.led
+		};
+
+		// If you don't have an encoder payload function:
+		// var payload = new Buffer([message.led ? 0 : 1]);
+
+		console.log('[DEBUG]', 'Sending:', JSON.stringify(payload));
 		client.send(data.dev_id, payload, data.port);
 	}
 });
