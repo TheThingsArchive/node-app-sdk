@@ -19,7 +19,7 @@ An [example](src/example.js) is included and can be run directly in the browser 
 > **NOTE:** By default Tonic uses the stable version. For this refactor version use:
 >
 > ```js
-> var ttn = require('ttn@2.0.0-1');
+> var ttn = require('ttn@2.0.0-3');
 > ```
 
 ### Monitor
@@ -101,7 +101,7 @@ If you'd like to do a pre-release this is how it works.
 3. [Push](https://git-scm.com/docs/git-push) commits, including tags:
 
 	```bash
-	git push --follow-tags
+	npm run push
 	```
 
 ### Releases
