@@ -27,14 +27,12 @@ An [example](src/example.js) is included and can be run directly in the browser 
 For a quick example run [bin/monitor](bin/monitor) and pass region, application ID and access key:
 
 ```bash
-npm run monitor eu HELLO-WORLD 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
-
-> ttn@2.0.0 monitor ~/node-app-lib
-> node bin/monitor "eu" "HELLO-WORLD" "4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo="
+npm run monitor eu hello-world 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
 
 [DEBUG] Region: eu
 [DEBUG] Application ID: hello-world
 [DEBUG] Application Access Key: 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
+[DEBUG] URL: mqtt://eu.thethings.network
 [DEBUG] Connect: Packet {
   cmd: 'connack',
   retain: false,
