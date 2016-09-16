@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "monitor": "npm run compile && node bin/monitor",
     "compile": "babel src --presets babel-preset-es2015 --out-dir dist",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "push": "git push --follow-tags"
   },
   "repository": {
     "type": "git",
