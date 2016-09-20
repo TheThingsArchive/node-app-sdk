@@ -28,7 +28,7 @@ const Client = class Client extends EventEmitter {
     if (Array.isArray(payload)) {
       payload = new Buffer(payload);
     }
-    if (payload instanceof Buffer) {
+    if (Buffer.isBuffer(payload)) {
       message.payload_raw = payload.toString('base64');
     } else {
       message.payload_fields = payload;
