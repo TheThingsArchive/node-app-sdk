@@ -3,14 +3,13 @@ const util = require('util');
 const EventEmitter = require('events');
 
 const Client = class Client {
-  constructor(region, appId, appAccessKey) {
+  constructor(region, appId, appAccessKey, options = {}) {
     this.url = util.format('mqtt://%s', (region.indexOf('.') !== -1) ? region : region + '.thethings.network');
     this.appId = appId;
     this.ee = new EventEmitter();
-    this.mqtt = mqtt.connect(this.url, {
-      username: appId,
-      password: appAccessKey
-    });
+    options.username = appId;
+    options.password = appAccessKey;
+    this.mqtt = mqtt.connect(this.url, options);
     this.mqtt.on('connect', this._connect.bind(this));
     this.mqtt.on('error', this._error.bind(this));
     this.mqtt.on('message', this._handleMessage.bind(this));
