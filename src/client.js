@@ -21,6 +21,10 @@ const Client = class Client extends EventEmitter {
   }
 
   send(devId, payload, port) {
+    if (devId === Object(devId)) {
+      devId = devId.dev_id;
+      port = port || devId.port;
+    }
     var topic = util.format('%s/devices/%s/down', this.appId, devId);
     var message = {
       port: port || 1
