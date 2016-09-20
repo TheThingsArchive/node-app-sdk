@@ -69,6 +69,8 @@ describe('Client', function() {
 				should(data.payload_fields).be.an.Object();
 				should(data.payload_fields.led).be.true();
 				should(data.payload_raw).be.a.String();
+				should(data.app_id).be.a.String().and.equal(client.appId);
+				should(data.dev_id).be.a.String().and.equal('a-device');
 				client.end();
 				done();
 			});

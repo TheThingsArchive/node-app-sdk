@@ -69,8 +69,15 @@ const Client = class Client {
 
   _handleMessage(topic, message) {
     var parts = topic.split('/');
+    if (parts[3] !== 'activations' && parts[3] !== 'up') {
+      return;
+    }
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
+    if (parts.length === 4) {
+      payload.app_id = this.appId;
+      payload.dev_id = devId;
+    }
     var data, field;
     switch (parts[3]) {
       case 'activations':
