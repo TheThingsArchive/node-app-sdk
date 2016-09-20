@@ -18,11 +18,11 @@ client.on('activation', function(data) {
 	console.log('[INFO] ', 'Activation:', data);
 });
 
-client.on('message', function(data) {
-	console.info('[INFO] ', 'Message:', JSON.stringify(data, null, 2));
+client.on('message', function(deviceId, field, data) {
+	console.info('[INFO] ', 'Message:', deviceId, field, JSON.stringify(data, null, 2));
 });
 
-client.on('message', function(data) {
+client.on('message', null, 'led', function(deviceId, field, data) {
 
 	// Respond to every third message
 	if (data.counter % 3 === 0) {
