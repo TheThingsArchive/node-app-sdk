@@ -25,7 +25,10 @@ const Client = class Client extends EventEmitter {
     var message = {
       port: port || 1
     };
-    if (payload instanceof Buffer) {
+    if (Array.isArray(payload)) {
+      payload = new Buffer(payload);
+    }
+    if (Buffer.isBuffer(payload)) {
       message.payload_raw = payload.toString('base64');
     } else {
       message.payload_fields = payload;
