@@ -67,7 +67,8 @@ describe('Client', function() {
         should(data).be.an.Object();
         should(data.payload_fields).be.an.Object();
         should(data.payload_fields.led).be.true();
-        should(data.payload_raw).equal('AQ==');
+        should(data.payload_raw).be.an.instanceOf(Buffer).with.lengthOf(1);
+        should(data.payload_raw[0]).equal(1);
         should(data.counter).equal(5);
         client.end();
         done();
@@ -103,7 +104,8 @@ describe('Client', function() {
         should(arguments.length).equal(2);
         should(deviceId).equal('a-device');
         should(data).be.an.Object();
-        should(data.payload_raw).equal('AQ==');
+        should(data.payload_raw).be.an.instanceOf(Buffer).with.lengthOf(1);
+        should(data.payload_raw[0]).equal(1);
         client.end();
         done();
       });

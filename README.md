@@ -29,7 +29,7 @@ To run the [tests](test):
 
 ```bash
 npm install
-npm run test
+npm test
 ```
 
 ## Release Policies
