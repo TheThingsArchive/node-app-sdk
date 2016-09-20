@@ -23,55 +23,6 @@ An [example](src/example.js) is included and can be run directly in the browser 
 > var ttn = require('ttn@2.0.0-4');
 > ```
 
-### Monitor
-
-For a quick example run [bin/monitor](bin/monitor) and pass region, application ID and access key:
-
-```bash
-npm run monitor eu hello-world 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
-
-[DEBUG] Region: eu
-[DEBUG] Application ID: hello-world
-[DEBUG] Application Access Key: 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
-[DEBUG] URL: mqtt://eu.thethings.network
-[DEBUG] Connect: Packet {
-  cmd: 'connack',
-  retain: false,
-  qos: 0,
-  dup: false,
-  length: 2,
-  topic: null,
-  payload: null,
-  sessionPresent: false,
-  returnCode: 0 }
-[INFO] Message: {
-  "dev_id": "my-uno",
-  "port": 1,
-  "counter": 63,
-  "payload_raw": "AQ==",
-  "payload_fields": {
-    "led": true
-  },
-  "metadata": {
-    "time": "2016-09-06T13:39:51.11186125Z",
-    "frequency": 868.1,
-    "modulation": "LORA",
-    "data_rate": "SF7BW125",
-    "coding_rate": "4/5",
-    "gateways": [
-      {
-        "eui": "B827EBFGFE87BD21",
-        "timestamp": 3746387779,
-        "time": "2016-09-06T13:39:51.077691Z",
-        "rssi": -76,
-        "snr": 7.2,
-        "rf_chain": 1
-      }
-    ]
-  }
-}
-```
-
 ## Test
 
 To run the [tests](test):
