@@ -1,2 +1,7 @@
-src/
-node_modules/
+/examples
+node_modules
+/src
+.editorconfig
+.gitignore
+.jshintrc
+.npmignore
