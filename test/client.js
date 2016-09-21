@@ -62,13 +62,12 @@ describe('Client', function() {
 
 		it('should emit event', function(done) {
 			var client = createClient();
-			client.on('message', function(devId, field, data) {
+			client.on('message', function(devId, data) {
 				should(devId).be.a.String().and.equal('a-device');
-				should(field === null).be.true();
 				should(data).be.an.Object();
 				should(data.payload_fields).be.an.Object();
 				should(data.payload_fields.led).be.true();
-				should(data.payload_raw).be.a.String();
+				should(data.payload_raw).equal('AQ==');
 				should(data.app_id).be.a.String().and.equal(client.appId);
 				should(data.dev_id).be.a.String().and.equal('a-device');
 				client.end();
@@ -101,16 +100,22 @@ describe('Client', function() {
 
 		it('should emit event for specific device', function(done) {
 			var client = createClient();
-			client.on('message', 'a-device', function(devId, field, data) {
+			client.on('message', 'a-device', function(devId, data) {
+				should(arguments.length).equal(2);
+				should(devId).equal('a-device');
+				should(data).be.an.Object();
+				should(data.payload_raw).equal('AQ==');
 				client.end();
 				done();
 			});
-			client.mqtt.publish(client.appId + '/devices/a-device/up', JSON.stringify({}));
+			client.mqtt.publish(client.appId + '/devices/a-device/up', JSON.stringify({ payload_raw: 'AQ==' }));
 		});
 
 		it('should emit event for specific device and field', function(done) {
 			var client = createClient();
-			client.on('message', 'a-device', 'led', function(devId, field, data) {
+			client.on('message', 'a-device', 'led', function(devId, data) {
+				should(arguments.length).equal(2);
+				should(devId).equal('a-device');
 				should(data).be.true();
 				client.end();
 				done();
@@ -120,7 +125,9 @@ describe('Client', function() {
 
 		it('should emit event for specific field', function(done) {
 			var client = createClient();
-			client.on('message', null, 'led', function(devId, field, data) {
+			client.on('message', null, 'led', function(devId, data) {
+				should(arguments.length).equal(2);
+				should(devId).equal('a-device');
 				should(data).be.false();
 				client.end();
 				done();

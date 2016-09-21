@@ -74,22 +74,12 @@ const Client = class Client {
     }
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
-    if (parts.length === 4) {
+    if (parts.length === 4) { // inject app_id and dev_id, but not for field topics
       payload.app_id = this.appId;
       payload.dev_id = devId;
     }
-    var data, field;
-    switch (parts[3]) {
-      case 'activations':
-        this.ee.emit(topic, devId, payload); // full topic
-        this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, payload); // any device
-        break;
-      case 'up':
-        field = (parts.length > 4) ? parts.slice(4).join('/') : null;
-        this.ee.emit(topic, devId, field, payload); // full topic, including field
-        this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, field, payload); // any device
-        break;
-    }
+    this.ee.emit(topic, devId, payload); // full topic, including field if any
+    this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, payload); // any device
   }
 
   _eventToTopic(eventName, devId, field) {
