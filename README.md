@@ -19,7 +19,7 @@ An [example](src/example.js) is included and can be run directly in the browser 
 > **NOTE:** By default Tonic uses the stable version. For this refactor version use:
 >
 > ```js
-> var ttn = require('ttn@2.0.0-3');
+> var ttn = require('ttn@2.0.0-4');
 > ```
 
 ### Monitor
@@ -119,7 +119,7 @@ If you'd like to do a pre-release this is how it works.
 	npm version [patch|minor|major]
 	```
 	
-	> **NOTE:** If the current version is a pre-release all of the above will simply remove the pre-release identifier. For example, if the current version is `2.0.0-3` then `npm version patch` will result in `2.0.0` and not `2.0.1`.
+	> **NOTE:** If the current version is a pre-release all of the above will simply remove the pre-release identifier. For example, if the current version is `2.0.0-4` then `npm version patch` will result in `2.0.0` and not `2.0.1`.
 
 2. [Publish](https://docs.npmjs.com/cli/publish) package:
 
