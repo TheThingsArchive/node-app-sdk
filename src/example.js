@@ -29,11 +29,11 @@ client.on('message', null, 'led', function(deviceId, field, data) {
 
     // Toggle the LED
     var payload = {
-      led: !!message.led
+      led: !message.led
     };
 
     // If you don't have an encoder payload function:
-    // var payload = new Buffer([message.led ? 0 : 1]);
+    // var payload = [message.led ? 0 : 1];
 
     console.log('[DEBUG]', 'Sending:', JSON.stringify(payload));
     client.send(data.dev_id, payload, data.port);
