@@ -71,6 +71,15 @@ npm run monitor eu hello-world 4rw/vLixroZHch8WNZVBAnmP9GEvuJ1QEB5fI2czlfo=
 }
 ```
 
+## Test
+
+To run the [tests](test):
+
+```bash
+npm install
+npm run test
+```
+
 ## Release Policies
 
 ### Pre-releases
