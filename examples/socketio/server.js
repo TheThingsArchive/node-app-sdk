@@ -16,13 +16,13 @@ var accessKey = process.env.TTN_APP_KEY || 'SuperSecretAccessKey=';
 var client = new ttn.Client(region, appId, accessKey);
 
 // Forward uplink to appId room in Socket.io
-client.on('message', function(data) {
+client.on('message', function(devId, data) {
   console.log('Message:', data);
   io.to(appId).emit('message', data);
 });
 
 // Forward activations to appId room in Socket.io
-client.on('activation', function(data) {
+client.on('activation', function(devId, data) {
   console.log('Activation:', data);
   io.to(appId).emit('activation', data);
 });
