@@ -72,12 +72,12 @@ const Client = class Client {
 
   _handleMessage(topic, message) {
     var parts = topic.split('/');
-    if (parts[3] !== 'activations' && parts[3] !== 'up') {
+    if (parts[4] !== 'activations' && parts[3] !== 'up') {
       return;
     }
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
-    if (parts.length === 4) { // inject app_id and dev_id, but not for field topics
+    if (parts[3] !== 'up' || parts.length === 4) { // inject app_id and dev_id, but not for field topics
       payload.app_id = this.appId;
       payload.dev_id = devId;
     }
@@ -93,7 +93,7 @@ const Client = class Client {
     if (eventName === 'message') {
       topic += 'up';
     } else if (eventName === 'activation') {
-      topic += 'activations';
+      topic += 'events/activations';
     } else {
       topic = null;
     }

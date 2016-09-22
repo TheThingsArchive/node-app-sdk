@@ -34,7 +34,7 @@ describe('Client', function() {
         client.end();
         done();
       });
-      client.mqtt.publish(client.appId + '/devices/a-device/activations', JSON.stringify({
+      client.mqtt.publish(client.appId + '/devices/a-device/events/activations', JSON.stringify({
         "app_eui": "70B3D57EF000001C",
         "dev_eui": "0004A30B001B7AD2",
         "dev_addr": "26012723",
