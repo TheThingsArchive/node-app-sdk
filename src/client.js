@@ -71,10 +71,10 @@ const Client = class Client {
   }
 
   _handleMessage(topic, message) {
-    var parts = topic.split('/');
-    if (parts[4] !== 'activations' && parts[3] !== 'up') {
+    if (!topic.match(new RegExp('^' + this.appId + '\/devices\/[^\/]+\/(up(\/|$)|events\/activations$)'))) {
       return;
     }
+    var parts = topic.split('/');
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
     if (parts[3] !== 'up' || parts.length === 4) { // inject app_id and dev_id, but not for field topics
