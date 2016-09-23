@@ -10,7 +10,8 @@ npm install --save ttn
 
 ## Documentation
 
-A Quick Start and full API Reference can be found in [The Things Network Documentation](https://www.thethingsnetwork.org/docs/refactor/node-js/).
+* [The Things Network Documentation / Arduino](https://www.thethingsnetwork.org/docs/node-js/)
+* [API Reference](API.md)
 
 ## Example
 

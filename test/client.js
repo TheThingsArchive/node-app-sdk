@@ -27,14 +27,14 @@ describe('Client', function() {
   describe('#on(activation)', function() {
     it('should emit event', function(done) {
       var client = createClient();
-      client.on('activation', function(devId, data) {
-        should(devId).be.a.String().and.equal('a-device');
+      client.on('activation', function(deviceId, data) {
+        should(deviceId).be.a.String().and.equal('a-device');
         should(data).be.an.Object();
         should(data.dev_addr).be.a.String().and.equal('26012723');
         client.end();
         done();
       });
-      client.mqtt.publish(client.appId + '/devices/a-device/activations', JSON.stringify({
+      client.mqtt.publish(client.appId + '/devices/a-device/events/activations', JSON.stringify({
         "app_eui": "70B3D57EF000001C",
         "dev_eui": "0004A30B001B7AD2",
         "dev_addr": "26012723",
@@ -62,14 +62,13 @@ describe('Client', function() {
 
     it('should emit event', function(done) {
       var client = createClient();
-      client.on('message', function(devId, data) {
-        should(devId).be.a.String().and.equal('a-device');
+      client.on('message', function(deviceId, data) {
+        should(deviceId).be.a.String().and.equal('a-device');
         should(data).be.an.Object();
         should(data.payload_fields).be.an.Object();
         should(data.payload_fields.led).be.true();
         should(data.payload_raw).equal('AQ==');
-        should(data.app_id).be.a.String().and.equal(client.appId);
-        should(data.dev_id).be.a.String().and.equal('a-device');
+        should(data.counter).equal(5);
         client.end();
         done();
       });
@@ -100,9 +99,9 @@ describe('Client', function() {
 
     it('should emit event for specific device', function(done) {
       var client = createClient();
-      client.on('message', 'a-device', function(devId, data) {
+      client.on('message', 'a-device', function(deviceId, data) {
         should(arguments.length).equal(2);
-        should(devId).equal('a-device');
+        should(deviceId).equal('a-device');
         should(data).be.an.Object();
         should(data.payload_raw).equal('AQ==');
         client.end();
@@ -115,9 +114,9 @@ describe('Client', function() {
 
     it('should emit event for specific device and field', function(done) {
       var client = createClient();
-      client.on('message', 'a-device', 'led', function(devId, data) {
+      client.on('message', 'a-device', 'led', function(deviceId, data) {
         should(arguments.length).equal(2);
-        should(devId).equal('a-device');
+        should(deviceId).equal('a-device');
         should(data).be.true();
         client.end();
         done();
@@ -127,9 +126,9 @@ describe('Client', function() {
 
     it('should emit event for specific field', function(done) {
       var client = createClient();
-      client.on('message', null, 'led', function(devId, data) {
+      client.on('message', null, 'led', function(deviceId, data) {
         should(arguments.length).equal(2);
-        should(devId).equal('a-device');
+        should(deviceId).equal('a-device');
         should(data).be.false();
         client.end();
         done();

@@ -71,16 +71,12 @@ const Client = class Client {
   }
 
   _handleMessage(topic, message) {
-    var parts = topic.split('/');
-    if (parts[3] !== 'activations' && parts[3] !== 'up') {
+    if (!topic.match(new RegExp('^' + this.appId + '\/devices\/[^\/]+\/(up(\/|$)|events\/activations$)'))) {
       return;
     }
+    var parts = topic.split('/');
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
-    if (parts.length === 4) { // inject app_id and dev_id, but not for field topics
-      payload.app_id = this.appId;
-      payload.dev_id = devId;
-    }
     this.ee.emit(topic, devId, payload); // full topic, including field if any
     this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, payload); // any device
   }
@@ -93,7 +89,7 @@ const Client = class Client {
     if (eventName === 'message') {
       topic += 'up';
     } else if (eventName === 'activation') {
-      topic += 'activations';
+      topic += 'events/activations';
     } else {
       topic = null;
     }
