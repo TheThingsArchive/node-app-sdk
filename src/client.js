@@ -76,6 +76,9 @@ const Client = class Client {
     var parts = topic.split('/');
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
+    if (payload === Object(payload) && payload.payload_raw) {
+      payload.payload_raw = new Buffer(payload.payload_raw, 'base64');
+    }
     this.ee.emit(topic, devId, payload); // full topic, including field if any
     this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, payload); // any device
   }
