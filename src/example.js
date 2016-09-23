@@ -14,28 +14,24 @@ client.on('error', function(err) {
   console.error('[ERROR]', err.message);
 });
 
-client.on('activation', function(data) {
-  console.log('[INFO] ', 'Activation:', data);
+client.on('activation', function(deviceId, data) {
+  console.log('[INFO] ', 'Activation:', deviceId, JSON.stringify(data, null, 2));
 });
 
-client.on('message', function(deviceId, field, data) {
-  console.info('[INFO] ', 'Message:', deviceId, field, JSON.stringify(data, null, 2));
+client.on('message', function(deviceId, data) {
+  console.info('[INFO] ', 'Message:', deviceId, JSON.stringify(data, null, 2));
 });
 
-client.on('message', null, 'led', function(deviceId, field, data) {
+client.on('message', null, 'led', function(deviceId, led) {
 
-  // Respond to every third message
-  if (data.counter % 3 === 0) {
+  // Toggle the LED
+  var payload = {
+    led: !led
+  };
 
-    // Toggle the LED
-    var payload = {
-      led: !message.led
-    };
+  // If you don't have an encoder payload function:
+  // var payload = [led ? 0 : 1];
 
-    // If you don't have an encoder payload function:
-    // var payload = [message.led ? 0 : 1];
-
-    console.log('[DEBUG]', 'Sending:', JSON.stringify(payload));
-    client.send(data.dev_id, payload, data.port);
-  }
+  console.log('[DEBUG]', 'Sending:', JSON.stringify(payload));
+  client.send(deviceId, payload);
 });
