@@ -77,10 +77,6 @@ const Client = class Client {
     var parts = topic.split('/');
     var devId = parts[2];
     var payload = JSON.parse(message.toString());
-    if (parts[3] !== 'up' || parts.length === 4) { // inject app_id and dev_id, but not for field topics
-      payload.app_id = this.appId;
-      payload.dev_id = devId;
-    }
     this.ee.emit(topic, devId, payload); // full topic, including field if any
     this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, payload); // any device
   }
