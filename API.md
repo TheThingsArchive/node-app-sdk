@@ -22,7 +22,7 @@ var client = new ttn.Client(region, appId, appAccessKey);
 
 ## Event: connect
 
-Emitted on succesful (re)connection.
+Emitted on successful (re)connection.
 
 ```js
 client.on('connect', function(connack) {});
