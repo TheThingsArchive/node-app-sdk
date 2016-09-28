@@ -25,31 +25,31 @@ var client = new ttn.Client(region, appId, appAccessKey);
 Emitted on successful (re)connection.
 
 ```js
-client.on('connect', function(connack) {});
+client.on('connect', function cb(connack) {});
 ```
 
-* `connack [object]`: Connack packet. See [MQTT](https://www.npmjs.com/package/mqtt#event-connect).
+* `cb.connack [object]`: Connack packet. See [MQTT](https://www.npmjs.com/package/mqtt#event-connect).
 
 ## Event: error
 
 Emitted when the client cannot connect or when a parsing error occurs.
 
 ```js
-client.on('error', function(err) {});
+client.on('error', function cb(err) {});
 ```
 
-* `err [Error]`: Error object. See [MQTT](https://www.npmjs.com/package/mqtt#event-error).
+* `cb.err [Error]`: Error object. See [MQTT](https://www.npmjs.com/package/mqtt#event-error).
 
 ## Event: message
 
 Emitted when TTN forwards a message addressed to your application.
 
 ```js
-client.on('message', function(deviceId, data) {});
+client.on('message', function cb(deviceId, data) {});
 ```
 
-* `deviceId [string]`: Device ID, e.g.: `my-uno`.
-* `data [object]`: Message data, e.g.:
+* `cb.deviceId [string]`: Device ID, e.g.: `my-uno`.
+* `cb.data [object]`: Message data, e.g.:
 
   ```json
   {
@@ -86,28 +86,26 @@ client.on('message', function(deviceId, data) {});
 ### Listen for a specific device
 
 ```js
-client.on('message', 'my-uno', function(deviceId, data) {});
+client.on('message', 'my-uno', function cb(deviceId, data) {});
 ```
 
 ### Listen for a specific field (and device)
 
 ```js
-client.on('message', null, 'led', function(deviceId, data) {});
+client.on('message', [deviceId], 'led', function cb(deviceId, data) {});
 ```
-
-*  `deviceId [string]`: Device ID, e.g. `my-uno`
-*  `data [mixed]`: Message data, e.g. `true`
 
 ## Event: activation
 
 Emitted when a device registered to the application activates.
 
 ```js
-client.on('activation', deviceId, function(deviceId, data)) {});
+client.on('activation', [deviceId], function cb(deviceId, data)) {});
 ```
 
-* `deviceId [string]`: Device ID, e.g.: `my-uno`.
-* `data [object]`: Activation data, e.g.:
+* `deviceId [string]`: Optional device ID to filter on, e.g.: `my-uno`.
+* `cb.deviceId [string]`: Device ID, e.g.: `my-uno`.
+* `cb.data [object]`: Activation data, e.g.:
 
   ```json
   {
@@ -139,12 +137,13 @@ client.on('activation', deviceId, function(deviceId, data)) {});
 Emitted when a device event is published.
 
 ```js
-client.on('device', deviceId, event, function(deviceId, data)) {});
+client.on('device', [deviceId], event, function cb(deviceId, data)) {});
 ```
 
-* `deviceId [string]`: Device ID, e.g.: `my-uno`.
+* `deviceId [string]`: Optional device ID to filter on, e.g.: `my-uno`.
 * `event [string]`: Event name, e.g.: `activations` or `down/scheduled`.
-* `data [object]`: Event data, e.g. for `down/scheduled`:
+* `cb.deviceId [string]`: Device ID, e.g.: `my-uno`.
+* `cb.data [object]`: Event data, e.g. for `down/scheduled`:
 
   ```json
   {
@@ -176,7 +175,7 @@ client.send(deviceId, payload, [port]);
     
         > This requires your application to be configured with an encoder payload function to encode the object in bytes.
         
-*  `port [number]`: Port to send via. Default: `1`.
+*  `port [number]`: Optional port to address. Default: `1`.
 
 > See the [Node.js Buffer reference](https://nodejs.org/api/buffer.html#buffer_class_buffer) for different ways to create a buffer. The client will call [`Buffer.toString('base64')`](https://nodejs.org/api/buffer.html#buffer_buf_tostring_encoding_start_end) before publishing the message to The Things Network's MQTT broker.
 
