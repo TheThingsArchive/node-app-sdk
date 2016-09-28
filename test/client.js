@@ -25,6 +25,18 @@ describe('Client', function() {
   });
 
   describe('#on(activation)', function() {
+    it('should error on devId with separator or wildcard', function() {
+      var client = createClient();
+      (function() {
+        client.on('activation', 'my/uno');
+      }).should.throw();
+      (function() {
+        client.on('activation', '#');
+      }).should.throw();
+      (function() {
+        client.on('activation', 'my/+');
+      }).should.throw();
+    });
     it('should emit event', function(done) {
       var client = createClient();
       client.on('activation', function(deviceId, data) {
@@ -54,6 +66,59 @@ describe('Client', function() {
             "rf_chain": 1
           }]
         }
+      }));
+    });
+  });
+
+  describe('#on(device)', function() {
+    it('should error on field wildcard', function() {
+      var client = createClient();
+      (function() {
+        client.on('device', null, '#');
+      }).should.throw();
+      (function() {
+        client.on('device', null, 'down/+');
+      }).should.throw();
+    });
+    it('should emit event', function(done) {
+      var client = createClient();
+      client.on('device', null, 'activations', function(deviceId, data) {
+        should(deviceId).be.a.String().and.equal('a-device');
+        should(data).be.an.Object();
+        should(data.dev_addr).be.a.String().and.equal('26012723');
+        client.end();
+        done();
+      });
+      client.mqtt.publish(client.appId + '/devices/a-device/events/activations', JSON.stringify({
+        "dev_addr": "26012723"
+      }));
+    });
+    it('should emit event for specific device', function(done) {
+      var client = createClient();
+      client.on('device', 'a-device', 'activations', function(deviceId, data) {
+        should(deviceId).be.a.String().and.equal('a-device');
+        should(data).be.an.Object();
+        should(data.dev_addr).be.a.String().and.equal('26012723');
+        client.end();
+        done();
+      });
+      client.mqtt.publish(client.appId + '/devices/a-device/events/activations', JSON.stringify({
+        "dev_addr": "26012723"
+      }));
+    });
+    it('should emit event with deep field and payload_raw', function(done) {
+      var client = createClient();
+      client.on('device', 'a-device', 'down/scheduled', function(deviceId, data) {
+        should(deviceId).be.a.String().and.equal('a-device');
+        should(data).be.an.Object();
+        should(data.payload_raw).be.an.instanceOf(Buffer).with.lengthOf(1);
+        should(data.payload_raw[0]).equal(1);
+        client.end();
+        done();
+      });
+      client.mqtt.publish(client.appId + '/devices/a-device/events/down/scheduled', JSON.stringify({
+        "port": 1,
+        "payload_raw": "AQ=="
       }));
     });
   });

@@ -40,46 +40,6 @@ client.on('error', function(err) {});
 
 * `err [Error]`: Error object. See [MQTT](https://www.npmjs.com/package/mqtt#event-error).
 
-## Event: activation
-
-Emitted when a device registered to the application activates.
-
-```js
-client.on('activation', deviceId, function(data)) {});
-```
-
-* `deviceId [string]`: Device ID, e.g.: `my-uno`.
-* `data [object]`: Activation data, e.g.:
-
-  ```json
-  {
-    "app_eui": "70B3D57ED0000AFB",
-    "dev_eui": "0004A30B001B7AD2",
-    "dev_addr": "260023BB",
-    "metadata": {
-      "time": "2016-09-07T12:43:17.97454032Z",
-      "frequency": 867.1,
-      "modulation": "LORA",
-      "data_rate": "SF7BW125",
-      "coding_rate": "4/5",
-      "gateways": [{
-        "eui": "0000024B08060112",
-        "timestamp": 3546311603,
-        "time": "2016-09-07T12:43:17.938537Z",
-        "channel": 2,
-        "rssi": -107,
-        "snr": 1.2
-      }]
-    }
-  }
-  ```
-
-### Listen for a specific device
-
-```js
-client.on('activation', 'my-uno', function(deviceId, data) {});
-```
-
 ## Event: message
 
 Emitted when TTN forwards a message addressed to your application.
@@ -95,7 +55,12 @@ client.on('message', function(deviceId, data) {});
   {
     "port": 1,
     "counter": 10,
-    "payload_raw": "AQ==",
+    "payload_raw": {
+      "type": "Buffer",
+      "data": [
+        1
+      ]
+    },
     "payload_fields": {
       "led": true
     },
@@ -132,6 +97,68 @@ client.on('message', null, 'led', function(deviceId, data) {});
 
 *  `deviceId [string]`: Device ID, e.g. `my-uno`
 *  `data [mixed]`: Message data, e.g. `true`
+
+## Event: activation
+
+Emitted when a device registered to the application activates.
+
+```js
+client.on('activation', deviceId, function(deviceId, data)) {});
+```
+
+* `deviceId [string]`: Device ID, e.g.: `my-uno`.
+* `data [object]`: Activation data, e.g.:
+
+  ```json
+  {
+    "app_eui": "70B3D57ED0000AFB",
+    "dev_eui": "0004A30B001B7AD2",
+    "dev_addr": "260023BB",
+    "metadata": {
+      "time": "2016-09-07T12:43:17.97454032Z",
+      "frequency": 867.1,
+      "modulation": "LORA",
+      "data_rate": "SF7BW125",
+      "coding_rate": "4/5",
+      "gateways": [{
+        "eui": "0000024B08060112",
+        "timestamp": 3546311603,
+        "time": "2016-09-07T12:43:17.938537Z",
+        "channel": 2,
+        "rssi": -107,
+        "snr": 1.2
+      }]
+    }
+  }
+  ```
+  
+> The `activation` is a type of `device` event and internally mapped as such.
+
+## Event: device
+
+Emitted when a device event is published.
+
+```js
+client.on('device', deviceId, event, function(deviceId, data)) {});
+```
+
+* `deviceId [string]`: Device ID, e.g.: `my-uno`.
+* `event [string]`: Event name, e.g.: `activations` or `down/scheduled`.
+* `data [object]`: Event data, e.g. for `down/scheduled`:
+
+  ```json
+  {
+    "port": 1,
+    "payload_raw": {
+      "type": "Buffer",
+      "data": [
+        1
+      ]
+    }
+  }
+  ```
+  
+> The `activation` is a type of `device` event and internally mapped as such.
 
 ## Method: send
 

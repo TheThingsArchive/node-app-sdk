@@ -70,40 +70,58 @@ const Client = class Client {
   }
 
   _handleMessage(topic, message) {
-    if (!topic.match(new RegExp('^' + this.appId + '\/devices\/[^\/]+\/(up(\/|$)|events\/activations$)'))) {
+    var event = this._topicToEvent(topic);
+    if (!event.name) {
       return;
     }
-    var parts = topic.split('/');
-    var devId = parts[2];
     var payload = JSON.parse(message.toString());
-    if (payload === Object(payload) && payload.payload_raw) {
+    if (payload === Object(payload) && typeof payload.payload_raw === 'string') {
       payload.payload_raw = new Buffer(payload.payload_raw, 'base64');
     }
-    this.ee.emit(topic, devId, payload); // full topic, including field if any
-    this.ee.emit(parts.slice(0, 2).concat('+', parts.slice(3)).join('/'), devId, payload); // any device
+    this.ee.emit(topic, event.devId, payload); // full topic, including field if any
+    this.ee.emit(this._eventToTopic(event.name, null, event.field), event.devId, payload); // any device
   }
 
-  _eventToTopic(eventName, devId, field) {
-    if (devId && devId.match(/[+#\/]+/)) {
+  _eventToTopic(name, devId, field) {
+    if (devId && /[+#\/]+/.test(devId)) {
       throw new Error('devId may not contain path separator and wildcards.');
     }
+    if (field && /[+#]+/.test(field)) {
+      throw new Error('field may not contain wildcards.');
+    }
+    if (name === 'activation') {
+      return this._eventToTopic('device', devId, 'activations');
+    }
     var topic = this.appId + '/devices/' + (devId || '+') + '/';
-    if (eventName === 'message') {
-      topic += 'up';
-    } else if (eventName === 'activation') {
-      topic += 'events/activations';
+    if (name === 'message') {
+      topic += 'up' + (field ? '/' + field : '');
+    } else if (name === 'device' && field) {
+      if (!field) {
+        throw new Error('device event requires field');
+      }
+      topic += 'events/' + field;
     } else {
       topic = null;
     }
-    if (topic) {
-      if (field) {
-        if (field.match(/[+#]+/)) {
-          throw new Error('field may not contain wildcards.');
-        }
-        topic += '/' + field;
-      }
-    }
     return topic;
+  }
+
+  _topicToEvent(topic) {
+    var matches = topic.match(new RegExp('^' + this.appId + '\/devices\/([^\/]+)\/(?:(up)(?:\/(.+)$)?|(events)\/(.+))'));
+    if (!matches) {
+      return;
+    }
+    var event = {
+      devId: matches[1]
+    };
+    if (matches[2] === 'up') {
+      event.name = 'message';
+      event.field = matches[3];
+    } else if (matches[4] === 'events') {
+      event.name = 'device';
+      event.field = matches[5];
+    }
+    return event;
   }
 };
 
