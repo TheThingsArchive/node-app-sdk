@@ -18,6 +18,10 @@ client.on('activation', function(deviceId, data) {
   console.log('[INFO] ', 'Activation:', deviceId, JSON.stringify(data, null, 2));
 });
 
+client.on('device', null, 'down/scheduled', function(deviceId, data) {
+  console.log('[INFO] ', 'Scheduled:', deviceId, JSON.stringify(data, null, 2));
+});
+
 client.on('message', function(deviceId, data) {
   console.info('[INFO] ', 'Message:', deviceId, JSON.stringify(data, null, 2));
 });
