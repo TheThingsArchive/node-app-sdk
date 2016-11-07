@@ -17,14 +17,14 @@ var client = new ttn.Client(region, appId, accessKey);
 
 // Forward uplink to appId room in Socket.io
 client.on('message', function(devId, data) {
-  console.log('Message:', data);
-  io.to(appId).emit('message', data);
+  console.log('Message:', devId, data);
+  io.to(appId).emit('message', devId, data);
 });
 
 // Forward activations to appId room in Socket.io
 client.on('activation', function(devId, data) {
-  console.log('Activation:', data);
-  io.to(appId).emit('activation', data);
+  console.log('Activation:', devId, data);
+  io.to(appId).emit('activation', devId, data);
 });
 
 // Print errors to the console
