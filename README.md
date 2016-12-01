@@ -1,7 +1,7 @@
-# The Things Network Node.js Client
-[![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-lib.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-lib) [![NPM](https://img.shields.io/npm/v/ttn.svg?maxAge=2592000)](https://www.npmjs.com/package/ttn)
+# The Things Network Node.js Application SDK
+[![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk) [![NPM](https://img.shields.io/npm/v/ttn.svg?maxAge=2592000)](https://www.npmjs.com/package/ttn)
 
-This is the Node.js client for [The Things Network](https://www.thethingsnetwork.org) to receive activations and messages from IoT devices via The Things Network and send messages as well.
+This is the Node.js Application SDK for [The Things Network](https://www.thethingsnetwork.org) to receive activations and messages from IoT devices via The Things Network and send messages as well.
 
 ## Installation [![NPM](https://img.shields.io/npm/v/ttn.svg?maxAge=2592000)](https://www.npmjs.com/package/ttn)
 
@@ -21,10 +21,10 @@ An [example](src/example.js) is included and can be run directly in the browser 
 > **NOTE:** By default Tonic uses the stable version. For this refactor version use:
 >
 > ```js
-> var ttn = require('ttn@2.0.0-5');
+> var ttn = require('ttn@2.0.0-7');
 > ```
 
-## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-lib.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-lib)
+## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
 To run the [tests](test):
 
