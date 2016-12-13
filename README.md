@@ -6,7 +6,7 @@ This is the Node.js Application SDK for [The Things Network](https://www.thethin
 ## Installation [![NPM](https://img.shields.io/npm/v/ttn.svg?maxAge=2592000)](https://www.npmjs.com/package/ttn)
 
 ```bash
-npm install --save ttn
+npm install --save ttn@refactor
 ```
 
 ## Documentation
