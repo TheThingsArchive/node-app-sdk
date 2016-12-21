@@ -4,7 +4,7 @@ var region = 'eu';
 var appId = '';
 var accessKey = '';
 
-var client = new ttn.Client(region, appId, accessKey);
+var client = new ttn.data.MQTT(region, appId, accessKey);
 
 client.on('connect', function(connack) {
   console.log('[DEBUG]', 'Connect:', connack);

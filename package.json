@@ -25,6 +25,7 @@
   "tonicExampleFilename": "dist/example.js",
   "dependencies": {
     "mqtt": "^2.1.3"
+    "request": "^2.79.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -34,5 +35,6 @@
     "should": "^11.1.2",
     "should-sinon": "0.0.5",
     "sinon": "^1.17.6"
+    "nock": "^9.0.2",
   }
 }
