@@ -1,9 +1,10 @@
 'use strict';
 
-const Client = require('./client');
-const regions = require('./regions');
+const data = require('./data');
 
 module.exports = {
-  Client: Client,
-  regions: regions.regions,
+  Client: data.MQTT, // DEPRECATED
+  
+  data: data,
+  manager: require('./manager')
 };

@@ -8,7 +8,7 @@ var BROKER = 'iot.eclipse.org';
 var BYPASS = true;
 var WAIT_FOR = BYPASS ? 100 : 1000;
 
-describe('Client', function () {
+describe('data.MQTT', function() {
 
   describe('#new', function () {
     it('should create client', function () {
@@ -208,7 +208,7 @@ describe('Client', function () {
 });
 
 function createClient() {
-  client = new ttn.Client(BROKER); // don't pass appId and appAccessKey to the test broker
+  client = new ttn.data.MQTT(BROKER); // don't pass appId and appAccessKey to the test broker
   client.appId = Math.floor(Math.random() * 16777215).toString(16); // but set random appId afterwards
   if (BYPASS) { // bypass MQTT server for faster and more reliable tests
     client.mqtt.publish = function(topic, message) {
