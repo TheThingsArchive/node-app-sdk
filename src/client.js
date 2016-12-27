@@ -80,6 +80,10 @@ const Client = class Client {
     }
     this.ee.emit(topic, event.devId, payload); // full topic, including field if any
     this.ee.emit(this._eventToTopic(event.name, null, event.field), event.devId, payload); // any device
+    if (event.name === 'device') {
+      this.ee.emit(this._eventToTopic(event.name, event.devId, null), event.devId, payload); // any field
+      this.ee.emit(this._eventToTopic(event.name, null, null), event.devId, payload); // any device or field
+    }
   }
 
   _eventToTopic(name, devId, field) {
@@ -89,17 +93,14 @@ const Client = class Client {
     if (field && /[+#]+/.test(field)) {
       throw new Error('field may not contain wildcards.');
     }
-    if (name === 'activation') {
+    if (name === 'activation') { // deprecated
       return this._eventToTopic('device', devId, 'activations');
     }
     var topic = this.appId + '/devices/' + (devId || '+') + '/';
     if (name === 'message') {
       topic += 'up' + (field ? '/' + field : '');
-    } else if (name === 'device' && field) {
-      if (!field) {
-        throw new Error('device event requires field');
-      }
-      topic += 'events/' + field;
+    } else if (name === 'device') {
+      topic += 'events/' + (field || '#');
     } else {
       topic = null;
     }
