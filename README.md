@@ -9,20 +9,16 @@ This is the Node.js Application SDK for [The Things Network](https://www.thethin
 npm install --save ttn
 ```
 
+> **NOTE:** To use this SDK with the deprecated staging environment, install [version 1.3.2](https://github.com/TheThingsNetwork/node-app-sdk/tree/v1.3.2) instead: `npm i --save ttn@1.3.2`.
+
 ## Documentation
 
-* [The Things Network Documentation / Arduino](https://www.thethingsnetwork.org/docs/node-js/)
+* [The Things Network Documentation / Arduino](https://www.thethingsnetwork.org/docs/applications/nodejs/)
 * [API Reference](API.md)
 
 ## Example
 
 An [example](src/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
-
-> **NOTE:** By default Tonic uses the stable version. For this refactor version use:
->
-> ```js
-> var ttn = require('ttn@2.0.0-7');
-> ```
 
 ## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
