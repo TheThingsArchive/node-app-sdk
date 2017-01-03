@@ -2,9 +2,22 @@ const mqtt = require('mqtt');
 const util = require('util');
 const EventEmitter = require('events');
 
+const regions = {
+  'eu': 'eu',
+  'asia-se': 'asia-se',
+  'brazil': 'brazil',
+  'us-west': 'us-west',
+};
+
 const Client = class Client {
   constructor(region, appId, appAccessKey, options = {}) {
-    this.url = util.format('mqtt://%s', (region.indexOf('.') !== -1) ? region : region + '.thethings.network');
+
+    const reg = reg.replace && reg.replace(/\.thethings\.network$/, '')
+    if (!(reg in regions)) {
+      throw new Error('Invalid region \'' + region + '\'');
+    }
+
+    this.url = util.format('mqtt://%s', reg + '.thethings.network');
     this.appId = appId;
     this.ee = new EventEmitter();
     options.username = appId;
@@ -126,4 +139,5 @@ const Client = class Client {
   }
 };
 
+Client.regions = regions;
 module.exports = Client;
