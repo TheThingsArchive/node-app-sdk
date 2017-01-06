@@ -4,5 +4,5 @@ const Client = require('./client');
 
 module.exports = {
   Client: Client,
-  regions: Client.reqions
+  regions: Client.regions,
 };
