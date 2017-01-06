@@ -12,12 +12,11 @@ const ttnSuffix = /\.thethings\.network$/;
 const Client = class Client {
   constructor(region, appId, appAccessKey, options = {}) {
 
-    let reg = region
-
+    let reg = region;
 
     // get the region from regions if it exists
     if (region in regions) {
-      reg = regions[region]
+      reg = regions[region];
     }
 
     // validate the things network regions
@@ -25,7 +24,7 @@ const Client = class Client {
       throw new Error('Invalid The Things Network region \'' + region + '\'');
     }
 
-    this.url = util.format('mqtt://%s', reg)
+    this.url = util.format('mqtt://%s', reg);
     this.appId = appId;
     this.ee = new EventEmitter();
     options.username = appId;

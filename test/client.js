@@ -34,7 +34,7 @@ describe('Client', function () {
       (function () {
         new ttn.Client('invalid.thethings.network');
       }).should.throw(/Invalid The Things Network region/);
-    })
+    });
   });
 
   describe('#on(connect)', function () {
