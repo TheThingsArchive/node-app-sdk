@@ -15,6 +15,26 @@ describe('Client', function () {
       var client = createClient();
       client.should.be.an.instanceOf(ttn.Client);
     });
+
+    it('should create a client with a string region (eg \'eu\')', function () {
+      new ttn.Client('eu');
+    });
+
+    it('should create a client with a string region (eg \'eu\')', function () {
+      new ttn.Client(ttn.Client.regions.eu);
+    });
+
+    it('should create a client with a raw url to a broker', function () {
+      new ttn.Client('localhost');
+      new ttn.Client('rabbitmq');
+      new ttn.Client('foo.bar.com');
+    });
+
+    it('should not create a client with an invalid ttn region', function () {
+      (function () {
+        new ttn.Client('invalid.thethings.network');
+      }).should.throw(/Invalid The Things Network region/);
+    })
   });
 
   describe('#on(connect)', function () {
