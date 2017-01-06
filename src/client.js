@@ -2,22 +2,30 @@ const mqtt = require('mqtt');
 const util = require('util');
 const EventEmitter = require('events');
 
-const regions = {
-  'eu': 'eu',
-  'asia-se': 'asia-se',
-  'brazil': 'brazil',
-  'us-west': 'us-west',
-};
+const regions = [ 'eu', 'asia-se', 'brazil', 'us-west' ].reduce(function (acc, region) {
+  acc[region] = region.concat('.thethings.network');
+  return acc;
+}, {});
+
+const ttnSuffix = /\.thethings\.network$/;
 
 const Client = class Client {
   constructor(region, appId, appAccessKey, options = {}) {
 
-    const reg = reg.replace && reg.replace(/\.thethings\.network$/, '')
-    if (!(reg in regions)) {
-      throw new Error('Invalid region \'' + region + '\'');
+    let reg = region
+
+
+    // get the region from regions if it exists
+    if (region in regions) {
+      reg = regions[region]
     }
 
-    this.url = util.format('mqtt://%s', reg + '.thethings.network');
+    // validate the things network regions
+    if (ttnSuffix.test(reg) && !(reg.replace(ttnSuffix, '') in regions)) {
+      throw new Error('Invalid The Things Network region \'' + region + '\'');
+    }
+
+    this.url = util.format('mqtt://%s', reg)
     this.appId = appId;
     this.ee = new EventEmitter();
     options.username = appId;
