@@ -1,10 +1,13 @@
 const mqtt = require('mqtt');
 const util = require('util');
 const EventEmitter = require('events');
+const regions = require('./regions');
 
 const Client = class Client {
   constructor(region, appId, appAccessKey, options = {}) {
-    this.url = util.format('mqtt://%s', (region.indexOf('.') !== -1) ? region : region + '.thethings.network');
+    var reg = regions.validate(region);
+
+    this.url = util.format('mqtt://%s', reg);
     this.appId = appId;
     this.ee = new EventEmitter();
     options.username = appId;

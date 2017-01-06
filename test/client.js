@@ -17,6 +17,7 @@ describe('Client', function () {
     });
   });
 
+
   describe('#on(connect)', function () {
     it('shoudl emit event', function (done) {
       var client = createClient();
