@@ -17,7 +17,7 @@ describe('utils', function() {
       }
       utils.expandRegion(options);
       options.should.eql({
-        baseUrl: 'https://eu.thethings.network:8084',
+        baseUrl: 'http://eu.thethings.network:8084',
         foo: 'bar'
       });
     });
