@@ -1,13 +1,26 @@
-var ttn = require('ttn');
+var ttn = require('.');
+var fs = require('fs');
 
 var region = 'eu';
 var appId = '';
 var accessKey = '';
+var options = {
+  protocol: 'mqtts',
+  // Assuming that the mqtt-ca certificate (https://www.thethingsnetwork.org/docs/applications/mqtt/quick-start.html) is in the same folder
+  ca: [ fs.readFileSync('mqtt-ca.pem') ],
+}
 
+// client without tls (no options)
 var client = new ttn.Client(region, appId, accessKey);
+
+// client with tls
+//var client = new ttn.Client(region, appId, accessKey, options);
 
 client.on('connect', function(connack) {
   console.log('[DEBUG]', 'Connect:', connack);
+  console.log('[DEBUG]', 'Protocol:', client.mqtt.options.protocol);
+  console.log('[DEBUG]', 'Host:', client.mqtt.options.host);
+  console.log('[DEBUG]', 'Port:', client.mqtt.options.port);
 });
 
 client.on('error', function(err) {
