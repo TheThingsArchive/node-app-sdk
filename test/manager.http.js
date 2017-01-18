@@ -29,7 +29,7 @@ var response = {
   }
 };
 
-nock('https://eu.thethings.network:8084')
+nock('http://eu.thethings.network:8084')
   .matchHeader('authorization', 'Bearer ' + TOKEN)
   .get('/applications/my-app/devices/my-dev')
   .reply(function (uri, requestBody, cb) {
@@ -37,7 +37,7 @@ nock('https://eu.thethings.network:8084')
     cb(null, [200, response]);
   });
 
-nock('https://eu.thethings.network:8084')
+nock('http://eu.thethings.network:8084')
   .matchHeader('authorization', 'Bearer ' + TOKEN)
   .post('/applications')
   .reply(function (uri, requestBody, cb) {

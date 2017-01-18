@@ -5,7 +5,7 @@ exports.serviceToFunction = serviceName => {
 exports.expandRegion = options => {
   
   if (!options.baseUrl && options.region) {
-    options.baseUrl = 'https://' + options.region + '.thethings.network:8084';
+    options.baseUrl = 'http://' + options.region + '.thethings.network:8084';
   }
   
   delete options.region;

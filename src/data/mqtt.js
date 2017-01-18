@@ -1,7 +1,7 @@
 const mqtt = require('mqtt');
 const util = require('util');
 const EventEmitter = require('events');
-const regions = require('./regions');
+const regions = require('../regions');
 
 const Client = class Client {
   constructor(region, appId, appAccessKey, options = {}) {
