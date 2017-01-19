@@ -40,7 +40,6 @@ let methods = {
     uri: '/applications/{app_id}/devices/{dev_id}'
   },
   GetDevicesForApplication: {
-    method: 'POST',
     uri: '/applications/{app_id}/devices'
   }
 };
