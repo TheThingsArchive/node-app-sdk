@@ -83,8 +83,8 @@ class HTTP {
     return this._request('POST', '/applications', app)
   }
 
-  setApplication (appID, app) {
-    return this._request('POST', `/applications/${appID}`, app)
+  setApplication (app_id, app = {}) {
+    return this._request('POST', `/applications/${appID}`, { app_id, ...app })
   }
 
   deleteApplication (appID) {
@@ -99,12 +99,12 @@ class HTTP {
     return this._request('GET', `/applications/${appID}/devices/${devID}`)
   }
 
-  registerDevice (appID, device) {
+  registerDevice (appID, device = {}) {
     return this.SetDevice(appID, device.devID, device)
   }
 
-  setDevice (appID, devID, device) {
-    return this._request('POST', `/applications/${appID}/devices`, device)
+  setDevice (appID, dev_id, device = {}) {
+    return this._request('POST', `/applications/${appID}/devices`, { dev_id, ...device })
   }
 
   deleteDevice (appID, devID) {
