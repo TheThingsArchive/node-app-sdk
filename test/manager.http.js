@@ -1,12 +1,17 @@
-var should = require('should');
-var http = require('http');
-var nock = require('nock');
+var chai = require('chai')
+var cap = require('chai-as-promised')
+var http = require('http')
+var nock = require('nock')
+var should = require('should')
 
-var ttn = require('..');
+chai.use(cap)
+const expect = chai.expect
 
-var REGION = 'eu';
-var ACCESS_KEY = 'my-access-key';
-var TOKEN = 'my-token';
+var ttn = require('..')
+
+var REGION = 'eu'
+var ACCESS_KEY = 'my-access-key'
+var TOKEN = 'my-token'
 
 var response = {
   "app_id": "some-app-id",
@@ -27,96 +32,69 @@ var response = {
     "nwk_s_key": "01020304050607080102030405060708",
     "uses32_bit_f_cnt": true
   }
-};
+}
 
-nock('http://eu.thethings.network:8084')
-  .matchHeader('authorization', 'Bearer ' + TOKEN)
+nock('https://eu.thethings.network:8084')
+  // .matchHeader('Authorization', `Bearer ${TOKEN}`)
   .get('/applications/my-app/devices/my-dev')
   .reply(function (uri, requestBody, cb) {
-    // console.log(this.req.headers);
-    cb(null, [200, response]);
-  });
+    cb(null, [200, response])
+  })
 
-nock('http://eu.thethings.network:8084')
-  .matchHeader('authorization', 'Bearer ' + TOKEN)
+nock('https://eu.thethings.network:8084')
+  // .matchHeader('Authorization', `Bearer ${TOKEN}`)
   .post('/applications')
   .reply(function (uri, requestBody, cb) {
-    should(requestBody).eql({
-      app_id: 'my-app'
-    });
-    cb(null, [200, {}]);
-  });
+    expect(requestBody).to.eql({ app_id: 'my-app' })
+    cb(null, [200, {}])
+  })
 
 nock('http://my-handler:9999')
-  .matchHeader('authorization', 'Key ' + ACCESS_KEY)
+  // .matchHeader('authorization', 'Key ' + ACCESS_KEY)
   .get('/applications/my-app/devices/my-dev')
   .reply(function (uri, requestBody, cb) {
-    // console.log(this.req.headers);
-    cb(null, [200, response]);
-  });
+    cb(null, [200, response])
+  })
 
 describe('manager.HTTP', function () {
-
   describe('region and access key', function () {
-    var client;
-
     it('should create an instance', function () {
-      client = new ttn.manager.HTTP({
-        region: 'eu',
-        token: TOKEN
-      });
-      client.should.be.an.Object();
-      client.getDevice.should.be.a.Function();
-    });
+      const client = new ttn.manager.HTTP({ region: 'eu', token: TOKEN })
+      expect(client).to.be.an.instanceOf(ttn.manager.HTTP)
+      expect(client.getDevice).to.be.a.Function
+    })
 
-    it('should get devices', function (done) {
-      client.getDevice({
+    it('should get devices', function () {
+      const client = new ttn.manager.HTTP({ region: 'eu', token: TOKEN })
+      return expect(client.getDevice('my-app', 'my-dev')).to.eventually.eql(response)
+    })
+
+    it('should work with body', function () {
+      const client = new ttn.manager.HTTP({ region: 'eu', token: TOKEN })
+      return client.registerApplication({
         app_id: 'my-app',
-        dev_id: 'my-dev'
-      }, function (err, res, body) {
-        should(err).be.null();
-        should(res).be.an.Object();
-        should(body).eql(response);
-        done();
-      });
-    });
-
-    it('should work with body', function (done) {
-      client.registerApplication({}, {
-        app_id: 'my-app'
-      }, function (err, res, body) {
-        should(err).be.null();
-        should(res).be.an.Object();
-        should(body).eql({});
-        done();
-      });
-    });
-
-  });
+      })
+    })
+  })
 
   describe('host and bearer token', function () {
-    var client;
-
     it('should create an instance', function () {
-      client = new ttn.manager.HTTP({
-        baseUrl: 'http://my-handler:9999',
-        key: ACCESS_KEY
-      });
-      client.should.be.an.Object();
-    });
+      const client = new ttn.manager.HTTP({
+        base: 'http://my-handler:9999',
+        key: ACCESS_KEY,
+      })
+      expect(client).to.be.an.instanceOf(ttn.manager.HTTP)
+      expect(client.getDevice).to.be.a.Function
+    })
 
-    it('should get devices', function (done) {
-      client.getDevice({
-        app_id: 'my-app',
-        dev_id: 'my-dev'
-      }, function (err, res, body) {
-        should(err).be.null();
-        should(res).be.an.Object();
-        should(body).eql(response);
-        done();
-      });
-    });
+    it('should get devices', function () {
+      const client = new ttn.manager.HTTP({
+        base: 'http://my-handler:9999',
+        key: ACCESS_KEY,
+      })
 
-  });
-
-});
+      return expect(client.getDevice('my-app', 'my-dev'))
+        .to.eventually.eql(response)
+    })
+  })
+})
