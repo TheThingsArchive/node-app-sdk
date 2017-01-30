@@ -4,7 +4,7 @@ require('should-sinon');
 
 var ttn = require('..');
 
-var BROKER = 'iot.eclipse.org';
+var BROKER = 'localhost'
 var BYPASS = true;
 var WAIT_FOR = BYPASS ? 100 : 1000;
 
