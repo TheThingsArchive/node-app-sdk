@@ -1,13 +1,8 @@
-require('isomorphic-fetch');
-const httpError = require('http-errors');
-const utils = require('../lib/utils');
-const regions = require('../regions');
-const URL = require('url');
-
-const defaults = {
-  method: 'GET',
-  json: true
-}
+import "isomorphic-fetch"
+import httpError from "http-errors"
+import utils from "../lib/utils"
+import regions from "../regions"
+import URL from "url"
 
 const checkStatus = function (response) {
   if (response.status < 200 || response.status >= 300) {
