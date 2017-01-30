@@ -1,6 +1,5 @@
 import "isomorphic-fetch"
 import httpError from "http-errors"
-import utils from "../lib/utils"
 import regions from "../regions"
 import URL from "url"
 
