@@ -5,14 +5,14 @@ const regions = require('./regions');
 
 const Client = class Client {
   constructor(region, appId, appAccessKey, options = {}) {
-    var reg = regions.validate(region);
+    var host = regions.validate(region);
 
-    this.url = util.format('mqtt://%s', reg);
     this.appId = appId;
     this.ee = new EventEmitter();
+    options.host = host;
     options.username = appId;
     options.password = appAccessKey;
-    this.mqtt = mqtt.connect(this.url, options);
+    this.mqtt = mqtt.connect(options);
     this.mqtt.on('connect', this._connect.bind(this));
     this.mqtt.on('error', this._error.bind(this));
     this.mqtt.on('message', this._handleMessage.bind(this));
