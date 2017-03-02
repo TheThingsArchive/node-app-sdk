@@ -1,4 +1,4 @@
-# API Reference
+# API Reference: Data MQTT
 
 Require the TTN Client module:
 
@@ -6,7 +6,7 @@ Require the TTN Client module:
 var ttn = require('ttn');
 ```
 
-## Class: Client
+## Class: data.MQTT
 
 Creates an instance of the client:
 

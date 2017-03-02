@@ -10,11 +10,7 @@ var options = {
   ca: [ fs.readFileSync('mqtt-ca.pem') ],
 }
 
-// client without tls (no options)
-var client = new ttn.Client(region, appId, accessKey);
-
-// client with tls
-//var client = new ttn.Client(region, appId, accessKey, options);
+var client = new ttn.data.MQTT(region, appId, accessKey);
 
 client.on('connect', function(connack) {
   console.log('[DEBUG]', 'Connect:', connack);

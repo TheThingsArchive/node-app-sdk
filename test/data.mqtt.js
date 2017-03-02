@@ -4,11 +4,11 @@ require('should-sinon');
 
 var ttn = require('..');
 
-var BROKER = 'iot.eclipse.org';
+var BROKER = 'localhost'
 var BYPASS = true;
 var WAIT_FOR = BYPASS ? 100 : 1000;
 
-describe('Client', function () {
+describe('data.MQTT', function() {
 
   describe('#new', function () {
     it('should create client', function () {
@@ -19,7 +19,7 @@ describe('Client', function () {
 
 
   describe('#on(connect)', function () {
-    it('shoudl emit event', function (done) {
+    it('should emit event', function (done) {
       var client = createClient();
       client.on('connect', function (connack) {
         should(connack).be.an.Object();
@@ -208,7 +208,7 @@ describe('Client', function () {
 });
 
 function createClient() {
-  client = new ttn.Client(BROKER); // don't pass appId and appAccessKey to the test broker
+  client = new ttn.data.MQTT(BROKER); // don't pass appId and appAccessKey to the test broker
   client.appId = Math.floor(Math.random() * 16777215).toString(16); // but set random appId afterwards
   if (BYPASS) { // bypass MQTT server for faster and more reliable tests
     client.mqtt.publish = function(topic, message) {

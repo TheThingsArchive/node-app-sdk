@@ -1,4 +1,11 @@
 language: node_js
+
+services:
+    - docker
+
+before_script:
+    - docker run -d -p 127.0.0.1:1883:1883 ansi/mosquitto
+
 node_js:
-  - "6"
-  - "4"
+    - "6"
+    - "4"
