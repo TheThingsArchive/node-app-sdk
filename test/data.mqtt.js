@@ -19,7 +19,7 @@ describe('data.MQTT', function() {
 
 
   describe('#on(connect)', function () {
-    it('shoudl emit event', function (done) {
+    it('should emit event', function (done) {
       var client = createClient();
       client.on('connect', function (connack) {
         should(connack).be.an.Object();
