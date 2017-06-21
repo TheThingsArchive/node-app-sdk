@@ -5,7 +5,7 @@ import URL from "url"
 
 const checkStatus = function (response) {
   if (response.status < 200 || response.status >= 300) {
-    throw httpError(response.status, reponse.statusText)
+    throw httpError(response.status, response.statusText)
   }
   return response
 }
