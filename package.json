@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/TheThingsNetwork/node-app-sdk#readme",
   "tonicExampleFilename": "dist/example.js",
+  "types": "index.d.ts",
   "dependencies": {
+    "@types/node": "^8.0.7",
     "babel-runtime": "^6.23.0",
     "http-errors": "^1.5.1",
     "isomorphic-fetch": "^2.2.1",
