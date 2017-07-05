@@ -99,7 +99,7 @@ class HTTP {
   }
 
   registerDevice (appID, device = {}) {
-    return this.SetDevice(appID, device.devID, device)
+    return this.setDevice(appID, device.devID, device)
   }
 
   setDevice (appID, dev_id, device = {}) {
