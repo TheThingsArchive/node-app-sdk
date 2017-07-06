@@ -27,6 +27,8 @@ Create a new Discovery client.
 
 -   `opts` **Options**  (optional, default `{}`)
 
+Returns **void** 
+
 ### getAll
 
 getAll returns announcements for all services known to
@@ -49,6 +51,8 @@ specified service name and id.
 ## services
 
 services is a map with the known service names for the discovery server.
+
+Type: {}
 
 ### Handler
 

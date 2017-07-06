@@ -9,6 +9,7 @@ import grpc from "grpc"
 
 import proto from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_pb"
 import discovery from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_grpc_pb"
+import { wrap } from "../utils"
 
 export type Options = {
   address? : string,
@@ -20,17 +21,6 @@ export type Service = "router" | "broker" | "handler"
 
 process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
 
-const wrap = function (o, fn, ...args) {
-  return new Promise(function (resolve, reject) {
-    fn.call(o, ...args, function (err, res) {
-      if (err) {
-        return reject(err)
-      }
-      resolve(res)
-    })
-  })
-}
-
 /** Discovery is a client for The Things Network discovery API */
 export class Discovery {
 
@@ -40,7 +30,7 @@ export class Discovery {
   /**
    * Create a new Discovery client.
    */
-  constructor (opts : Options = {}) {
+  constructor (opts : Options = {}) : void {
     const {
       address = "discover.thethings.network",
       insecure = false,
@@ -56,7 +46,7 @@ export class Discovery {
   }
 
   /** @private */
-  _wrap (fn : Function, ...args : any[]) {
+  _wrap (fn : Function, ...args : any[]) : Promise<*> {
     return wrap(this.client, fn, ...args).then(res => res.toObject())
   }
 
@@ -91,7 +81,7 @@ export class Discovery {
 /**
  * services is a map with the known service names for the discovery server.
  */
-export const services = {
+export const services : { [string] : Service } = {
   /** Handler is a Handler service */
   Handler: "handler",
 
