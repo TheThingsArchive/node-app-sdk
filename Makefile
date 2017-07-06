@@ -59,11 +59,14 @@ docs:
 FLOW = ./node_modules/.bin/flow
 
 typecheck:
+	$(log) "typechecking all files"
 	@$(FLOW) check
 
 typecheck-staged:
+	$(log) "typechecking `$(JS_STAGED_FILES) | $(count)` js files"
 	@CODE=0; for file in `$(JS_STAGED_FILES)`; do $(FLOW) focus-check --quiet $$file || { $(erri) "type error in $$file"; CODE=1; }; done; exit $$CODE
 
 typestatus:
+	$(log) "checking flow status"
 	@$(FLOW) status
 
