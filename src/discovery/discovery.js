@@ -1,18 +1,22 @@
 // Copyright © 2017 The Things Network
 // Use of this source code is governed by the MIT license that can be found in the LICENCE file.
 
+// @flow
+// Copyright © 2017 The Things Network
+// Use of this source code is governed by the MIT license that can be found in the LICENCE file.
+
 import grpc from "grpc"
 
 import proto from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_pb"
 import discovery from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_grpc_pb"
 
-type Options = {
-  address : string,
-  insecure : ?bool,
-  certificate : ?Buffer,
+export type Options = {
+  address? : string,
+  insecure? : boolean,
+  certificate? : Buffer,
 }
 
-type Service = "router" | "broker" | "handler"
+export type Service = "router" | "broker" | "handler"
 
 process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
 
@@ -29,6 +33,10 @@ const wrap = function (o, fn, ...args) {
 
 /** Discovery is a client for The Things Network discovery API */
 export class Discovery {
+
+  /** @private */
+  client : any
+
   /**
    * Create a new Discovery client.
    */
@@ -48,7 +56,7 @@ export class Discovery {
   }
 
   /** @private */
-  _wrap (fn, ...args) {
+  _wrap (fn : Function, ...args : any[]) {
     return wrap(this.client, fn, ...args).then(res => res.toObject())
   }
 
@@ -56,7 +64,7 @@ export class Discovery {
    * getAll returns announcements for all services known to
    * the discovery server that match the service name.
    *
-   * @param serviceName - The name of the services to look for, eg. "handler"
+   * @param serviceName - The name of the services to look for, eg. `"handler"`
    */
   async getAll (serviceName : Service) {
     const req = new proto.GetServiceRequest()
@@ -69,8 +77,8 @@ export class Discovery {
    * get returns the announcement for the service with the
    * specified service name and id.
    *
-   * @param serviceName - The name of the services to look for, eg. "handler"
-   * @param id - The id of the service to look for, eg. "ttn-handler-eu"
+   * @param serviceName - The name of the services to look for, eg. `"handler"`
+   * @param id - The id of the service to look for, eg. `"ttn-handler-eu"`
    */
   get (serviceName : Service, id : string) {
     const req = new proto.GetRequest()
@@ -84,13 +92,13 @@ export class Discovery {
  * services is a map with the known service names for the discovery server.
  */
 export const services = {
-  /** handler is a Handler service */
-  handler: "handler",
+  /** Handler is a Handler service */
+  Handler: "handler",
 
-  /** router is a Router service */
-  router: "router",
+  /** Router is a Router service */
+  Router: "router",
 
-  /** broker is a Broker service */
-  broker: "broker",
+  /** Broker is a Broker service */
+  Broker: "broker",
 }
 

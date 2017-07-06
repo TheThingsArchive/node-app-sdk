@@ -7,9 +7,9 @@
     -   [getAll](#getall)
     -   [get](#get)
 -   [services](#services)
-    -   [handler](#handler)
-    -   [router](#router)
-    -   [broker](#broker)
+    -   [Handler](#handler)
+    -   [Router](#router)
+    -   [Broker](#broker)
 
 ## Discovery
 
@@ -34,7 +34,7 @@ the discovery server that match the service name.
 
 **Parameters**
 
--   `serviceName` **service** The name of the services to look for, eg. "handler"
+-   `serviceName` **Service** The name of the services to look for, eg. `"handler"`
 
 ### get
 
@@ -43,21 +43,21 @@ specified service name and id.
 
 **Parameters**
 
--   `serviceName` **service** The name of the services to look for, eg. "handler"
--   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the service to look for, eg. "ttn-handler-eu"
+-   `serviceName` **Service** The name of the services to look for, eg. `"handler"`
+-   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the service to look for, eg. `"ttn-handler-eu"`
 
 ## services
 
 services is a map with the known service names for the discovery server.
 
-### handler
+### Handler
 
-handler is a Handler service
+Handler is a Handler service
 
-### router
+### Router
 
-router is a Router service
+Router is a Router service
 
-### broker
+### Broker
 
-broker is a Broker service
+Broker is a Broker service

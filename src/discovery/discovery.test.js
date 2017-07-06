@@ -4,10 +4,26 @@
 /* eslint-env jest */
 /* eslint-disable arrow-body-style */
 
-import { Discovery } from "./discovery"
+// This file tests the discovery client.
+// It requires a server to be running at localhost:1900
+// that has allows insecure connections.
 
-test("Constructor should work", () => {
+import { Discovery, services } from "./discovery"
+
+test("Discovery.getAll", async () => {
   const client = new Discovery({
-    address: "localhost:4000",
+    address: "localhost:1900",
+    insecure: true,
   })
+
+  await client.getAll(services.Handler)
+})
+
+test("Discovery.get", async () => {
+  const client = new Discovery({
+    address: "localhost:1900",
+    insecure: true,
+  })
+
+  await client.getAll(services.Handler, "dev")
 })

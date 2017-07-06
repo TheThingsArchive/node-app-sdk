@@ -10,8 +10,8 @@ const main = async function () {
     certificate: fs.readFileSync("../ttn/.env/discovery/server.cert"),
   })
 
-  const handlers = await client.getAll(services.handler)
-  const handlerDev = await client.get(services.handler, "dev")
+  const handlers = await client.getAll(services.Handler)
+  const handlerDev = await client.get(services.Handler, "dev")
 
   console.log(`Found ${handlers.length} handlers in total:`)
   handlers.forEach(handler => console.log(`  - ${handler.id}`))
