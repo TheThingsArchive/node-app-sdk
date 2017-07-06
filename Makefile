@@ -1,18 +1,17 @@
 
 PRE_COMMIT = quality-staged
+HEADER ?= "// Copyright © 2017 The Things Network\n// Use of this source code is governed by the MIT license that can be found in the LICENCE file."
 
 include .make/*.make
 include .make/js/*.make
 
 dev-deps: js.dev-deps
 test: js.test
-quality: js.quality
-quality-staged: js.quality-staged
+quality: js.quality headers.check
+quality-staged: js.quality-staged headers.fix-staged
 
 BABEL_FLAGS = -D --ignore '*.test.js'
 build: js.build
-
-PRE_COMMIT = quality_staged
 
 .PHONY: protos docs
 
