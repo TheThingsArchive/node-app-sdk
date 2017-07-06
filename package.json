@@ -3,15 +3,6 @@
   "version": "2.1.2",
   "description": "The Things Network Client",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "npm run compile && mocha --bail",
-    "compile": "babel src --out-dir dist",
-    "prepublish": "npm run compile",
-    "push": "git push --follow-tags"
-  },
-  "pre-commit": [
-    "test"
-  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/TheThingsNetwork/node-app-sdk.git"
@@ -22,30 +13,41 @@
     "url": "https://github.com/TheThingsNetwork/node-app-sdk/issues"
   },
   "homepage": "https://github.com/TheThingsNetwork/node-app-sdk#readme",
-  "tonicExampleFilename": "dist/example.js",
-  "dependencies": {
-    "babel-runtime": "^6.23.0",
-    "http-errors": "^1.5.1",
-    "isomorphic-fetch": "^2.2.1",
-    "mqtt": "^2.6.1"
-  },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "mocha": "^3.2.0",
-    "nock": "^9.0.2",
-    "pre-commit": "^1.2.2",
-    "should": "^11.1.2",
-    "should-sinon": "0.0.5",
-    "sinon": "^2.1.0"
+    "babel-cli": "^6.24.1",
+    "babel-plugin-flow-runtime": "^0.11.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-ttn": "^1.2.3",
+    "eslint": "^4.1.1",
+    "eslint-config-ttn": "^1.3.1",
+    "grpc-tools": "^1.4.1",
+    "jest": "^20.0.4",
+    "jest-preset-ttn": "^0.0.3",
+    "json": "^9.0.6"
+  },
+  "dependencies": {
+    "flow-runtime": "^0.13.0",
+    "google-protobuf": "^3.3.0",
+    "grpc": "^1.4.1"
   },
   "babel": {
     "presets": [
-      "es2015",
-      "stage-0"
+      "ttn",
+      "react"
+    ],
+    "plugins": [
+      "flow-runtime",
+      "transform-decorators-legacy"
     ]
+  },
+  "eslintConfig": {
+    "extends": "ttn",
+    "env": {
+      "node": true,
+      "es6": true
+    }
+  },
+  "jest": {
+    "preset": "jest-preset-ttn"
   }
 }
