@@ -55,6 +55,10 @@
     "env": {
       "node": true,
       "es6": true
+    },
+    "rules": {
+      "import/named": "off",
+      "no-duplicate-imports": "off"
     }
   },
   "jest": {

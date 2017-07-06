@@ -11,10 +11,16 @@ import proto from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/di
 import discovery from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_grpc_pb"
 import { wrap } from "../utils"
 
-export type Options = {
+export type DiscoveryOptions = {
   address? : string,
   insecure? : boolean,
   certificate? : Buffer,
+}
+
+export type Announcement = {
+  netAddress : string,
+  mqttAddress : string,
+  certificate? : string,
 }
 
 export type Service = "router" | "broker" | "handler"
@@ -30,7 +36,7 @@ export class Discovery {
   /**
    * Create a new Discovery client.
    */
-  constructor (opts : Options = {}) : void {
+  constructor (opts : DiscoveryOptions = {}) : void {
     const {
       address = "discover.thethings.network",
       insecure = false,
@@ -56,7 +62,7 @@ export class Discovery {
    *
    * @param serviceName - The name of the services to look for, eg. `"handler"`
    */
-  async getAll (serviceName : Service) {
+  async getAll (serviceName : Service) : Promise<Announcement[]> {
     const req = new proto.GetServiceRequest()
     req.setServiceName(serviceName)
     const res = await this._wrap(this.client.getAll, req)
@@ -70,7 +76,7 @@ export class Discovery {
    * @param serviceName - The name of the services to look for, eg. `"handler"`
    * @param id - The id of the service to look for, eg. `"ttn-handler-eu"`
    */
-  get (serviceName : Service, id : string) {
+  get (serviceName : Service, id : string) : Promise<Announcement> {
     const req = new proto.GetRequest()
     req.setServiceName(serviceName)
     req.setId(id)

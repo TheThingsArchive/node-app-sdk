@@ -2,14 +2,103 @@
 
 ### Table of Contents
 
+-   [discover](#discover)
+-   [Handler](#handler)
+    -   [discover](#discover-1)
+    -   [configure](#configure)
+    -   [application](#application)
+    -   [data](#data)
+    -   [devices](#devices)
+-   [manual](#manual)
 -   [Discovery](#discovery)
     -   [constructor](#constructor)
     -   [getAll](#getall)
     -   [get](#get)
 -   [services](#services)
-    -   [Handler](#handler)
+    -   [Handler](#handler-1)
     -   [Router](#router)
     -   [Broker](#broker)
+
+## discover
+
+Create a new handler by discovering it based on a handler id
+
+**Parameters**
+
+-   `handler_id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the handler
+-   `opts` **DiscoveryOptions?** Optional options to be used for passed to the Discovery client
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
+
+## Handler
+
+A client for The Things Network handler APIs.
+
+Handler can be used to get data from an application
+or to manage devices.
+
+### discover
+
+discover uses The Things Network discovery API to discovery the required
+properties of the Handler based on the Handlers id.
+
+**Parameters**
+
+-   `handler_id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the handler
+-   `opts` **DiscoveryOptions?** Optional options to be used for passed to the Discovery client
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### configure
+
+configure configures the Handler manually, setting the necessary addresses
+and certificates needed to connect to the handler.
+
+**Parameters**
+
+-   `mqtt_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The address of the MQTT broker of the Handler
+-   `net_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The address of the Handler's gRPC endpoint
+-   `certificate` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** An optional certificate to use when connecting to the Handler
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### application
+
+Configure the application that is to be used.
+
+**Parameters**
+
+-   `app_id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The application ID
+-   `access_key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The application access key used to autheticate
+
+Returns **[Handler](#handler)** 
+
+### data
+
+Open a data client that can be used to receive live application data
+
+Returns **Data** 
+
+### devices
+
+Open a device client that can be used to manage the devices of the
+application
+
+Returns **Devices** 
+
+## manual
+
+Create a new handler by discovering it based on a handler id
+
+**Parameters**
+
+-   `mqtt_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `net_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `certificate` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `handler_id`  The id of the handler
+-   `opts`  Optional options to be used for passed to the Discovery client
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
 
 ## Discovery
 
@@ -17,7 +106,7 @@ Discovery is a client for The Things Network discovery API
 
 **Parameters**
 
--   `opts` **Options**  (optional, default `{}`)
+-   `opts` **DiscoveryOptions**  (optional, default `{}`)
 
 ### constructor
 
@@ -25,7 +114,7 @@ Create a new Discovery client.
 
 **Parameters**
 
--   `opts` **Options**  (optional, default `{}`)
+-   `opts` **DiscoveryOptions**  (optional, default `{}`)
 
 Returns **void** 
 
@@ -38,6 +127,8 @@ the discovery server that match the service name.
 
 -   `serviceName` **Service** The name of the services to look for, eg. `"handler"`
 
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Announcement>>** 
+
 ### get
 
 get returns the announcement for the service with the
@@ -47,6 +138,8 @@ specified service name and id.
 
 -   `serviceName` **Service** The name of the services to look for, eg. `"handler"`
 -   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the service to look for, eg. `"ttn-handler-eu"`
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Announcement>** 
 
 ## services
 
