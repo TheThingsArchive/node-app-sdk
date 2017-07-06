@@ -32,10 +32,19 @@ PROTOC_FLAGS ?= $(PROTOC_INCLUDES) \
 	--grpc_out=$(PROTO_DIR) \
   --plugin=protoc-gen-grpc=$(PWD)/$(NODE_MODULES)/.bin/grpc_tools_node_protoc_plugin
 
-protos:
-	$(log) building protos
+only_pb = grep '_pb\.js$$'
+
+protos: fix-protos
+
+compile-protos:
+	$(log) "building protos"
 	@mkdir -p $(PROTO_DIR)
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
+
+fix-protos: compile-protos
+	$(log) "fixing protos"
+	@$(JS_FILES) | $(only_pb) | xargs sed -i.bk 's:\([^/]\)github\.com:\1github_com:g'
+	@find $(PROTO_DIR) -name '*_pb.js.bk' | xargs rm
 
 
 DOCJS = ./node_modules/.bin/documentation
@@ -46,7 +55,6 @@ DOC_FILE = DOCUMENTATION.md
 docs:
 	$(log) building documentation
 	@$(DOCJS) build `$(JS_LINT_FILES)` $(DOCJS_FLAGS) -f md > $(DOC_FILE)
-
 
 FLOW = ./node_modules/.bin/flow
 

@@ -9,6 +9,7 @@ var grpc = require('grpc');
 var src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb = require('../../../../../../src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 var google_api_annotations_pb = require('../../../../../../google/api/annotations_pb.js');
+var github_com_gogo_protobuf_gogoproto_gogo_pb = require('../../../../../../github.com/gogo/protobuf/gogoproto/gogo_pb.js');
 
 function serialize_discovery_Announcement(arg) {
   if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.Announcement)) {
@@ -30,6 +31,28 @@ function serialize_discovery_AnnouncementsResponse(arg) {
 
 function deserialize_discovery_AnnouncementsResponse(buffer_arg) {
   return src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.AnnouncementsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_discovery_GetByAppEUIRequest(arg) {
+  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.GetByAppEUIRequest)) {
+    throw new Error('Expected argument of type discovery.GetByAppEUIRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_discovery_GetByAppEUIRequest(buffer_arg) {
+  return src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.GetByAppEUIRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_discovery_GetByAppIDRequest(arg) {
+  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.GetByAppIDRequest)) {
+    throw new Error('Expected argument of type discovery.GetByAppIDRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_discovery_GetByAppIDRequest(buffer_arg) {
+  return src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.GetByAppIDRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_discovery_GetRequest(arg) {
@@ -140,6 +163,28 @@ var DiscoveryService = exports.DiscoveryService = {
     requestDeserialize: deserialize_discovery_MetadataRequest,
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  getByAppID: {
+    path: '/discovery.Discovery/GetByAppID',
+    requestStream: false,
+    responseStream: false,
+    requestType: src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.GetByAppIDRequest,
+    responseType: src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.Announcement,
+    requestSerialize: serialize_discovery_GetByAppIDRequest,
+    requestDeserialize: deserialize_discovery_GetByAppIDRequest,
+    responseSerialize: serialize_discovery_Announcement,
+    responseDeserialize: deserialize_discovery_Announcement,
+  },
+  getByAppEUI: {
+    path: '/discovery.Discovery/GetByAppEUI',
+    requestStream: false,
+    responseStream: false,
+    requestType: src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.GetByAppEUIRequest,
+    responseType: src_github_com_TheThingsNetwork_ttn_api_discovery_discovery_pb.Announcement,
+    requestSerialize: serialize_discovery_GetByAppEUIRequest,
+    requestDeserialize: deserialize_discovery_GetByAppEUIRequest,
+    responseSerialize: serialize_discovery_Announcement,
+    responseDeserialize: deserialize_discovery_Announcement,
   },
 };
 
