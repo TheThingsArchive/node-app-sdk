@@ -9,6 +9,8 @@ type Options = {
   certificate : ?Buffer,
 }
 
+type Service = "router" | "broker" | "handler"
+
 process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
 
 const wrap = function (o, fn, ...args) {
@@ -22,7 +24,11 @@ const wrap = function (o, fn, ...args) {
   })
 }
 
+/** Discovery is a client for The Things Network discovery API */
 export class Discovery {
+  /**
+   * Create a new Discovery client.
+   */
   constructor (opts : Options = {}) {
     const {
       address = "discover.thethings.network",
@@ -38,18 +44,32 @@ export class Discovery {
     this.client = new discovery.DiscoveryClient(address, credentials)
   }
 
+  /** @private */
   _wrap (fn, ...args) {
     return wrap(this.client, fn, ...args).then(res => res.toObject())
   }
 
-  async getAll (serviceName : string) {
+  /**
+   * getAll returns announcements for all services known to
+   * the discovery server that match the service name.
+   *
+   * @param serviceName - The name of the services to look for, eg. "handler"
+   */
+  async getAll (serviceName : Service) {
     const req = new proto.GetServiceRequest()
     req.setServiceName(serviceName)
     const res = await this._wrap(this.client.getAll, req)
     return res.servicesList
   }
 
-  get (serviceName : string, id : string) {
+  /**
+   * get returns the announcement for the service with the
+   * specified service name and id.
+   *
+   * @param serviceName - The name of the services to look for, eg. "handler"
+   * @param id - The id of the service to look for, eg. "ttn-handler-eu"
+   */
+  get (serviceName : Service, id : string) {
     const req = new proto.GetRequest()
     req.setServiceName(serviceName)
     req.setId(id)
@@ -57,9 +77,17 @@ export class Discovery {
   }
 }
 
+/**
+ * services is a map with the known service names for the discovery server.
+ */
 export const services = {
+  /** handler is a Handler service */
   handler: "handler",
+
+  /** router is a Router service */
   router: "router",
+
+  /** broker is a Broker service */
   broker: "broker",
 }
 
