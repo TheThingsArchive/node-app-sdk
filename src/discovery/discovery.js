@@ -5,6 +5,7 @@ import discovery from "../proto/src/github.com/TheThingsNetwork/ttn/api/discover
 
 type Options = {
   address : string,
+  insecure : ?bool,
   certificate : ?Buffer,
 }
 
@@ -25,11 +26,16 @@ export class Discovery {
   constructor (opts : Options = {}) {
     const {
       address = "discover.thethings.network",
+      insecure = false,
       certificate,
     } = opts
 
-    const ssl = grpc.credentials.createSsl(certificate)
-    this.client = new discovery.DiscoveryClient(address, ssl)
+    const credentials =
+      insecure
+        ? grpc.credentials.createInsecure()
+        : grpc.credentials.createSsl(certificate)
+
+    this.client = new discovery.DiscoveryClient(address, credentials)
   }
 
   _wrap (fn, ...args) {
