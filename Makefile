@@ -12,6 +12,8 @@ quality-staged: js.quality-staged
 BABEL_FLAGS = -D --ignore '*.test.js'
 build: js.build
 
+PRE_COMMIT = quality_staged
+
 .PHONY: protos
 
 PROTOC ?= protoc
@@ -35,5 +37,3 @@ protos:
 	$(log) building protos
 	@mkdir -p $(PROTO_DIR)
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
-
-
