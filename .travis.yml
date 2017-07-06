@@ -8,6 +8,10 @@ node_js:
 services:
   - docker
 
+cache:
+  directories:
+    - "node_modules"
+
 before_script:
   - docker run -d -p 127.0.0.1:1883:1883 ansi/mosquitto
 
