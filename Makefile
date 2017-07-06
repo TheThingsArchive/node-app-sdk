@@ -14,7 +14,7 @@ build: js.build
 
 PRE_COMMIT = quality_staged
 
-.PHONY: protos
+.PHONY: protos docs
 
 PROTOC ?= protoc
 
@@ -37,3 +37,14 @@ protos:
 	$(log) building protos
 	@mkdir -p $(PROTO_DIR)
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
+
+
+DOCJS = ./node_modules/.bin/documentation
+DOCJS_FLAGS = --shallow
+
+DOC_FILE = DOCUMENTATION.md
+
+docs:
+	$(log) building documentation
+	@$(DOCJS) build `$(JS_LINT_FILES)` $(DOCJS_FLAGS) -f md > $(DOC_FILE)
+
