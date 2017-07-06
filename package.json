@@ -36,7 +36,12 @@
       "react"
     ],
     "plugins": [
-      "flow-runtime",
+      [
+        "flow-runtime",
+        {
+          "assert": true
+        }
+      ],
       "transform-decorators-legacy"
     ]
   },
