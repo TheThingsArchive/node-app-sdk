@@ -7,8 +7,8 @@ include .make/js/*.make
 
 dev-deps: js.dev-deps
 test: js.test
-quality: js.quality headers.check
-quality-staged: js.quality-staged headers.fix-staged
+quality: js.quality typecheck headers.check
+quality-staged: js.quality-staged headers.fix-staged typecheck-staged
 
 BABEL_FLAGS = -D --ignore '*.test.js'
 build: js.build
@@ -46,4 +46,16 @@ DOC_FILE = DOCUMENTATION.md
 docs:
 	$(log) building documentation
 	@$(DOCJS) build `$(JS_LINT_FILES)` $(DOCJS_FLAGS) -f md > $(DOC_FILE)
+
+
+FLOW = ./node_modules/.bin/flow
+
+typecheck:
+	@$(FLOW) check
+
+typecheck-staged:
+	@CODE=0; for file in `$(JS_STAGED_FILES)`; do $(FLOW) focus-check --quiet $$file || { $(erri) "type error in $$file"; CODE=1; }; done; exit $$CODE
+
+typestatus:
+	@$(FLOW) status
 
