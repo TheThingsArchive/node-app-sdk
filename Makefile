@@ -40,6 +40,7 @@ compile-protos:
 	$(log) "building protos"
 	@mkdir -p $(PROTO_DIR)
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/handler/handler.proto
 
 fix-protos: compile-protos
 	$(log) "fixing protos"
