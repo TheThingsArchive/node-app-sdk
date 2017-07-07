@@ -57,7 +57,7 @@ export class Discovery {
   }
 
   /**
-   * getAll returns announcements for all services known to
+   * `getAll` returns announcements for all services known to
    * the discovery server that match the service name.
    *
    * @param serviceName - The name of the services to look for, eg. `"handler"`
@@ -70,7 +70,7 @@ export class Discovery {
   }
 
   /**
-   * get returns the announcement for the service with the
+   * `get` returns the announcement for the service with the
    * specified service name and id.
    *
    * @param serviceName - The name of the services to look for, eg. `"handler"`
@@ -81,6 +81,16 @@ export class Discovery {
     req.setServiceName(serviceName)
     req.setId(id)
     return this._wrap(this.client.get, req)
+  }
+
+  /**
+   * `getByAppID` gets a handler announcement by application ID.
+   * It looks up the handler the application is registered to.
+   */
+  getByAppID (appID : string) : Promise<Announcement> {
+    const req = new proto.GetByAppIDRequest()
+    req.setAppId(appID)
+    return this._wrap(this.client.getByAppID, req)
   }
 }
 
