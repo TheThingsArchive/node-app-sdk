@@ -3,15 +3,23 @@
 
 // @flow
 
-import Handler from "./handler"
-
 export type EventName = "connect" | "error" | "message" | "device" | "activation"
 
-export default class Data {
+export default class DataClient {
   /** @private */
-  handler : Handler
+  mqttAddress : string
 
-  constructor (handler : Handler) : void {
-    this.handler = handler
+  /** @private */
+  appID : string
+
+  /** @private */
+  appAccessKey : string
+
+
+  constructor (appID : string, appAccessKey : string, mqttAddress : string) : void {
+    this.mqttAddress = mqttAddress
+    this.appID = appID
+    this.appAccessKey = appAccessKey
   }
+
 }

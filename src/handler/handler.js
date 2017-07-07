@@ -6,9 +6,8 @@
 import { Discovery } from "../discovery"
 import type { DiscoveryOptions, Announcement } from "../discovery"
 
-import Devices from "./devices"
-import Data from "./data"
-
+import ApplicationClient from "./application"
+import DataClient from "./data"
 
 /**
  * A client for The Things Network handler APIs.
@@ -16,84 +15,53 @@ import Data from "./data"
  * Handler can be used to get data from an application
  * or to manage devices.
  */
-export default class Handler {
+export class Handler {
   /** @private */
-  app_id : string
+  appID : string
 
   /** @private */
-  access_key : string
+  appAccessKey : string
+
+  /** @private */
+  discoveryOptions : ?DiscoveryOptions
 
   /** @private */
   announcement : ?Announcement
 
-  /**
-   * discover uses The Things Network discovery API to discovery the required
-   * properties of the Handler based on the Handlers id.
-   *
-   * @param handler_id - The id of the handler
-   * @param opts - Optional options to be used for passed to the Discovery client
-   */
-  async discover (handler_id : string, opts : ?DiscoveryOptions) : Promise<void> {
-    const discovery = new Discovery(opts)
-    this.announcement = await discovery.get(handler_id)
+  constructor (appID : string, appAccessKey : string, opts : ?DiscoveryOptions) : void {
+    this.appID = appID
+    this.appAccessKey = appAccessKey
+    this.discoveryOptions = opts
   }
 
   /**
-   * configure configures the Handler manually, setting the necessary addresses
-   * and certificates needed to connect to the handler.
-   *
-   * @param mqtt_address - The address of the MQTT broker of the Handler
-   * @param net_address - The address of the Handler's gRPC endpoint
-   * @param certificate - An optional certificate to use when connecting to the Handler
+   * `open` opens the client to the handler.
    */
-  async configure (mqtt_address : string, net_address : string, certificate : ?string) : Promise<void> {
-    this.announcement = {
-      mqttAddress: mqtt_address,
-      netAddress: net_address,
-      certificate,
-    }
-  }
-
-  /**
-   * Configure the application that is to be used.
-   *
-   * @param app_id - The application ID
-   * @param access_key - The application access key used to autheticate
-   */
-  application (app_id : string, access_key : string) : Handler {
-    this.app_id = app_id
-    this.access_key = access_key
-    return this
+  async open () : Promise<void> {
+    const discovery = new Discovery(this.discoveryOptions)
+    this.announcement = await discovery.getByAppID(this.appID)
   }
 
   /**
    * Open a data client that can be used to receive live application data
    */
-  data () : Data {
+  data () : DataClient {
     if (!this.announcement) {
       throw new Error("No handler configured, call discover() or configure() first!")
     }
 
-    if (!this.app_id || !this.access_key) {
-      throw new Error("No application configured, call application() first!")
-    }
-
-    return new Data(this)
+    return new DataClient(this.appID, this.appAccessKey, this.announcement.mqttAddress)
   }
 
   /**
    * Open a device client that can be used to manage the devices of the
-   * application
+   * application.
    */
-  devices () : Devices {
+  devices () : ApplicationClient {
     if (!this.announcement) {
       throw new Error("No handler configured, call discover() or configure() first!")
     }
 
-    if (!this.app_id || !this.access_key) {
-      throw new Error("No application configured, call application() first!")
-    }
-
-    return new Devices(this)
+    return new ApplicationClient(this.appID, this.appAccessKey, this.announcement)
   }
 }
