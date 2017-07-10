@@ -5,7 +5,7 @@ HEADER ?= "// Copyright © 2017 The Things Network\n// Use of this source code i
 include .make/*.make
 include .make/js/*.make
 
-dev-deps: js.dev-deps
+dev-deps: js.dev-deps type-deps
 test: js.test
 quality: js.quality typecheck headers.check
 quality-staged: js.quality-staged headers.fix-staged typecheck-staged
@@ -70,4 +70,11 @@ typecheck-staged:
 typestatus:
 	$(log) "checking flow status"
 	@$(FLOW) status
+
+FLOW_TYPED = $(NODE_MODULES)/.bin/flow-typed
+
+type-deps:
+	$(log) "installing type definitions"
+	@$(FLOW_TYPED) install
+
 
