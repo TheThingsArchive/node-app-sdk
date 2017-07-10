@@ -1,0 +1,11 @@
+id: dev
+debug: true
+discovery-address: "localhost:1900"
+auth-servers:
+  ttn-account-v2: "https://account.thethingsnetwork.org"
+tls: true
+key-dir: "./.env/router/"
+router:
+  skip-verify-gateway-token: true
+
+auth-token: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0ODE4ODMwMjMsImlzcyI6ImxvY2FsIiwibmJmIjoxNDgxODgzMDIzLCJzdWIiOiJkZXYiLCJ0eXBlIjoicm91dGVyIn0.H89M76CAXv7s-VHfpKsMDptjFcnRuzDcQGEu6EJ4sm640hfNRW3Z-Hk6gP3_9Apq0NyC1_jmGCDayFLyHsO8CA

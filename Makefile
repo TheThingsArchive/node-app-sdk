@@ -41,6 +41,7 @@ compile-protos:
 	@mkdir -p $(PROTO_DIR)
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/handler/handler.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
 
 fix-protos: compile-protos
 	$(log) "fixing protos"
@@ -78,3 +79,5 @@ type-deps:
 	@$(FLOW_TYPED) install
 
 
+JS_FILES ?= $(ALL_FILES) | $(only_js) | $(not_flowtyped)
+JS_STAGED_FILES = $(STAGED_FILES) | $(only_js) | $(not_flowtyped)

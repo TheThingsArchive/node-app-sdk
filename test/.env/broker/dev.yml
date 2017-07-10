@@ -1,0 +1,13 @@
+id: dev
+debug: true
+discovery-address: "localhost:1900"
+auth-servers:
+  ttn-account-v2: "https://account.thethingsnetwork.org"
+tls: true
+key-dir: "./.env/broker/"
+
+auth-token: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0ODE4ODMwNDcsImlzcyI6ImxvY2FsIiwibmJmIjoxNDgxODgzMDQ3LCJzdWIiOiJkZXYiLCJ0eXBlIjoiYnJva2VyIn0.mjfGN12HXcTjP-OO0_Q2jWm4UgDA5TAcTTtdXh1fm7a-CJSPaARi3zuorNd7wrGhcnb7WfaIiWJBrSnnzSKTBg
+
+broker:
+  networkserver-cert: ./.env/broker/networkserver.cert
+  networkserver-token: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0Njk3OTQzNTksIm5iZiI6MTQ2OTc5NDM1OSwic3ViIjoiZGV2In0.Xj1AFEAblzFLdS5cUiDrG773EqHazARvGdkTHFoPa_c0XGhdKSrevVpTNkzvcXeTQTWnTQrg1t98atNIk7F13Q

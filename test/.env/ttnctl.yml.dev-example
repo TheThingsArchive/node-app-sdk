@@ -1,0 +1,4 @@
+discovery-address: localhost:1900
+router-id: dev
+handler-id: dev
+mqtt-address: localhost:1883
