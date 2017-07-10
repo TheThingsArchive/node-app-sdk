@@ -18,9 +18,20 @@ export type DiscoveryOptions = {
 }
 
 export type Announcement = {
+  id : string,
+  serviceName: Service,
+  serviceVersion : string,
+  description : string,
+  pb_public : bool,
+
+  url : string,
   netAddress : string,
   mqttAddress : string,
+  apiAddress : string,
+
+  publicKey? : string,
   certificate? : string,
+  metadataList? : Array<any>,
 }
 
 export type Service = "router" | "broker" | "handler"
