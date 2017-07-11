@@ -7,7 +7,6 @@ import grpc from "grpc"
 import wrap from "../utils/wrap"
 import proto from "../proto/ttn/api/handler/handler_pb"
 import handler from "../proto/ttn/api/handler/handler_grpc_pb"
-import type { Announcement } from "../discovery"
 
 export type PayloadFormat = "custom" | "cayenne"
 
@@ -78,11 +77,6 @@ type DeviceUpdates = {
   uses32BitFCnt? : bool,
 }
 
-type ApplicationsClientOptions = {
-  netAddress : string,
-  certificate? : string,
-}
-
 /**
  * A client that manages devices on the handler.
  */
@@ -100,12 +94,7 @@ export class ApplicationClient {
   /**
    * Create and open an application manager client that handles
    */
-  constructor (appID : string, appAccessKey : string, announcement : Announcement | ApplicationsClientOptions) : void {
-    const {
-      netAddress,
-      certificate,
-    } = announcement
-
+  constructor (appID : string, appAccessKey : string, netAddress : string, certificate : ?string) : void {
     const credentials =
       certificate
         ? grpc.credentials.createInsecure()

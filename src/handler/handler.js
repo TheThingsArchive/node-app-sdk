@@ -67,6 +67,6 @@ export class Handler {
       throw new Error("No handler configured, call discover() or configure() first!")
     }
 
-    return new ApplicationClient(this.appID, this.appAccessKey, this.announcement)
+    return new ApplicationClient(this.appID, this.appAccessKey, this.announcement.netAddress, this.announcement.certificate)
   }
 }
