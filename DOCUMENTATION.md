@@ -2,33 +2,30 @@
 
 ### Table of Contents
 
--   [discover](#discover)
 -   [Handler](#handler)
-    -   [discover](#discover-1)
-    -   [configure](#configure)
-    -   [application](#application)
+    -   [open](#open)
     -   [data](#data)
-    -   [devices](#devices)
--   [manual](#manual)
+    -   [application](#application)
 -   [Discovery](#discovery)
     -   [constructor](#constructor)
     -   [getAll](#getall)
     -   [get](#get)
+    -   [getByAppID](#getbyappid)
+-   [ApplicationClient](#applicationclient)
+    -   [constructor](#constructor-1)
+    -   [get](#get-1)
+    -   [setPayloadFormat](#setpayloadformat)
+    -   [setCustomPayloadFunctions](#setcustompayloadfunctions)
+    -   [unregister](#unregister)
+    -   [devices](#devices)
+    -   [registerDevice](#registerdevice)
+    -   [getDevice](#getdevice)
+    -   [setDevice](#setdevice)
+    -   [deleteDevice](#deletedevice)
 -   [services](#services)
     -   [Handler](#handler-1)
     -   [Router](#router)
     -   [Broker](#broker)
-
-## discover
-
-Create a new handler by discovering it based on a handler id
-
-**Parameters**
-
--   `handler_id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the handler
--   `opts` **DiscoveryOptions?** Optional options to be used for passed to the Discovery client
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
 
 ## Handler
 
@@ -37,68 +34,30 @@ A client for The Things Network handler APIs.
 Handler can be used to get data from an application
 or to manage devices.
 
-### discover
-
-discover uses The Things Network discovery API to discovery the required
-properties of the Handler based on the Handlers id.
-
 **Parameters**
 
--   `handler_id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the handler
--   `opts` **DiscoveryOptions?** Optional options to be used for passed to the Discovery client
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **DiscoveryOptions?** 
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+### open
 
-### configure
+`open` opens the client to the handler.
 
-configure configures the Handler manually, setting the necessary addresses
-and certificates needed to connect to the handler.
-
-**Parameters**
-
--   `mqtt_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The address of the MQTT broker of the Handler
--   `net_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The address of the Handler's gRPC endpoint
--   `certificate` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** An optional certificate to use when connecting to the Handler
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
-
-### application
-
-Configure the application that is to be used.
-
-**Parameters**
-
--   `app_id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The application ID
--   `access_key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The application access key used to autheticate
-
-Returns **[Handler](#handler)** 
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
 
 ### data
 
 Open a data client that can be used to receive live application data
 
-Returns **Data** 
+Returns **DataClient** 
 
-### devices
+### application
 
-Open a device client that can be used to manage the devices of the
-application
+Open a application manager that can be used to manage the settings and devices of the
+application.
 
-Returns **Devices** 
-
-## manual
-
-Create a new handler by discovering it based on a handler id
-
-**Parameters**
-
--   `mqtt_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `net_address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `certificate` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
--   `handler_id`  The id of the handler
--   `opts`  Optional options to be used for passed to the Discovery client
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
+Returns **[ApplicationClient](#applicationclient)** 
 
 ## Discovery
 
@@ -120,7 +79,7 @@ Returns **void**
 
 ### getAll
 
-getAll returns announcements for all services known to
+`getAll` returns announcements for all services known to
 the discovery server that match the service name.
 
 **Parameters**
@@ -131,7 +90,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### get
 
-get returns the announcement for the service with the
+`get` returns the announcement for the service with the
 specified service name and id.
 
 **Parameters**
@@ -140,6 +99,120 @@ specified service name and id.
 -   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the service to look for, eg. `"ttn-handler-eu"`
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Announcement>** 
+
+### getByAppID
+
+`getByAppID` gets a handler announcement by application ID.
+It looks up the handler the application is registered to.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Announcement>** 
+
+## ApplicationClient
+
+A client that manages devices on the handler.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `announcement` **(Announcement | ApplicationsClientOptions)** 
+
+### constructor
+
+Create and open an application manager client that handles
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `announcement` **(Announcement | ApplicationsClientOptions)** 
+
+Returns **void** 
+
+### get
+
+Get the application
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Application>** 
+
+### setPayloadFormat
+
+Change the payload format of the application.
+
+**Parameters**
+
+-   `format` **PayloadFormat** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### setCustomPayloadFunctions
+
+Set the custom payload functions of the application and set the format
+to custom.
+
+**Parameters**
+
+-   `fns` **PayloadFunctions**  (optional, default `{}`)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### unregister
+
+Unregister the application from the handler.
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### devices
+
+List the devices of the application
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Device>>** 
+
+### registerDevice
+
+Register a device in the application.
+
+**Parameters**
+
+-   `devID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `device` **DeviceUpdates** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### getDevice
+
+Get the device specified by the devID
+
+**Parameters**
+
+-   `devID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Device>** 
+
+### setDevice
+
+Update the device specified by the devID
+
+**Parameters**
+
+-   `devID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `device` **DeviceUpdates** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
+
+### deleteDevice
+
+Delete the specified device.
+
+**Parameters**
+
+-   `devID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
 
 ## services
 
