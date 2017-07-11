@@ -34,7 +34,8 @@ PROTOC_INCLUDES ?= \
 PROTOC_FLAGS ?= $(PROTOC_INCLUDES) \
 	--grpc_out=$(PROTO_DIR) \
 	--flowtypes_out=./flow-typed \
-  --plugin=protoc-gen-grpc=$(PWD)/$(NODE_MODULES)/.bin/grpc_tools_node_protoc_plugin
+  --plugin=protoc-gen-grpc=$(PWD)/$(NODE_MODULES)/.bin/grpc_tools_node_protoc_plugin \
+	--js_out=import_style=commonjs,binary:$(PROTO_DIR)
 
 only_pb = grep '_pb\.js$$'
 
@@ -43,16 +44,16 @@ protos: fix-protos
 compile-protos:
 	$(log) "building protos"
 	@mkdir -p $(PROTO_DIR)
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/handler/handler.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/gateway/gateway.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/broker/broker.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/protocol.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/lorawan/device.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/lorawan/lorawan.proto
-	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/trace/trace.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/handler/handler.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/gateway/gateway.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/broker/broker.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/protocol.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/lorawan/device.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/lorawan/lorawan.proto
+	@$(PROTOC) $(PROTOC_FLAGS) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/trace/trace.proto
 	@mkdir -p $(PROTO_DIR)/google/protobuf
 	@touch $(PROTO_DIR)/google/protobuf/empty_pb.js
 	@mkdir -p $(PROTO_DIR)/google/api
