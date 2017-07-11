@@ -25,10 +25,10 @@ GOLAST ?= $(lastword $(subst :, ,$(GOPATH)))
 PROTO_DIR = ./src/proto
 NODE_MODULES = node_modules
 
-PROTOC_INCLUDES ?= -I/usr/local/include \
-  -I$(subst :, -I,$(GOPATH)) \
-	-I`dirname $(PWD)` \
+PROTOC_INCLUDES ?= \
+	-I/usr/local/include \
 	-I$(GOLAST)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+	-I`dirname $(PWD)` \
 	-I$(GOLAST)/src
 
 PROTOC_FLAGS ?= $(PROTOC_INCLUDES) \
@@ -44,13 +44,25 @@ compile-protos:
 	@mkdir -p $(PROTO_DIR)
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery.proto
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/handler/handler.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/gateway/gateway.proto
 	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/api.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/broker/broker.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/protocol.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/lorawan/device.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/protocol/lorawan/lorawan.proto
+	@$(PROTOC) $(PROTOC_FLAGS) --js_out=import_style=commonjs,binary:$(PROTO_DIR) $(GOLAST)/src/github.com/TheThingsNetwork/ttn/api/trace/trace.proto
+	@mkdir -p $(PROTO_DIR)/google/protobuf
+	@touch $(PROTO_DIR)/google/protobuf/empty_pb.js
+	@mkdir -p $(PROTO_DIR)/google/api
+	@touch $(PROTO_DIR)/google/api/annotations_pb.js
+	@mkdir -p $(PROTO_DIR)/github.com/gogo/protobuf/gogoproto
+	@touch $(PROTO_DIR)/github.com/gogo/protobuf/gogoproto/gogo_pb.js
 
 fix-protos: compile-protos
 	$(log) "fixing protos"
 	@$(JS_FILES) | $(only_pb) | xargs sed -i.bk 's:\([^/]\)github\.com:\1github_com:g'
 	@find $(PROTO_DIR) -name '*_pb.js.bk' | xargs rm
-
 
 DOCJS = ./node_modules/.bin/documentation
 DOCJS_FLAGS = --shallow

@@ -6,14 +6,14 @@
 //
 'use strict';
 var grpc = require('grpc');
-var src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb = require('../../../../../../src/github.com/TheThingsNetwork/ttn/api/handler/handler_pb.js');
+var ttn_api_handler_handler_pb = require('../../../ttn/api/handler/handler_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
-var google_api_annotations_pb = require('../../../../../../google/api/annotations_pb.js');
-var ttn_api_api_pb = require('../../../../../../ttn/api/api_pb.js');
-var ttn_api_broker_broker_pb = require('../../../../../../ttn/api/broker/broker_pb.js');
-var ttn_api_protocol_protocol_pb = require('../../../../../../ttn/api/protocol/protocol_pb.js');
-var ttn_api_protocol_lorawan_device_pb = require('../../../../../../ttn/api/protocol/lorawan/device_pb.js');
-var ttn_api_trace_trace_pb = require('../../../../../../ttn/api/trace/trace_pb.js');
+var google_api_annotations_pb = require('../../../google/api/annotations_pb.js');
+var ttn_api_api_pb = require('../../../ttn/api/api_pb.js');
+var ttn_api_broker_broker_pb = require('../../../ttn/api/broker/broker_pb.js');
+var ttn_api_protocol_protocol_pb = require('../../../ttn/api/protocol/protocol_pb.js');
+var ttn_api_protocol_lorawan_device_pb = require('../../../ttn/api/protocol/lorawan/device_pb.js');
+var ttn_api_trace_trace_pb = require('../../../ttn/api/trace/trace_pb.js');
 
 function serialize_broker_ActivationChallengeRequest(arg) {
   if (!(arg instanceof ttn_api_broker_broker_pb.ActivationChallengeRequest)) {
@@ -60,146 +60,146 @@ function deserialize_google_protobuf_Empty(buffer_arg) {
 }
 
 function serialize_handler_Application(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Application)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.Application)) {
     throw new Error('Expected argument of type handler.Application');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_Application(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Application.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.Application.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_ApplicationIdentifier(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.ApplicationIdentifier)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.ApplicationIdentifier)) {
     throw new Error('Expected argument of type handler.ApplicationIdentifier');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_ApplicationIdentifier(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.ApplicationIdentifier.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.ApplicationIdentifier.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_Device(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Device)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.Device)) {
     throw new Error('Expected argument of type handler.Device');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_Device(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Device.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.Device.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DeviceActivationResponse(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceActivationResponse)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DeviceActivationResponse)) {
     throw new Error('Expected argument of type handler.DeviceActivationResponse');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DeviceActivationResponse(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceActivationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DeviceActivationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DeviceIdentifier(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceIdentifier)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DeviceIdentifier)) {
     throw new Error('Expected argument of type handler.DeviceIdentifier');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DeviceIdentifier(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceIdentifier.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DeviceIdentifier.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DeviceList(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceList)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DeviceList)) {
     throw new Error('Expected argument of type handler.DeviceList');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DeviceList(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceList.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DeviceList.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DryDownlinkMessage(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryDownlinkMessage)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DryDownlinkMessage)) {
     throw new Error('Expected argument of type handler.DryDownlinkMessage');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DryDownlinkMessage(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryDownlinkMessage.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DryDownlinkMessage.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DryDownlinkResult(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryDownlinkResult)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DryDownlinkResult)) {
     throw new Error('Expected argument of type handler.DryDownlinkResult');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DryDownlinkResult(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryDownlinkResult.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DryDownlinkResult.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DryUplinkMessage(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryUplinkMessage)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DryUplinkMessage)) {
     throw new Error('Expected argument of type handler.DryUplinkMessage');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DryUplinkMessage(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryUplinkMessage.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DryUplinkMessage.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_DryUplinkResult(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryUplinkResult)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.DryUplinkResult)) {
     throw new Error('Expected argument of type handler.DryUplinkResult');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_DryUplinkResult(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryUplinkResult.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.DryUplinkResult.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_SimulatedUplinkMessage(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.SimulatedUplinkMessage)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.SimulatedUplinkMessage)) {
     throw new Error('Expected argument of type handler.SimulatedUplinkMessage');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_SimulatedUplinkMessage(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.SimulatedUplinkMessage.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.SimulatedUplinkMessage.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_Status(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Status)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.Status)) {
     throw new Error('Expected argument of type handler.Status');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_Status(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Status.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.Status.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_handler_StatusRequest(arg) {
-  if (!(arg instanceof src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.StatusRequest)) {
+  if (!(arg instanceof ttn_api_handler_handler_pb.StatusRequest)) {
     throw new Error('Expected argument of type handler.StatusRequest');
   }
   return new Buffer(arg.serializeBinary());
 }
 
 function deserialize_handler_StatusRequest(buffer_arg) {
-  return src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.StatusRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return ttn_api_handler_handler_pb.StatusRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -221,7 +221,7 @@ var HandlerService = exports.HandlerService = {
     requestStream: false,
     responseStream: false,
     requestType: ttn_api_broker_broker_pb.DeduplicatedDeviceActivationRequest,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceActivationResponse,
+    responseType: ttn_api_handler_handler_pb.DeviceActivationResponse,
     requestSerialize: serialize_broker_DeduplicatedDeviceActivationRequest,
     requestDeserialize: deserialize_broker_DeduplicatedDeviceActivationRequest,
     responseSerialize: serialize_handler_DeviceActivationResponse,
@@ -241,7 +241,7 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/RegisterApplication',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.ApplicationIdentifier,
+    requestType: ttn_api_handler_handler_pb.ApplicationIdentifier,
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_handler_ApplicationIdentifier,
     requestDeserialize: deserialize_handler_ApplicationIdentifier,
@@ -253,8 +253,8 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/GetApplication',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.ApplicationIdentifier,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Application,
+    requestType: ttn_api_handler_handler_pb.ApplicationIdentifier,
+    responseType: ttn_api_handler_handler_pb.Application,
     requestSerialize: serialize_handler_ApplicationIdentifier,
     requestDeserialize: deserialize_handler_ApplicationIdentifier,
     responseSerialize: serialize_handler_Application,
@@ -265,7 +265,7 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/SetApplication',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Application,
+    requestType: ttn_api_handler_handler_pb.Application,
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_handler_Application,
     requestDeserialize: deserialize_handler_Application,
@@ -277,7 +277,7 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/DeleteApplication',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.ApplicationIdentifier,
+    requestType: ttn_api_handler_handler_pb.ApplicationIdentifier,
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_handler_ApplicationIdentifier,
     requestDeserialize: deserialize_handler_ApplicationIdentifier,
@@ -289,8 +289,8 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/GetDevice',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceIdentifier,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Device,
+    requestType: ttn_api_handler_handler_pb.DeviceIdentifier,
+    responseType: ttn_api_handler_handler_pb.Device,
     requestSerialize: serialize_handler_DeviceIdentifier,
     requestDeserialize: deserialize_handler_DeviceIdentifier,
     responseSerialize: serialize_handler_Device,
@@ -301,7 +301,7 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/SetDevice',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Device,
+    requestType: ttn_api_handler_handler_pb.Device,
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_handler_Device,
     requestDeserialize: deserialize_handler_Device,
@@ -313,7 +313,7 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/DeleteDevice',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceIdentifier,
+    requestType: ttn_api_handler_handler_pb.DeviceIdentifier,
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_handler_DeviceIdentifier,
     requestDeserialize: deserialize_handler_DeviceIdentifier,
@@ -325,8 +325,8 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/GetDevicesForApplication',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.ApplicationIdentifier,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DeviceList,
+    requestType: ttn_api_handler_handler_pb.ApplicationIdentifier,
+    responseType: ttn_api_handler_handler_pb.DeviceList,
     requestSerialize: serialize_handler_ApplicationIdentifier,
     requestDeserialize: deserialize_handler_ApplicationIdentifier,
     responseSerialize: serialize_handler_DeviceList,
@@ -337,8 +337,8 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/DryDownlink',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryDownlinkMessage,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryDownlinkResult,
+    requestType: ttn_api_handler_handler_pb.DryDownlinkMessage,
+    responseType: ttn_api_handler_handler_pb.DryDownlinkResult,
     requestSerialize: serialize_handler_DryDownlinkMessage,
     requestDeserialize: deserialize_handler_DryDownlinkMessage,
     responseSerialize: serialize_handler_DryDownlinkResult,
@@ -349,8 +349,8 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/DryUplink',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryUplinkMessage,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.DryUplinkResult,
+    requestType: ttn_api_handler_handler_pb.DryUplinkMessage,
+    responseType: ttn_api_handler_handler_pb.DryUplinkResult,
     requestSerialize: serialize_handler_DryUplinkMessage,
     requestDeserialize: deserialize_handler_DryUplinkMessage,
     responseSerialize: serialize_handler_DryUplinkResult,
@@ -361,7 +361,7 @@ var ApplicationManagerService = exports.ApplicationManagerService = {
     path: '/handler.ApplicationManager/SimulateUplink',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.SimulatedUplinkMessage,
+    requestType: ttn_api_handler_handler_pb.SimulatedUplinkMessage,
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_handler_SimulatedUplinkMessage,
     requestDeserialize: deserialize_handler_SimulatedUplinkMessage,
@@ -378,8 +378,8 @@ var HandlerManagerService = exports.HandlerManagerService = {
     path: '/handler.HandlerManager/GetStatus',
     requestStream: false,
     responseStream: false,
-    requestType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.StatusRequest,
-    responseType: src_github_com_TheThingsNetwork_ttn_api_handler_handler_pb.Status,
+    requestType: ttn_api_handler_handler_pb.StatusRequest,
+    responseType: ttn_api_handler_handler_pb.Status,
     requestSerialize: serialize_handler_StatusRequest,
     requestDeserialize: deserialize_handler_StatusRequest,
     responseSerialize: serialize_handler_Status,

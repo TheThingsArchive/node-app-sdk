@@ -5,8 +5,8 @@
 
 import grpc from "grpc"
 import wrap from "../utils/wrap"
-import proto from "../proto/src/github.com/TheThingsNetwork/ttn/api/handler/handler_pb"
-import handler from "../proto/src/github.com/TheThingsNetwork/ttn/api/handler/handler_grpc_pb"
+import proto from "../proto/ttn/api/handler/handler_pb"
+import handler from "../proto/ttn/api/handler/handler_grpc_pb"
 import type { Announcement } from "../discovery"
 
 export type PayloadFormat = "custom" | "cayenne"

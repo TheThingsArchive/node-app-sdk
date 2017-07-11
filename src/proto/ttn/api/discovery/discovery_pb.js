@@ -10,8 +10,8 @@ var goog = jspb;
 var global = Function('return this')();
 
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
-var google_api_annotations_pb = require('../../../../../../google/api/annotations_pb.js');
-var github_com_gogo_protobuf_gogoproto_gogo_pb = require('../../../../../../github.com/gogo/protobuf/gogoproto/gogo_pb.js');
+var google_api_annotations_pb = require('../../../google/api/annotations_pb.js');
+var github_com_gogo_protobuf_gogoproto_gogo_pb = require('../../../github.com/gogo/protobuf/gogoproto/gogo_pb.js');
 goog.exportSymbol('proto.discovery.Announcement', null, global);
 goog.exportSymbol('proto.discovery.AnnouncementsResponse', null, global);
 goog.exportSymbol('proto.discovery.GetByAppEUIRequest', null, global);

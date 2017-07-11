@@ -7,8 +7,8 @@
 
 import grpc from "grpc"
 
-import proto from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_pb"
-import discovery from "../proto/src/github.com/TheThingsNetwork/ttn/api/discovery/discovery_grpc_pb"
+import proto from "../proto/ttn/api/discovery/discovery_pb"
+import discovery from "../proto/ttn/api/discovery/discovery_grpc_pb"
 import { wrap } from "../utils"
 
 export type DiscoveryOptions = {

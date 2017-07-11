@@ -10,12 +10,12 @@ var goog = jspb;
 var global = Function('return this')();
 
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
-var google_api_annotations_pb = require('../../../../../../google/api/annotations_pb.js');
-var ttn_api_api_pb = require('../../../../../../ttn/api/api_pb.js');
-var ttn_api_broker_broker_pb = require('../../../../../../ttn/api/broker/broker_pb.js');
-var ttn_api_protocol_protocol_pb = require('../../../../../../ttn/api/protocol/protocol_pb.js');
-var ttn_api_protocol_lorawan_device_pb = require('../../../../../../ttn/api/protocol/lorawan/device_pb.js');
-var ttn_api_trace_trace_pb = require('../../../../../../ttn/api/trace/trace_pb.js');
+var google_api_annotations_pb = require('../../../google/api/annotations_pb.js');
+var ttn_api_api_pb = require('../../../ttn/api/api_pb.js');
+var ttn_api_broker_broker_pb = require('../../../ttn/api/broker/broker_pb.js');
+var ttn_api_protocol_protocol_pb = require('../../../ttn/api/protocol/protocol_pb.js');
+var ttn_api_protocol_lorawan_device_pb = require('../../../ttn/api/protocol/lorawan/device_pb.js');
+var ttn_api_trace_trace_pb = require('../../../ttn/api/trace/trace_pb.js');
 goog.exportSymbol('proto.handler.Application', null, global);
 goog.exportSymbol('proto.handler.ApplicationIdentifier', null, global);
 goog.exportSymbol('proto.handler.Device', null, global);
