@@ -59,6 +59,8 @@
     },
     "rules": {
       "import/named": "off",
+      "import/prefer-default-export": "off",
+      "object-curly-newline": "off",
       "no-duplicate-imports": "off"
     }
   },

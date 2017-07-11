@@ -17,6 +17,8 @@ export type DiscoveryOptions = {
   certificate? : Buffer,
 }
 
+export type Service = "router" | "broker" | "handler"
+
 export type Announcement = {
   id : string,
   serviceName: Service,
@@ -33,8 +35,6 @@ export type Announcement = {
   certificate? : string,
   metadataList? : Array<any>,
 }
-
-export type Service = "router" | "broker" | "handler"
 
 process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
 
