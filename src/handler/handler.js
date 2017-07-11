@@ -62,7 +62,7 @@ export class Handler {
    * Open a application manager that can be used to manage the settings and devices of the
    * application.
    */
-  applications () : ApplicationClient {
+  application () : ApplicationClient {
     if (!this.announcement) {
       throw new Error("No handler configured, call discover() or configure() first!")
     }
