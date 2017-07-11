@@ -67,7 +67,7 @@ fix-protos: compile-protos
 	@find $(PROTO_DIR) -name '*_pb.js.bk' | xargs rm
 
 DOCJS = ./node_modules/.bin/documentation
-DOCJS_FLAGS = --shallow
+DOCJS_FLAGS = --shallow -g
 
 DOC_FILE = DOCUMENTATION.md
 
