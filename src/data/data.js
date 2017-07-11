@@ -5,7 +5,7 @@
 
 export type EventName = "connect" | "error" | "message" | "device" | "activation"
 
-export default class DataClient {
+export class DataClient {
   /** @private */
   mqttAddress : string
 
@@ -15,11 +15,9 @@ export default class DataClient {
   /** @private */
   appAccessKey : string
 
-
   constructor (appID : string, appAccessKey : string, mqttAddress : string) : void {
     this.mqttAddress = mqttAddress
     this.appID = appID
     this.appAccessKey = appAccessKey
   }
-
 }

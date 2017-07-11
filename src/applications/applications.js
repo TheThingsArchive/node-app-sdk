@@ -16,12 +16,12 @@ export type PayloadFormat = "custom" | "cayenne"
 
 export type Application = {
   appId : string,
-  payload_format : PayloadFormat,
+  payloadFormat : PayloadFormat,
   decoder? : string,
   converter? : string,
   validator? : string,
   encoder? : string,
-  register_on_join_access_key? : string,
+  registerOnJoinAccessKey? : string,
 }
 
 type PayloadFunctions = {
@@ -31,39 +31,41 @@ type PayloadFunctions = {
   encoder? : string,
 }
 
+type ApplicationSettings = {
+  payloadFormat? : PayloadFormat,
+  registerOnJoinAccessKey? : string,
+}
 type ApplicationUpdates = {
-  payload_format? : PayloadFormat,
-  register_on_join_access_key? : string,
-} & PayloadFunctions
+  ...ApplicationSettings,
+  ...PayloadFunctions,
+}
 
 export type Device = {
-  app_id : string,
-  dev_id : string,
+  appId : string,
+  devId : string,
   description? : string,
-
-  app_eui : string,
-  dev_eui : string,
-  dev_addr : string,
-
-  nwk_s_key? : string,
-  app_s_key? : string,
-  app_key? : string,
-  f_cnt_up? : number,
-  f_cnt_down? : number,
+  appEui : string,
+  devEui : string,
+  devAddr : string,
+  nwkSKey? : string,
+  appSKey? : string,
+  appKey? : string,
+  fCntUp? : number,
+  fCntDown? : number,
   latitude? : number,
   longitude? : number,
   altitude? : number,
   attributes? : { [string]: string },
-  disable_f_cnt_check? : bool,
-  uses32_bit_f_cnt? : bool,
-  activation_constraints? : string,
-  last_seen? : number,
+  disableFCntCheck? : bool,
+  uses32BitFCnt? : bool,
+  activationConstraints? : string,
+  lastSeen? : number,
 }
 
 /**
  * A client that manages devices on the handler.
  */
-export default class ApplicationClient {
+export class ApplicationClient {
 
   /** @private */
   appID : string
@@ -103,7 +105,7 @@ export default class ApplicationClient {
 
   async getPayloadFormat () : Promise<PayloadFormat> {
     const app = await this.get()
-    return app.payload_format
+    return app.payloadFormat
   }
 
   async setPayloadFormat (format : PayloadFormat) : Promise<void> {
@@ -122,20 +124,20 @@ export default class ApplicationClient {
     }
   }
 
-  async setCustomPayloadFunctions (fns : PayloadFunctions) : Promise<void> {
-    await this.set(fns)
+  async setCustomPayloadFunctions (fns : PayloadFunctions = {}) : Promise<void> {
+    await this.set({ ...fns })
   }
 
   /** @private */
-  async set (updates : ApplicationUpdates) : Promise<void> {
+  async set (updates : ApplicationUpdates = {}) : Promise<void> {
     const req = new proto.Application()
 
-    if ("payload_format" in updates) {
-      req.setPayloadFormat(updates.payload_format)
+    if ("payloadFormat" in updates) {
+      req.setPayloadFormat(updates.payloadFormat)
     }
 
-    if ("register_on_join_access_key" in updates) {
-      req.setRegisterOnJoinAccessKey(updates.register_on_join_access_key)
+    if ("registerOnJoinAccessKey" in updates) {
+      req.setRegisterOnJoinAccessKey(updates.registerOnJoinAccessKey)
     }
 
     if ("decoder" in updates) {
@@ -164,13 +166,14 @@ export default class ApplicationClient {
   }
 
   async devices () : Promise<Device[]> {
+    return []
   }
 
   async registerDevice (device : Device) : Promise<void> {
   }
 
-  async getDevice (devID : string) : Promise<Device> {
-  }
+  // async getDevice (devID : string) : Promise<Device> {
+  // }
 
   async setDevice (devID : string, device : Device) : Promise<void> {
   }

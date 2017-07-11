@@ -6,8 +6,8 @@
 import { Discovery } from "../discovery"
 import type { DiscoveryOptions, Announcement } from "../discovery"
 
-import ApplicationClient from "./application"
-import DataClient from "./data"
+import { ApplicationClient } from "../applications"
+import { DataClient } from "../data"
 
 /**
  * A client for The Things Network handler APIs.
@@ -54,10 +54,10 @@ export class Handler {
   }
 
   /**
-   * Open a device client that can be used to manage the devices of the
+   * Open a application manager that can be used to manage the settings and devices of the
    * application.
    */
-  devices () : ApplicationClient {
+  applications () : ApplicationClient {
     if (!this.announcement) {
       throw new Error("No handler configured, call discover() or configure() first!")
     }
