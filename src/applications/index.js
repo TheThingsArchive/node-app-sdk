@@ -3,4 +3,4 @@
 
 // @flow
 
-export * from "./applications"
+export { ApplicationClient } from "./applications"

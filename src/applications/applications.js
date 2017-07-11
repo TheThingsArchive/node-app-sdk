@@ -4,12 +4,9 @@
 // @flow
 
 import grpc from "grpc"
-
 import wrap from "../utils/wrap"
-
 import proto from "../proto/src/github.com/TheThingsNetwork/ttn/api/handler/handler_pb"
 import handler from "../proto/src/github.com/TheThingsNetwork/ttn/api/handler/handler_grpc_pb"
-
 import type { Announcement } from "../discovery"
 
 export type PayloadFormat = "custom" | "cayenne"
@@ -35,18 +32,39 @@ type ApplicationSettings = {
   payloadFormat? : PayloadFormat,
   registerOnJoinAccessKey? : string,
 }
+
 type ApplicationUpdates = {
   ...ApplicationSettings,
   ...PayloadFunctions,
 }
 
-export type Device = {
+type Device = {
   appId : string,
   devId : string,
-  description? : string,
+  description : string,
   appEui : string,
   devEui : string,
   devAddr : string,
+  nwkSKey : string,
+  appSKey : string,
+  appKey : string,
+  fCntUp : number,
+  fCntDown : number,
+  latitude : number,
+  longitude : number,
+  altitude : number,
+  attributes : { [string]: string },
+  disableFCntCheck : bool,
+  uses32BitFCnt : bool,
+  activationConstraints : string,
+  lastSeen : number,
+}
+
+type DeviceUpdates = {
+  description? : string,
+  appEui? : string,
+  devEui? : string,
+  devAddr? : string,
   nwkSKey? : string,
   appSKey? : string,
   appKey? : string,
@@ -58,8 +76,11 @@ export type Device = {
   attributes? : { [string]: string },
   disableFCntCheck? : bool,
   uses32BitFCnt? : bool,
-  activationConstraints? : string,
-  lastSeen? : number,
+}
+
+type ApplicationsClientOptions = {
+  netAddress : string,
+  certificate? : string,
 }
 
 /**
@@ -76,18 +97,21 @@ export class ApplicationClient {
   /** @private */
   client : any
 
-  constructor (appID : string, appAccessKey : string, announcement : Announcement) : void {
+  /**
+   * Create and open an application manager client that handles
+   */
+  constructor (appID : string, appAccessKey : string, announcement : Announcement | ApplicationsClientOptions) : void {
     const {
-      net_address,
+      netAddress,
       certificate,
     } = announcement
 
     const credentials =
-      announcement.certificate
+      certificate
         ? grpc.credentials.createInsecure()
         : grpc.credentials.createSsl(certificate)
 
-    this.client = new handler.HandlerManagerClient(net_address, credentials)
+    this.client = new handler.HandlerManagerClient(netAddress, credentials)
     this.appID = appID
     this.appAccessKey = appAccessKey
   }
@@ -97,35 +121,42 @@ export class ApplicationClient {
     return wrap(this.client, fn, ...args).then(res => res.toObject())
   }
 
+  /**
+   * Get the application
+   */
   async get () : Promise<Application> {
     const req = new proto.ApplicationIdentifier()
     req.setAppId(this.appID)
     return this.exec(this.client.getApplication, req)
   }
 
-  async getPayloadFormat () : Promise<PayloadFormat> {
-    const app = await this.get()
-    return app.payloadFormat
-  }
-
+  /**
+   * Change the payload format of the application.
+   */
   async setPayloadFormat (format : PayloadFormat) : Promise<void> {
     await this.set({
       payload_format: format,
     })
   }
 
-  async getCustomPayloadFunctions () : Promise<PayloadFunctions> {
-    const app = await this.get()
-    return {
-      decoder: app.decoder,
-      converter: app.converter,
-      validator: app.validator,
-      encoder: app.encoder,
-    }
+  /**
+   * Set the custom payload functions of the application and set the format
+   * to custom.
+   */
+  async setCustomPayloadFunctions (fns : PayloadFunctions = {}) : Promise<void> {
+    await this.set({
+      payloadFormat: "custom",
+      ...fns,
+    })
   }
 
-  async setCustomPayloadFunctions (fns : PayloadFunctions = {}) : Promise<void> {
-    await this.set({ ...fns })
+  /**
+   * Unregister the application from the handler.
+   */
+  async unregister () : Promise<void> {
+    const req = new proto.ApplicationIdentifier()
+    req.setAppId(this.appID)
+    return this.exec(this.client.deleteApplication, req)
   }
 
   /** @private */
@@ -159,25 +190,116 @@ export class ApplicationClient {
     return this.exec(this.client.setApplication, req)
   }
 
-  async delete () : Promise<void> {
+  /**
+   * List the devices of the application
+   */
+  async devices () : Promise<Device[]> {
     const req = new proto.ApplicationIdentifier()
     req.setAppId(this.appID)
-    return this.exec(this.client.deleteApplication, req)
+    return this.exec(this.client.getDevicesForApplication, req)
   }
 
-  async devices () : Promise<Device[]> {
-    return []
+  /**
+   * Register a device in the application.
+   */
+  async registerDevice (devID : string, device : DeviceUpdates) : Promise<void> {
+    return this.setDevice(devID, device)
   }
 
-  async registerDevice (device : Device) : Promise<void> {
+  /**
+   * Get the device specified by the devID
+   */
+  async getDevice (devID : string) : Promise<Device> {
+    const req = new proto.DeviceIdentifier()
+    req.setAppId(this.appID)
+    req.setDevId(devID)
+    return this.exec(this.client.getDevices, req)
   }
 
-  // async getDevice (devID : string) : Promise<Device> {
-  // }
-
-  async setDevice (devID : string, device : Device) : Promise<void> {
+  /**
+   * Update the device specified by the devID
+   */
+  async setDevice (devID : string, device : DeviceUpdates) : Promise<void> {
+    const req = this.deviceRequest(devID, device)
+    return this.exec(this.client.setDevice, req)
   }
 
+  /**
+   * Delete the specified device.
+   */
   async deleteDevice (devID : string) : Promise<void> {
+    const req = new proto.DeviceIdentifier()
+    req.setAppId(this.appID)
+    req.setDevId(devID)
+    return this.exec(this.client.deleteDevice, req)
+  }
+
+  /** @private */
+  deviceRequest (devID : string, device : DeviceUpdates = {}) : any {
+    const req = new proto.Device()
+    req.setAppId(this.appID)
+    req.setDevId(devID)
+
+    if ("description" in device) {
+      req.setDescription(device.description)
+    }
+
+    if ("appEui" in device) {
+      req.setAppEui(device.appEui)
+    }
+
+    if ("devEui" in device) {
+      req.setDevEui(device.devEui)
+    }
+
+    if ("devAddr" in device) {
+      req.setDevAddr(device.devAddr)
+    }
+
+    if ("nwkSKey" in device) {
+      req.setNwkSKey(device.nwkSKey)
+    }
+
+    if ("appSKey" in device) {
+      req.setAppSKey(device.appSKey)
+    }
+
+    if ("appKey" in device) {
+      req.setAppKey(device.appKey)
+    }
+
+    if ("fCntUp" in device) {
+      req.setFCntUp(device.fCntUp)
+    }
+
+    if ("fCntDown" in device) {
+      req.setFCntDown(device.fCntDown)
+    }
+
+    if ("latitude" in device) {
+      req.setLatitude(device.latitude)
+    }
+
+    if ("longitude" in device) {
+      req.setLongitude(device.longitude)
+    }
+
+    if ("altitude" in device) {
+      req.setAltitude(device.altitude)
+    }
+
+    if ("attributes" in device) {
+      req.setAttributes(device.attributes)
+    }
+
+    if ("disableFCntCheck" in device) {
+      req.setDisableFCntCheck(device.disableFCntCheck)
+    }
+
+    if ("uses32BitFCnt" in device) {
+      req.setUses32BitFCnt(device.uses32BitFCnt)
+    }
+
+    return
   }
 }

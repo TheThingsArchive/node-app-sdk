@@ -37,9 +37,14 @@ export class Handler {
   /**
    * `open` opens the client to the handler.
    */
-  async open () : Promise<void> {
+  async open () : Promise<Handler> {
+    if (this.announcement) {
+      return this
+    }
+
     const discovery = new Discovery(this.discoveryOptions)
     this.announcement = await discovery.getByAppID(this.appID)
+    return this
   }
 
   /**
@@ -47,7 +52,7 @@ export class Handler {
    */
   data () : DataClient {
     if (!this.announcement) {
-      throw new Error("No handler configured, call discover() or configure() first!")
+      throw new Error("No handler configured, call open()!")
     }
 
     return new DataClient(this.appID, this.appAccessKey, this.announcement.mqttAddress)

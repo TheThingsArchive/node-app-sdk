@@ -6,13 +6,14 @@
 /* eslint-env jest */
 /* eslint-disable arrow-body-style */
 
-import { Handler } from "./handler"
+import { Handler } from "."
 
 const appID = "test"
 const appAccessKey = "testkey"
 
 test("Handler constructor", async () => {
   const client = new Handler(appID, appAccessKey)
+  await client.open()
 
-  console.log("CLIENT", client)
+  console.log(client)
 })
