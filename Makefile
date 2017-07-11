@@ -33,6 +33,7 @@ PROTOC_INCLUDES ?= \
 
 PROTOC_FLAGS ?= $(PROTOC_INCLUDES) \
 	--grpc_out=$(PROTO_DIR) \
+	--flowtypes_out=./flow-typed \
   --plugin=protoc-gen-grpc=$(PWD)/$(NODE_MODULES)/.bin/grpc_tools_node_protoc_plugin
 
 only_pb = grep '_pb\.js$$'
