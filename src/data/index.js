@@ -3,4 +3,4 @@
 
 // @flow
 
-export * from "./data"
+export { DataClient } from "./data"
