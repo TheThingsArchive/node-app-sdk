@@ -6,14 +6,14 @@
 /* eslint-env jest */
 /* eslint-disable arrow-body-style */
 
+import setup from "../../test/setup"
+import { discovery, app } from "../../test/stubs"
+
 import { Handler } from "."
 
-const appID = "test"
-const appAccessKey = "testkey"
+beforeEach(setup)
 
 test("Handler constructor", async () => {
-  const client = new Handler(appID, appAccessKey)
+  const client = new Handler(app.id, app.accessToken, discovery)
   await client.open()
-
-  console.log(client)
 })
