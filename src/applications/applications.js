@@ -38,6 +38,11 @@ export class ApplicationClient {
   /**
    * Create and open an application manager client that can be used for
    * retreiving and updating an application and its devices.
+   *
+   * @param appID - The ID of the application you want to manage
+   * @param tokenOrKey - The Access Token or Access Key used to authenticate
+   * @param netAddress - The gRPC address of the handler where the application is registered
+   * @param certificate - An optional certificate used to connect to the handler securely
    */
   constructor (appID : string, tokenOrKey : string, netAddress : string, certificate : ?Buffer) : void {
     const credentials =
