@@ -25,6 +25,7 @@ before_script:
   - cd test/ && docker-compose up -d && cd -
 
 script:
+  - make type-deps
   - make quality
   - make test
 
