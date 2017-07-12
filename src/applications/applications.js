@@ -103,7 +103,7 @@ export class ApplicationClient {
         ? grpc.credentials.createInsecure()
         : grpc.credentials.createSsl(certificate)
 
-    this.client = new handler.HandlerManagerClient(netAddress, credentials)
+    this.client = new handler.ApplicationManagerClient(netAddress, credentials)
     this.appID = appID
     this.appAccessKey = appAccessKey
   }
