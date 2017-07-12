@@ -11,6 +11,9 @@ import proto from "../proto/ttn/api/discovery/discovery_pb"
 import discovery from "../proto/ttn/api/discovery/discovery_grpc_pb"
 import { wrap } from "../utils"
 
+// Necessary to make gRPC work
+process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+
 export type DiscoveryOptions = {
   address? : string,
   insecure? : boolean,
@@ -36,7 +39,6 @@ export type Announcement = {
   metadataList? : Array<any>,
 }
 
-process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
 
 /** Discovery is a client for The Things Network discovery API */
 export class Discovery {

@@ -11,6 +11,9 @@ import handler from "../src/proto/ttn/api/handler/handler_grpc_pb"
 
 import * as stubs from "./stubs"
 
+// Necessary to make gRPC work
+process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+
 const netAddress = "localhost:1904"
 
 /**

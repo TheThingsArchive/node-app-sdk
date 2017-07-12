@@ -8,6 +8,9 @@ import wrap from "../utils/wrap"
 import proto from "../proto/ttn/api/handler/handler_pb"
 import handler from "../proto/ttn/api/handler/handler_grpc_pb"
 
+// Necessary to make gRPC work
+process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+
 export type PayloadFormat = "custom" | "cayenne"
 
 export type Application = {
