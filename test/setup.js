@@ -14,15 +14,13 @@ import * as stubs from "./stubs"
 // Necessary to make gRPC work
 process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
 
-const netAddress = "localhost:1904"
-
 /**
  * Setup function that prepares the environment with the required
  * application and devices for testing.
  */
 export default async function () {
   const credentials = grpc.credentials.createSsl(stubs.handler.certificate)
-  const client = new handler.ApplicationManagerClient(netAddress, credentials)
+  const client = new handler.ApplicationManagerClient(stubs.handlerAddress, credentials)
 
   // register the test app
   const req = new proto.ApplicationIdentifier()

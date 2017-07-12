@@ -40,6 +40,7 @@ export const token = jwt.sign(claims, key, options)
 export const app = {
   id: "test",
   accessToken: jwt.sign(appClaims, key, options),
+  accessKey: "local.12345678",
 }
 
 /**
@@ -66,3 +67,5 @@ export const handler = {
   mqttAddress: "handler:1883",
   amqpAddress: "handler:5672",
 }
+
+export const handlerAddress = "localhost:1904"
