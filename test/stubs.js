@@ -38,9 +38,15 @@ export const token = jwt.sign(claims, key, options)
  * The app used for testing
  */
 export const app = {
-  id: "test",
+  appId: "test",
   accessToken: jwt.sign(appClaims, key, options),
   accessKey: "local.12345678",
+  payloadFormat: "custom",
+  decoder: "",
+  converter: "",
+  validator: "",
+  encoder: "",
+  registerOnJoinAccessKey: "",
 }
 
 /**

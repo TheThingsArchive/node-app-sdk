@@ -24,7 +24,7 @@ export default async function () {
 
   // register the test app
   const req = new proto.ApplicationIdentifier()
-  req.setAppId(stubs.app.id)
+  req.setAppId(stubs.app.appId)
 
   const meta = new grpc.Metadata()
   meta.add("token", stubs.app.accessToken)

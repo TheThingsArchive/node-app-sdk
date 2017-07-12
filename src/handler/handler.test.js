@@ -14,6 +14,6 @@ import { Handler } from "."
 beforeEach(setup)
 
 test("Handler constructor", async () => {
-  const client = new Handler(app.id, app.accessToken, discovery)
+  const client = new Handler(app.appId, app.accessToken, discovery)
   await client.open()
 })
