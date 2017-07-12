@@ -28,7 +28,8 @@
     "grpc-tools": "^1.4.1",
     "jest": "^20.0.4",
     "jest-preset-ttn": "^0.0.3",
-    "json": "^9.0.6"
+    "json": "^9.0.6",
+    "jsonwebtoken": "^7.4.1"
   },
   "dependencies": {
     "flow-runtime": "^0.13.0",
