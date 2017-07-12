@@ -33,7 +33,7 @@ PROTOC_INCLUDES ?= \
 
 PROTOC_FLAGS ?= $(PROTOC_INCLUDES) \
 	--grpc_out=$(PROTO_DIR) \
-	--flowtypes_out=./flow-typed \
+	--flowtypes_out=$(PROTO_DIR)/types \
   --plugin=protoc-gen-grpc=$(PWD)/$(NODE_MODULES)/.bin/grpc_tools_node_protoc_plugin \
 	--js_out=import_style=commonjs,binary:$(PROTO_DIR)
 
