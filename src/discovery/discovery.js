@@ -51,7 +51,7 @@ export class Discovery {
    */
   constructor (opts : DiscoveryOptions = {}) : void {
     const {
-      address = "discover.thethings.network",
+      address = "discovery.thethings.network:1900",
       insecure = false,
       certificate,
     } = opts
