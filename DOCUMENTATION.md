@@ -3,16 +3,14 @@
 ### Table of Contents
 
 -   [key](#key)
--   [constructor](#constructor)
--   [on](#on)
 -   [is-token](#is-token)
--   [setup](#setup)
 -   [Handler](#handler)
     -   [open](#open)
     -   [data](#data)
     -   [application](#application)
+-   [setup](#setup)
 -   [ApplicationClient](#applicationclient)
-    -   [constructor](#constructor-1)
+    -   [constructor](#constructor)
     -   [get](#get)
     -   [setPayloadFormat](#setpayloadformat)
     -   [setCustomPayloadFunctions](#setcustompayloadfunctions)
@@ -23,6 +21,12 @@
     -   [device](#device)
     -   [updateDevice](#updatedevice)
     -   [deleteDevice](#deletedevice)
+-   [constructor](#constructor-1)
+-   [close](#close)
+-   [end](#end)
+-   [on](#on)
+-   [off](#off)
+-   [send](#send)
 -   [app](#app)
 -   [Discovery](#discovery)
     -   [constructor](#constructor-2)
@@ -36,7 +40,7 @@
 
 ## key
 
-[src/utils/key.js:11-13](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/utils/key.js#L11-L13 "Source code on GitHub")
+[src/utils/key.js:11-13](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/utils/key.js#L11-L13 "Source code on GitHub")
 
 Generates a new key to be used for Lora
 
@@ -44,29 +48,9 @@ Generates a new key to be used for Lora
 
 -   `length` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  (optional, default `16`)
 
-## constructor
-
-[src/data/data.js:26-32](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/data/data.js#L26-L32 "Source code on GitHub")
-
-Creates a new DataClient and opens the MQTT connection
-
-**Parameters**
-
--   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `mqttAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-Returns **void** 
-
-## on
-
-[src/data/data.js:37-38](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/data/data.js#L37-L38 "Source code on GitHub")
-
-Starts listening to events
-
 ## is-token
 
-[src/utils/is-token.js:13-19](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/utils/is-token.js#L13-L19 "Source code on GitHub")
+[src/utils/is-token.js:13-19](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/utils/is-token.js#L13-L19 "Source code on GitHub")
 
 Returns true if the passed in string
 is a json web token, and false otherwise.
@@ -78,22 +62,9 @@ It does NOT validate the token signature.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-## 
-
-[test/stubs.js:21-30](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/test/stubs.js#L21-L30 "Source code on GitHub")
-
-A token that can register ApplicationSettings
-
-## setup
-
-[test/setup.js:21-35](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/test/setup.js#L21-L35 "Source code on GitHub")
-
-Setup function that prepares the environment with the required
-application and devices for testing.
-
 ## Handler
 
-[src/handler/handler.js:21-75](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/handler/handler.js#L21-L75 "Source code on GitHub")
+[src/handler/handler.js:21-75](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/handler/handler.js#L21-L75 "Source code on GitHub")
 
 A client for The Things Network handler APIs.
 
@@ -108,7 +79,7 @@ or to manage devices.
 
 ### open
 
-[src/handler/handler.js:43-51](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/handler/handler.js#L43-L51 "Source code on GitHub")
+[src/handler/handler.js:43-51](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/handler/handler.js#L43-L51 "Source code on GitHub")
 
 `open` opens the client to the handler.
 
@@ -116,7 +87,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### data
 
-[src/handler/handler.js:56-62](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/handler/handler.js#L56-L62 "Source code on GitHub")
+[src/handler/handler.js:56-62](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/handler/handler.js#L56-L62 "Source code on GitHub")
 
 Open a data client that can be used to receive live application data
 
@@ -124,16 +95,29 @@ Returns **DataClient**
 
 ### application
 
-[src/handler/handler.js:68-74](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/handler/handler.js#L68-L74 "Source code on GitHub")
+[src/handler/handler.js:68-74](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/handler/handler.js#L68-L74 "Source code on GitHub")
 
 Open a application manager that can be used to manage the settings and devices of the
 application.
 
 Returns **[ApplicationClient](#applicationclient)** 
 
+## 
+
+[test/stubs.js:21-30](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/test/stubs.js#L21-L30 "Source code on GitHub")
+
+A token that can register ApplicationSettings
+
+## setup
+
+[test/setup.js:21-35](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/test/setup.js#L21-L35 "Source code on GitHub")
+
+Setup function that prepares the environment with the required
+application and devices for testing.
+
 ## ApplicationClient
 
-[src/applications/applications.js:24-296](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L24-L296 "Source code on GitHub")
+[src/applications/applications.js:24-296](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L24-L296 "Source code on GitHub")
 
 A client that manages devices on the handler.
 
@@ -146,7 +130,7 @@ A client that manages devices on the handler.
 
 ### constructor
 
-[src/applications/applications.js:47-61](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L47-L61 "Source code on GitHub")
+[src/applications/applications.js:47-61](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L47-L61 "Source code on GitHub")
 
 Create and open an application manager client that can be used for
 retreiving and updating an application and its devices.
@@ -162,7 +146,7 @@ Returns **void**
 
 ### get
 
-[src/applications/applications.js:80-88](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L80-L88 "Source code on GitHub")
+[src/applications/applications.js:80-88](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L80-L88 "Source code on GitHub")
 
 Get the application
 
@@ -170,7 +154,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### setPayloadFormat
 
-[src/applications/applications.js:93-97](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L93-L97 "Source code on GitHub")
+[src/applications/applications.js:93-97](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L93-L97 "Source code on GitHub")
 
 Change the payload format of the application.
 
@@ -182,7 +166,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### setCustomPayloadFunctions
 
-[src/applications/applications.js:103-108](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L103-L108 "Source code on GitHub")
+[src/applications/applications.js:103-108](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L103-L108 "Source code on GitHub")
 
 Set the custom payload functions of the application and set the format
 to custom.
@@ -195,7 +179,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### setRegisterOnJoinAccessKey
 
-[src/applications/applications.js:113-117](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L113-L117 "Source code on GitHub")
+[src/applications/applications.js:113-117](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L113-L117 "Source code on GitHub")
 
 Set the registerOnJoinAccessKey or remove it.
 
@@ -207,7 +191,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### unregister
 
-[src/applications/applications.js:122-126](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L122-L126 "Source code on GitHub")
+[src/applications/applications.js:122-126](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L122-L126 "Source code on GitHub")
 
 Unregister the application from the handler.
 
@@ -215,7 +199,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### devices
 
-[src/applications/applications.js:164-169](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L164-L169 "Source code on GitHub")
+[src/applications/applications.js:164-169](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L164-L169 "Source code on GitHub")
 
 List the devices of the application
 
@@ -223,7 +207,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### registerDevice
 
-[src/applications/applications.js:174-176](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L174-L176 "Source code on GitHub")
+[src/applications/applications.js:174-176](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L174-L176 "Source code on GitHub")
 
 Register a device in the application.
 
@@ -236,7 +220,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### device
 
-[src/applications/applications.js:181-187](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L181-L187 "Source code on GitHub")
+[src/applications/applications.js:181-187](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L181-L187 "Source code on GitHub")
 
 Get the device specified by the devID
 
@@ -248,7 +232,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### updateDevice
 
-[src/applications/applications.js:198-202](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L198-L202 "Source code on GitHub")
+[src/applications/applications.js:198-202](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L198-L202 "Source code on GitHub")
 
 Update the device specified by the devID with the specified updates
 
@@ -261,7 +245,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### deleteDevice
 
-[src/applications/applications.js:207-212](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/applications/applications.js#L207-L212 "Source code on GitHub")
+[src/applications/applications.js:207-212](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/applications/applications.js#L207-L212 "Source code on GitHub")
 
 Delete the specified device.
 
@@ -271,21 +255,148 @@ Delete the specified device.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
 
-## app
+## constructor
 
-[test/stubs.js:40-50](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/test/stubs.js#L40-L50 "Source code on GitHub")
+[src/data/data.js:45-62](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/data/data.js#L45-L62 "Source code on GitHub")
 
-The app used for testing
+Creates a new DataClient and opens the MQTT connection.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `mqttAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **void** 
+
+## close
+
+[src/data/data.js:67-69](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/data/data.js#L67-L69 "Source code on GitHub")
+
+Close the mqtt connection
+
+**Parameters**
+
+-   `args` **...any** 
+
+## end
+
+[src/data/data.js:74-76](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/data/data.js#L74-L76 "Source code on GitHub")
+
+Same as close (for backwards compatibility.
+
+**Parameters**
+
+-   `args` **...any** 
+
+## on
+
+[src/data/data.js:130-132](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/data/data.js#L130-L132 "Source code on GitHub")
+
+Starts listening to events.
+
+Possible events are:
+
+-   `uplink` (or `message`): Messages sent by the devices to the appliction.
+-   `activation`: An alias for the `activations` (see `event`)
+-   `event` (or `device`): Events that happen to devices. You can filter on
+    the events by adding more parameters. For instance:
+    -   `downlink/scheduled`
+    -   `downlink/sent`
+    -   `activations`
+    -   `create`
+    -   `update`
+    -   `delete`
+    -   `down/acks`
+    -   `up/errors`
+    -   `down/errors`
+    -   `activations/errors`
+
+See [The MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)
+for more information about these events and what their payloads look like.
+
+**Parameters**
+
+-   `event` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the event to listen to.
+-   `args` **...[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any>** 
+-   `devID`  An optional devID. If not passed will subscribe to the event for all devices.
+-   `callback`  The callback to call when the event occurs.
+
+**Examples**
+
+```javascript
+// listens to all uplinks from all devices
+client.on("uplink", function (devID, message) {})
+```
+
+```javascript
+// listens to all uplinks from the device with id `foo`
+client.on("uplink", "foo", function (devID, message) {})
+```
+
+```javascript
+// listens to all device events for all devices
+client.on("event", function (devID, message) {})
+```
+
+```javascript
+// listens to all device events for device with id `foo`
+client.on("event", "foo", function (devID, message) {})
+```
+
+```javascript
+// listens to the `downlink/scheduled` events for device with id `foo`
+client.on("event", "foo", "downlink/scheduled", function (devID, message) {})
+```
+
+```javascript
+// listens to the `downlink/scheduled` events for all devices
+client.on("event", "+", "downlink/scheduled", function (devID, message) {})
+```
+
+Returns **void** 
+
+## off
+
+[src/data/data.js:138-140](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/data/data.js#L138-L140 "Source code on GitHub")
+
+Stop listening to events.
+The argument structure is the same as for `on()`.
+
+**Parameters**
+
+-   `event` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `args` **...[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any>** 
+
+Returns **void** 
+
+## send
+
+[src/data/data.js:186-201](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/data/data.js#L186-L201 "Source code on GitHub")
+
+Send a message to the device with the specified device ID.
+
+**Parameters**
+
+-   `devID` **DeviceID** 
+-   `payload` **(PayloadArray | PayloadRaw | PayloadFields)** 
+-   `port` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  (optional, default `1`)
 
 ## 
 
-[test/stubs.js:40-50](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/test/stubs.js#L40-L50 "Source code on GitHub")
+[test/stubs.js:40-50](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/test/stubs.js#L40-L50 "Source code on GitHub")
 
 Settings for the discovery server
 
+## app
+
+[test/stubs.js:40-50](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/test/stubs.js#L40-L50 "Source code on GitHub")
+
+The app used for testing
+
 ## Discovery
 
-[src/discovery/discovery.js:44-108](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L44-L108 "Source code on GitHub")
+[src/discovery/discovery.js:44-108](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L44-L108 "Source code on GitHub")
 
 Discovery is a client for The Things Network discovery API
 
@@ -295,7 +406,7 @@ Discovery is a client for The Things Network discovery API
 
 ### constructor
 
-[src/discovery/discovery.js:52-65](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L52-L65 "Source code on GitHub")
+[src/discovery/discovery.js:52-65](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L52-L65 "Source code on GitHub")
 
 Create a new Discovery client.
 
@@ -307,7 +418,7 @@ Returns **void**
 
 ### getAll
 
-[src/discovery/discovery.js:78-83](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L78-L83 "Source code on GitHub")
+[src/discovery/discovery.js:78-83](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L78-L83 "Source code on GitHub")
 
 `getAll` returns announcements for all services known to
 the discovery server that match the service name.
@@ -320,7 +431,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### get
 
-[src/discovery/discovery.js:92-97](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L92-L97 "Source code on GitHub")
+[src/discovery/discovery.js:92-97](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L92-L97 "Source code on GitHub")
 
 `get` returns the announcement for the service with the
 specified service name and id.
@@ -334,7 +445,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ### getByAppID
 
-[src/discovery/discovery.js:103-107](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L103-L107 "Source code on GitHub")
+[src/discovery/discovery.js:103-107](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L103-L107 "Source code on GitHub")
 
 `getByAppID` gets a handler announcement by application ID.
 It looks up the handler the application is registered to.
@@ -347,13 +458,13 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## 
 
-[test/stubs.js:55-58](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/test/stubs.js#L55-L58 "Source code on GitHub")
+[test/stubs.js:55-58](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/test/stubs.js#L55-L58 "Source code on GitHub")
 
 Settings for the handler
 
 ## services
 
-[src/discovery/discovery.js:113-122](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L113-L122 "Source code on GitHub")
+[src/discovery/discovery.js:113-122](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L113-L122 "Source code on GitHub")
 
 services is a map with the known service names for the discovery server.
 
@@ -361,18 +472,18 @@ Type: {}
 
 ### Handler
 
-[src/discovery/discovery.js:115-115](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L115-L115 "Source code on GitHub")
+[src/discovery/discovery.js:115-115](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L115-L115 "Source code on GitHub")
 
 Handler is a Handler service
 
 ### Router
 
-[src/discovery/discovery.js:118-118](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L118-L118 "Source code on GitHub")
+[src/discovery/discovery.js:118-118](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L118-L118 "Source code on GitHub")
 
 Router is a Router service
 
 ### Broker
 
-[src/discovery/discovery.js:121-121](https://github.com/TheThingsNetwork/node-app-sdk/blob/c1ee9c8db865f47832481f912ee872d407aef1e0/src/discovery/discovery.js#L121-L121 "Source code on GitHub")
+[src/discovery/discovery.js:121-121](https://github.com/TheThingsNetwork/node-app-sdk/blob/853c8a329915fb3c3362bbd7d2b07bde2b749fb2/src/discovery/discovery.js#L121-L121 "Source code on GitHub")
 
 Broker is a Broker service
