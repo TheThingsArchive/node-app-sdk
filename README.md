@@ -14,7 +14,7 @@ npm install --save ttn
 ## Documentation
 
 * [The Things Network Documentation / Arduino](https://www.thethingsnetwork.org/docs/applications/nodejs/)
-* [API Reference](https://www.thethingsnetwork.org/docs/applications/nodejs/api.html)
+* [API Reference](DOCUMENTATION.md)
 
 ## Example
 
