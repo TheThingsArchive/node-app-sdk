@@ -15,7 +15,10 @@ const main = async function () {
 
   handler
     .data()
-    // TODO: show actual data
+    .on("uplink", function (devID, payload) {
+      console.log("Received uplink from ", devID)
+      console.log(payload)
+    })
 }
 
 main().catch(function (err) {
