@@ -18,13 +18,35 @@ npm install --save ttn
 
 ## Example
 
-An [example](src/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
-
 ## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
 To run the [tests](test):
 
 ```bash
-npm install
-npm test
+yarn install
+make test
+```
+
+## Quality
+
+The code is written in ES7 using [`flowtype`](https://flowtype.org) type annotations.
+
+- To run the typechecker:
+
+```
+make typecheck 
+```
+
+- To run the linter:
+
+```
+make lint
+```
+
+## Build
+
+To build the repository and transpile to ES5, run:
+
+```
+make build
 ```
