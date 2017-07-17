@@ -11,9 +11,8 @@ import { wildcard, topic, uplinkTopic, eventTopic, validWildcards } from "./topi
 test("topic", () => {
   expect(topic("a", "b", "c")).toEqual("a/b/c")
   expect(topic("a", undefined, "c")).toEqual("a/c")
-  expect(topic("a", "#", "c")).toEqual("a/#/c")
-  expect(topic("a", "#", "#", "c")).toEqual("a/#/c")
-  expect(topic("a", "#", "#", "#", "c")).toEqual("a/#/c")
+  expect(topic("a", "#", "c")).toEqual("a/#")
+  expect(topic("a", "#", "c", "#", "d")).toEqual("a/#")
 })
 
 test("uplinkTopic", () => {

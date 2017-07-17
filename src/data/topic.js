@@ -32,12 +32,7 @@ export const topic = function (...parts : Array<string | void>) : string {
 }
 
 const collapse = function (t : string) : string {
-  const r = t.replace(/#\/#/g, "#")
-  if (r === t) {
-    return t
-  }
-
-  return collapse(r)
+  return t.replace(/#.*/g, "#")
 }
 
 /**
@@ -106,27 +101,13 @@ export const downlinkTopic = function (appID : string, devID : string) : string 
  *  - a/b/c
  *  - a/b/#
  *  - a/b/+
- *  - a/#/c
  *  - a/#
- *  - a/#/+
- *  - a/+/c
  *  - a/+/#
  *  - a/+/+
- *  - #/b/c
- *  - #/b/#
- *  - #/b/+
- *  - #/c
- *  - #
- *  - #/+
- *  - #/+/c
- *  - #/+/#
- *  - #/+/+
  *  - +/b/c
  *  - +/b/#
  *  - +/b/+
- *  - +/#/c
  *  - +/#
- *  - +/#/+
  *  - +/+/c
  *  - +/+/#
  *  - +/+/+
@@ -150,6 +131,11 @@ const valid = function (topic) {
   return parts.length >= 4 && parts[0] !== "#" && parts[1] === "devices" && parts[2] !== "#" && (parts[3] === "up" || parts[3] === "events")
 }
 
+/**
+ * @private
+ * Same as `wildcards` but filters the ouput on valid topics for The Things
+ * Network.
+ */
 export const validWildcards = function (t : string) : Array<string> {
   return wildcards(t).filter(valid)
 }
@@ -159,18 +145,18 @@ const unique = function (value, index, self) {
   return self.indexOf(value) === index
 }
 
-export const allcombos = function (first : Array<string>, ...args : Array<Array<string>>) : Array<string> {
+const allcombos = function (first : Array<string>, ...args : Array<Array<string>>) : Array<string> {
   if (args.length === 0) {
     return first
   }
 
   const [ fst, ...rest ] = args
-  const cc = combos(first, fst).map(el => topic(...el))
+  const cc = combos(first, fst).map(el => topic(...el)).filter(unique)
 
   return allcombos(cc, ...rest)
 }
 
-export const combos = function (a : Array<string>, b : Array<string>) : Array<Array<string>> {
+const combos = function (a : Array<string>, b : Array<string>) : Array<Array<string>> {
   if (a.length === 0) {
     return b.map(el => [ el ])
   }
