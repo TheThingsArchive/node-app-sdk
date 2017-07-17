@@ -8,7 +8,7 @@ import mqtt from "mqtt"
 
 import debug from "../utils/debug"
 
-import { wildcard, uplinkTopic, eventTopic, downlinkTopic, validWildcards } from "./topic"
+import { devID, wildcard, uplinkTopic, eventTopic, downlinkTopic, validWildcards } from "./topic"
 
 type DeviceID = string
 type Connack = {
@@ -256,7 +256,8 @@ export class DataClient {
 
     debug("received message on topic `%s`: %O", topic, payload)
 
-    validWildcards(topic).forEach(topic => this.emitter.emit(topic, payload))
+    const dev = devID(topic)
+    validWildcards(topic).forEach(topic => this.emitter.emit(topic, dev, payload))
   }
 
   /**
