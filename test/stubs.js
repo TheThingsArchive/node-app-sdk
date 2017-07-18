@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken"
 const key = fs.readFileSync(path.resolve(__dirname, ".env/discovery/server.key"))
 const options = {
   issuer: "local",
-  expiresIn: "7d",
+  expiresIn: "200y",
   algorithm: "ES256",
 }
 
@@ -20,6 +20,7 @@ const claims = {
 
 const appClaims = {
   scope: [ "apps:test" ],
+  iat: Math.floor(Date.now() / 1000) - 60,
   apps: {
     test: [
       "settings",
