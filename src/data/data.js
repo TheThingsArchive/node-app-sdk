@@ -64,6 +64,7 @@ export class DataClient {
    * Close the mqtt connection
    */
   close (...args : any) {
+    debug("closing mqtt client")
     return this.mqtt.end(...args)
   }
 
@@ -160,6 +161,7 @@ export class DataClient {
       break
     case "device":
     case "event":
+    case "events":
       t = eventTopic(...rest)
       break
     case "activation":

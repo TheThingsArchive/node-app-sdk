@@ -55,4 +55,4 @@ make build
 
 - [x] Rewrite the API part to use gRPC.
 - [x] Discover the handler based on the `app ID`
-- [ ] Add tests for MQTT
+- [x] Add tests for MQTT

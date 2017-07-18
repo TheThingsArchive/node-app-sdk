@@ -174,6 +174,5 @@ const combos = function (a : Array<string>, b : Array<string>) : Array<Array<str
 }
 
 export const devID = function (t : string) : string {
-  console.log("TTT", t)
   return t.split("/")[2] || "+"
 }
