@@ -21,7 +21,7 @@ build: js.build
 .PHONY: docs
 
 DOCJS = ./node_modules/.bin/documentation
-DOCJS_FLAGS = --shallow -g
+DOCJS_FLAGS = --shallow
 
 DOC_FILE = DOCUMENTATION.md
 
