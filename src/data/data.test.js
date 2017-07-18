@@ -90,8 +90,7 @@ test("DataClient.on('error')", done => {
   client.on("error", function (error) {
     expect(error).toEqual(expect.any(Error))
     expect(error.message).toEqual(expect.stringContaining("Bad username or password"))
-
-    client.close()
+    client.close({ force: true })
     done()
   })
 })
