@@ -7,8 +7,9 @@
 
 import grpc from "grpc"
 
-import proto from "../proto/ttn/api/discovery/discovery_pb"
-import discovery from "../proto/ttn/api/discovery/discovery_grpc_pb"
+import proto from "ttnapi/discovery/discovery_pb"
+import discovery from "ttnapi/discovery/discovery_grpc_pb"
+
 import { wrap } from "../utils"
 
 // Necessary to make gRPC work

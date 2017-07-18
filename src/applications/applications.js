@@ -4,11 +4,13 @@
 // @flow
 
 import grpc from "grpc"
+
+import proto from "ttnapi/handler/handler_pb"
+import lorawan from "ttnapi/protocol/lorawan/device_pb"
+import handler from "ttnapi/handler/handler_grpc_pb"
+
 import wrap from "../utils/wrap"
 import isToken from "../utils/is-token"
-import proto from "../proto/ttn/api/handler/handler_pb"
-import lorawan from "../proto/ttn/api/protocol/lorawan/device_pb"
-import handler from "../proto/ttn/api/handler/handler_grpc_pb"
 
 import normalize from "./normalize"
 

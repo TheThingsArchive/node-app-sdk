@@ -5,9 +5,10 @@
 
 import grpc from "grpc"
 
+import proto from "ttnapi/handler/handler_pb"
+import handler from "ttnapi/handler/handler_grpc_pb"
+
 import wrap from "../src/utils/wrap"
-import proto from "../src/proto/ttn/api/handler/handler_pb"
-import handler from "../src/proto/ttn/api/handler/handler_grpc_pb"
 
 import * as stubs from "./stubs"
 

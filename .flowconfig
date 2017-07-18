@@ -5,8 +5,7 @@
 [include]
 
 [libs]
-types
-src/proto/types
+flow-typed
 
 [options]
 
