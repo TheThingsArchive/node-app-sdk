@@ -27,6 +27,7 @@
     "flow-bin": "^0.49.1",
     "grpc-tools": "^1.4.1",
     "jest": "^20.0.4",
+    "jest-cli": "^20.0.4",
     "jest-preset-ttn": "^0.0.3",
     "json": "^9.0.6"
   },
