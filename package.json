@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "debug": "^2.6.8",
-    "flow-runtime": "^0.13.0",
     "flow-typed": "^2.1.2",
     "google-protobuf": "^3.3.0",
     "grpc": "^1.4.1",
@@ -45,12 +44,6 @@
       "react"
     ],
     "plugins": [
-      [
-        "flow-runtime",
-        {
-          "assert": true
-        }
-      ],
       "transform-decorators-legacy"
     ]
   },
