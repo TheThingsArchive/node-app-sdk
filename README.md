@@ -21,11 +21,11 @@ npm install --save ttn
 ```js
 import { Handler } from "../src"
 
-const app_id = "foo"
-const access_key = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
+const appID = "foo"
+const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
 const main = async function () {
-  const handler = new Handler(app_id, access_key)
+  const handler = new Handler(appID, accessKey)
 
   await handler.open()
 

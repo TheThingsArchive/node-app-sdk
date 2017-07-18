@@ -5,10 +5,10 @@
 
 var Handler = require("../../dist").Handler
 
-var app_id = "foo"
-var access_key = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
+var appID = "foo"
+var accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
-var handler = new Handler(app_id, access_key)
+var handler = new Handler(appID, accessKey)
 
 handler
   .open()
