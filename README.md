@@ -18,6 +18,35 @@ npm install --save ttn
 
 ## Example
 
+```js
+import { Handler } from "../src"
+
+const app_id = "foo"
+const access_key = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
+
+const main = async function () {
+  const handler = new Handler(app_id, access_key)
+
+  await handler.open()
+
+  handler
+    .data()
+    .on("uplink", function (devID, payload) {
+      console.log("Received uplink from ", devID)
+      console.log(payload)
+    })
+}
+
+main().catch(function (err) {
+  console.error(err)
+  process.exit(1)
+})
+```
+
+There are more examples in the [`examples/`](examples) directory. For examples
+written in ES5 (instead of ES2015), check the [`examples/es5`](examples/es5)
+directory.
+
 ## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
 To run the [tests](test):
