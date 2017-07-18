@@ -28,3 +28,14 @@ script:
   - make quality
   - make test
 
+before_deploy:
+  - make build
+
+deploy:
+  provider: npm
+  email: romeovs@gmail.com
+  api_key:
+    secure: QlKxEKMBc6f3cPcvq72GfW/JwLtkNxfCJg8rjlXkIjjX/o5cDVgXV1OzKdovZVAcVGxjtted9ORkVI8CQt2ZYGkdrbRyqHCac5qYtex1VENo/6yNzEdjj1M5kcEF5V+j4Q/omgSFtcXPlFX1Gr3xtdZlnO07FQNbhjQbJlz/DHkpWUhwbCDp1qmdd3cqvFjFcUqomqPCtNbFE90bnCwUcyOXHQI9OaImUSnHkR3z7TF/OBpp0c9orqHPDPWKCxLdFWC+h/YIXcYD0xF8qRO6exoFifrrDXM8ijxAhA0GlKEWYu86ROlRG/4UecK4kvZuXNch731NZHtOU8jUMYMORHwbrA/1sWyyq/3ue9Bf0tgKLzVls/TlsdmgukODHU3o6XEZbWWuyOD0SAKMTGJ1yRComwYe88tDVHGUdPD+7euNtQsibG+DUnoMkGIfe6EkZND3p1yAmhSjGHzjn5tlPjt4VQq5aYylDa4lLO8l/V+KTodKw95fGj/8CG6MdqmYTm2YQpTmSXFIzbp7Xs1qIaEsWrmbjTUpcbmnNnK/vRF+bMWFJFP0fkTbcwsQQ11zI9BtpUpSaNR11m6jV0JFu0t9yCHVfxrgReP1kF0eeZ9PLCIkfL6OZ6QCn45z4Ux1GV43/mBEuDpJVqRoa/Wt5hhdV9ojvUht+C8sQLZCz+4=
+  on:
+    branch: master
+    tags: true
