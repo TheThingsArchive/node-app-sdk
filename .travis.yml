@@ -22,6 +22,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
+  - npm install --unsafe-perm
   - cd test/ && docker-compose up -d && cd -
 
 script:
