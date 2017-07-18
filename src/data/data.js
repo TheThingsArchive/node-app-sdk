@@ -62,17 +62,20 @@ export class DataClient {
 
   /**
    * Close the mqtt connection
+   *
+   * @param force - passing it to true will close the client right away, without waiting for the in-flight messages to be acked
+   * @param callback - will be called when the client is closed
    */
-  close (...args : any) {
+  close (force : ?boolean = false, callback : ?Function) {
     debug("closing mqtt client")
-    return this.mqtt.end(...args)
+    return this.mqtt.end(force, callback)
   }
 
   /**
-   * Same as close (for backwards compatibility.
+   * Same as close (for backwards compatibility).
    */
-  end (...args : any) {
-    return this.close(...args)
+  end (force : ?boolean, callback : ?Function) {
+    return this.close(force, callback)
   }
 
   /**
