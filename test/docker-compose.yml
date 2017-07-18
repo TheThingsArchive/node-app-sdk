@@ -37,7 +37,6 @@ services:
       - TTN_DISCOVERY_REDIS_ADDRESS=redis:6379
     ports:
       - "1900:1900"
-      - "8080:8080"
     volumes:
       - "./.env/:/root/.env/"
 
