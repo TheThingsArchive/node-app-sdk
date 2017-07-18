@@ -3,8 +3,10 @@
 
 /* eslint-disable */
 
-var Handler = require("../../dist/handler").Handler
-var key = require("../../dist/handler").key
+var ttn = require("../../dist")
+
+var Handler = ttn.Handler
+var key = ttn.key
 
 var app_id = "foo"
 var access_key = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"

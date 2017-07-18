@@ -4,7 +4,7 @@
 // @flow
 
 import fs from "fs"
-import { Discovery, services } from "../src/discovery"
+import { Discovery, services } from "../src"
 
 const main = async function () {
   const client = new Discovery({

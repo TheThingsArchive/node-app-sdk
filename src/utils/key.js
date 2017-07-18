@@ -8,6 +8,8 @@ import crypto from "crypto"
 /**
  * Generates a new key to be used for Lora
  */
-export default function (length : number = 16) {
+export const key = function (length : number = 16) {
   return crypto.randomBytes(length).toString("hex")
 }
+
+export default key

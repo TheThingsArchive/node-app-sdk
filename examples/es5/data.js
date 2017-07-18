@@ -3,7 +3,7 @@
 
 /* eslint-disable */
 
-var Handler = require("../../dist/handler").Handler
+var Handler = require("../../dist").Handler
 
 var app_id = "foo"
 var access_key = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"

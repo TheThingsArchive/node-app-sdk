@@ -3,7 +3,7 @@
 
 // @flow
 
-import { Handler } from "../src/handler"
+import { Handler } from "../src"
 
 const app_id = "foo"
 const access_key = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
