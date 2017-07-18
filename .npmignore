@@ -1,8 +1,9 @@
-/examples
-node_modules
-/src
+examples/
+node_modules/
+src/
 test/
+flow-typed/
 .editorconfig
 .gitignore
-.jshintrc
-.npmignore
+.travis.yml
+yarn.lock
