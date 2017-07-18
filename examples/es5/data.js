@@ -3,22 +3,17 @@
 
 /* eslint-disable */
 
-var Handler = require("../../dist").Handler
+var ttn = require("../../dist")
 
 var appID = "foo"
 var accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
-var handler = new Handler(appID, accessKey)
-
-handler
-  .open()
-  .then(function () {
-    handler
-      .data()
-      .on("uplink", function (devID, payload) {
-        console.log("Received uplink from ", devID)
-        console.log(payload)
-      })
+ttn.data(appID, accessKey)
+  .then(function (client) {
+    client.on("uplink", function (devID, payload) {
+      console.log("Received uplink from ", devID)
+      console.log(payload)
+    })
   })
   .catch(function (error) {
     console.error("Error", error)

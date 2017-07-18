@@ -3,18 +3,15 @@
 
 // @flow
 
-import { Handler } from "../src"
+import { data } from "../src"
 
 const appID = "foo"
 const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
 const main = async function () {
-  const handler = new Handler(appID, accessKey)
+  const client = await data(appID, accessKey)
 
-  await handler.open()
-
-  handler
-    .data()
+  client
     .on("uplink", function (devID, payload) {
       console.log("Received uplink from ", devID)
       console.log(payload)

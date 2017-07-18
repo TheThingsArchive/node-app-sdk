@@ -9,6 +9,7 @@
     -   [data](#data)
     -   [application](#application)
 -   [setup](#setup)
+-   [open](#open-1)
 -   [ApplicationClient](#applicationclient)
     -   [constructor](#constructor)
     -   [get](#get)
@@ -27,12 +28,14 @@
 -   [on](#on)
 -   [off](#off)
 -   [send](#send)
+-   [application](#application-1)
 -   [app](#app)
 -   [Discovery](#discovery)
     -   [constructor](#constructor-2)
     -   [getAll](#getall)
     -   [get](#get-1)
     -   [getByAppID](#getbyappid)
+-   [data](#data-1)
 -   [services](#services)
     -   [Handler](#handler-1)
     -   [Router](#router)
@@ -98,6 +101,19 @@ A token that can register ApplicationSettings
 
 Setup function that prepares the environment with the required
 application and devices for testing.
+
+## open
+
+Create and open a HandlerClient.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage.
+-   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **DiscoveryOptions?** Optional options to pass to the Discovery client.
+-   `tokenOrKey`  The Access Token or Access Key used to authenticate.
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
 
 ## ApplicationClient
 
@@ -332,6 +348,19 @@ Send a message to the device with the specified device ID.
 -   `payload` **(PayloadArray | PayloadRaw | PayloadFields)** 
 -   `port` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  (optional, default `1`)
 
+## application
+
+Create and open an ApplicationClient.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
+-   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **DiscoveryOptions?** 
+-   `tokenOrKey`  The Access Token or Access Key used to authenticate
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[ApplicationClient](#applicationclient)>** 
+
 ## 
 
 Settings for the discovery server
@@ -391,6 +420,19 @@ It looks up the handler the application is registered to.
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Announcement>** 
+
+## data
+
+Create and open a DataClient.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
+-   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **DiscoveryOptions?** 
+-   `tokenOrKey`  The Access Token or Access Key used to authenticate
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;DataClient>** 
 
 ## 
 

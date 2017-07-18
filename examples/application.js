@@ -3,20 +3,16 @@
 
 // @flow
 
-import { Handler, key } from "../src"
+import { application as apps, key } from "../src"
 
 const appID = "foo"
 const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
 const main = async function () {
-  const handler = new Handler(appID, accessKey)
-
-  await handler.open()
-
-  const App = handler.application()
+  const application = await apps(appID, accessKey)
 
   // set the payload functions
-  await App.setCustomPayloadFunctions({
+  await application.setCustomPayloadFunctions({
     decoder: `
       function Decoder(payload) {
         return { led: 1 };
@@ -25,11 +21,11 @@ const main = async function () {
   })
 
   // get the application info
-  const app = await App.get()
+  const app = await application.get()
   console.log(app)
 
   // register a new device
-  await App.registerDevice("foo", {
+  await application.registerDevice("foo", {
     description: "Description",
     appEui: "0011223344556677",
     devEui: "9988776655443322",
@@ -40,7 +36,7 @@ const main = async function () {
   })
 
   // list the apps devices
-  const devices = await App.devices()
+  const devices = await application.devices()
   console.log(devices)
 }
 

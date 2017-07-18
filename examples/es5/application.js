@@ -5,19 +5,14 @@
 
 var ttn = require("../../dist")
 
-var Handler = ttn.Handler
 var key = ttn.key
 
 var appID = "foo"
 var accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
-var handler = new Handler(appID, accessKey)
-
-handler
-  .open()
-  .then(function () {
-    var App = handler.application()
-    return App.get()
+ttn.application(appID, accessKey)
+  .then(function (client) {
+    return client.get()
   })
   .then(function (app) {
     console.log(app)

@@ -19,28 +19,23 @@ npm install --save ttn
 ## Example
 
 ```js
-import { Handler } from "../src"
+import { data } from "../src"
 
 const appID = "foo"
 const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
-const main = async function () {
-  const handler = new Handler(appID, accessKey)
-
-  await handler.open()
-
-  handler
-    .data()
-    .on("uplink", function (devID, payload) {
+// discover handler and open mqtt connection
+data(appID, accessKey)
+  .then(function (client) {
+    client.on("uplink", function (devID, payload) {
       console.log("Received uplink from ", devID)
       console.log(payload)
     })
-}
-
-main().catch(function (err) {
-  console.error(err)
-  process.exit(1)
-})
+  })
+  .catch(function (err) {
+    console.error(err)
+    process.exit(1)
+  })
 ```
 
 There are more examples in the [`examples/`](examples) directory. For examples
