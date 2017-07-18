@@ -4,8 +4,7 @@
   "description": "The Things Network Client",
   "main": "dist/index.js",
   "scripts": {
-    "test": "make test",
-    "prepublish": "make quality && make build"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
