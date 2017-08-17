@@ -9,16 +9,15 @@ import proto from "ttnapi/handler/handler_pb"
 import lorawan from "ttnapi/protocol/lorawan/device_pb"
 import handler from "ttnapi/handler/handler_grpc_pb"
 
-import wrap from "../utils/wrap"
+import { wrap, MODERN_CIPHER_SUITES } from "../utils"
 import isToken from "../utils/is-token"
 
 import normalize from "./normalize"
 
 import type { Device, Application, ApplicationUpdates, PayloadFunctions, DeviceUpdates, LorawanDeviceUpdates, PayloadFormat } from "./types"
 
-
 // Necessary to make gRPC work
-process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 
 /**
  * A client that manages devices on the handler.

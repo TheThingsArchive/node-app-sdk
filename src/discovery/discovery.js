@@ -10,10 +10,10 @@ import grpc from "grpc"
 import proto from "ttnapi/discovery/discovery_pb"
 import discovery from "ttnapi/discovery/discovery_grpc_pb"
 
-import { wrap } from "../utils"
+import { wrap, MODERN_CIPHER_SUITES } from "../utils"
 
 // Necessary to make gRPC work
-process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 
 export type DiscoveryOptions = {
   address? : string,

@@ -9,8 +9,10 @@ import type { DiscoveryOptions, Announcement } from "../discovery"
 import { ApplicationClient } from "../applications"
 import { DataClient } from "../data"
 
+import { MODERN_CIPHER_SUITES } from "../utils"
+
 // Necessary to make gRPC work
-process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 
 /**
  * A client for The Things Network handler APIs.

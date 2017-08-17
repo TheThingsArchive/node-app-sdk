@@ -8,12 +8,12 @@ import grpc from "grpc"
 import proto from "ttnapi/handler/handler_pb"
 import handler from "ttnapi/handler/handler_grpc_pb"
 
-import wrap from "../src/utils/wrap"
+import { wrap, MODERN_CIPHER_SUITES } from "../src/utils"
 
 import * as stubs from "./stubs"
 
 // Necessary to make gRPC work
-process.env.GRPC_SSL_CIPHER_SUITES = "ECDHE-ECDSA-AES256-GCM-SHA384"
+process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 
 /**
  * Setup function that prepares the environment with the required
