@@ -25,6 +25,9 @@ type DownlinkMessage = {
   payload_fields? : PayloadFields,
 }
 
+/**
+ * DataClient is a client for The Things Network data API.
+ */
 export class DataClient {
   /** @private */
   appID : string

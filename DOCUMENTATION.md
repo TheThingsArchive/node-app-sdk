@@ -4,11 +4,11 @@
 
 -   [key](#key)
 -   [is-token](#is-token)
+-   [setup](#setup)
 -   [Handler](#handler)
     -   [open](#open)
     -   [data](#data)
     -   [application](#application)
--   [setup](#setup)
 -   [open](#open-1)
 -   [ApplicationClient](#applicationclient)
     -   [constructor](#constructor)
@@ -22,20 +22,24 @@
     -   [device](#device)
     -   [updateDevice](#updatedevice)
     -   [deleteDevice](#deletedevice)
--   [constructor](#constructor-1)
--   [close](#close)
--   [end](#end)
--   [on](#on)
--   [off](#off)
--   [send](#send)
+-   [DiscoveryOptions](#discoveryoptions)
+-   [DataClient](#dataclient)
+    -   [constructor](#constructor-1)
+    -   [close](#close)
+    -   [end](#end)
+    -   [on](#on)
+    -   [off](#off)
+    -   [send](#send)
 -   [application](#application-1)
+-   [Service](#service)
+-   [Announcement](#announcement)
 -   [app](#app)
+-   [data](#data-1)
 -   [Discovery](#discovery)
     -   [constructor](#constructor-2)
     -   [getAll](#getall)
     -   [get](#get-1)
     -   [getByAppID](#getbyappid)
--   [data](#data-1)
 -   [services](#services)
     -   [Handler](#handler-1)
     -   [Router](#router)
@@ -61,6 +65,15 @@ It does NOT validate the token signature.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+## 
+
+A token that can register ApplicationSettings
+
+## setup
+
+Setup function that prepares the environment with the required
+application and devices for testing.
+
 ## Handler
 
 A client for The Things Network handler APIs.
@@ -72,7 +85,7 @@ or to manage devices.
 
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `opts` **DiscoveryOptions?** 
+-   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
 
 ### open
 
@@ -84,7 +97,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 Open a data client that can be used to receive live application data
 
-Returns **DataClient** 
+Returns **[DataClient](#dataclient)** 
 
 ### application
 
@@ -92,15 +105,6 @@ Open a application manager that can be used to manage the settings and devices o
 application.
 
 Returns **[ApplicationClient](#applicationclient)** 
-
-## 
-
-A token that can register ApplicationSettings
-
-## setup
-
-Setup function that prepares the environment with the required
-application and devices for testing.
 
 ## open
 
@@ -110,7 +114,7 @@ Create and open a HandlerClient.
 
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage.
 -   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `opts` **DiscoveryOptions?** Optional options to pass to the Discovery client.
+-   `opts` **[DiscoveryOptions](#discoveryoptions)?** Optional options to pass to the Discovery client.
 -   `tokenOrKey`  The Access Token or Access Key used to authenticate.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
@@ -231,7 +235,27 @@ Delete the specified device.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
 
-## constructor
+## DiscoveryOptions
+
+Type: {address: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, insecure: [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?, certificate: [Buffer](https://nodejs.org/api/buffer.html)?}
+
+**Properties**
+
+-   `address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `insecure` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** 
+-   `certificate` **[Buffer](https://nodejs.org/api/buffer.html)?** 
+
+## DataClient
+
+DataClient is a client for The Things Network data API.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `mqttAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### constructor
 
 Creates a new DataClient and opens the MQTT connection.
 
@@ -243,7 +267,7 @@ Creates a new DataClient and opens the MQTT connection.
 
 Returns **void** 
 
-## close
+### close
 
 Close the mqtt connection
 
@@ -252,7 +276,7 @@ Close the mqtt connection
 -   `force` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** passing it to true will close the client right away, without waiting for the in-flight messages to be acked
 -   `callback` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** will be called when the client is closed
 
-## end
+### end
 
 Same as close (for backwards compatibility).
 
@@ -261,7 +285,7 @@ Same as close (for backwards compatibility).
 -   `force` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** 
 -   `callback` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** 
 
-## on
+### on
 
 Starts listening to events.
 
@@ -326,7 +350,7 @@ client.on("event", "+", "downlink/scheduled", function (devID, message) {})
 
 Returns **void** 
 
-## off
+### off
 
 Stop listening to events.
 The argument structure is the same as for `on()`.
@@ -338,7 +362,7 @@ The argument structure is the same as for `on()`.
 
 Returns **void** 
 
-## send
+### send
 
 Send a message to the device with the specified device ID.
 
@@ -356,18 +380,63 @@ Create and open an ApplicationClient.
 
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
 -   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `opts` **DiscoveryOptions?** 
+-   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
 -   `tokenOrKey`  The Access Token or Access Key used to authenticate
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[ApplicationClient](#applicationclient)>** 
+
+## Service
+
+Service is an enum of the possible services types to get from the discovery
+server.
+
+Type: (`"router"` \| `"broker"` \| `"handler"`)
 
 ## 
 
 Settings for the discovery server
 
+## Announcement
+
+Announcement is an announcement on the discovery server.
+
+Type: {id: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), serviceName: [Service](#service), serviceVersion: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), description: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), pb_public: [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean), url: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), netAddress: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), mqttAddress: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), apiAddress: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), publicKey: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, certificate: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, metadataList: [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any>?}
+
+**Properties**
+
+-   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `serviceName` **[Service](#service)** 
+-   `serviceVersion` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `description` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `pb_public` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `url` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `netAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `mqttAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `apiAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `publicKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `certificate` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `metadataList` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any>?** 
+
 ## app
 
 The app used for testing
+
+## data
+
+Create and open a DataClient.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
+-   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
+-   `tokenOrKey`  The Access Token or Access Key used to authenticate
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[DataClient](#dataclient)>** 
+
+## 
+
+Settings for the handler
 
 ## Discovery
 
@@ -375,7 +444,7 @@ Discovery is a client for The Things Network discovery API
 
 **Parameters**
 
--   `opts` **DiscoveryOptions**  (optional, default `{}`)
+-   `opts` **[DiscoveryOptions](#discoveryoptions)**  (optional, default `{}`)
 
 ### constructor
 
@@ -383,7 +452,7 @@ Create a new Discovery client.
 
 **Parameters**
 
--   `opts` **DiscoveryOptions**  (optional, default `{}`)
+-   `opts` **[DiscoveryOptions](#discoveryoptions)**  (optional, default `{}`)
 
 Returns **void** 
 
@@ -394,9 +463,9 @@ the discovery server that match the service name.
 
 **Parameters**
 
--   `serviceName` **Service** The name of the services to look for, eg. `"handler"`
+-   `serviceName` **[Service](#service)** The name of the services to look for, eg. `"handler"`
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Announcement>>** 
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Announcement](#announcement)>>** 
 
 ### get
 
@@ -405,10 +474,10 @@ specified service name and id.
 
 **Parameters**
 
--   `serviceName` **Service** The name of the services to look for, eg. `"handler"`
+-   `serviceName` **[Service](#service)** The name of the services to look for, eg. `"handler"`
 -   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the service to look for, eg. `"ttn-handler-eu"`
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Announcement>** 
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Announcement](#announcement)>** 
 
 ### getByAppID
 
@@ -419,24 +488,7 @@ It looks up the handler the application is registered to.
 
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Announcement>** 
-
-## data
-
-Create and open a DataClient.
-
-**Parameters**
-
--   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
--   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `opts` **DiscoveryOptions?** 
--   `tokenOrKey`  The Access Token or Access Key used to authenticate
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;DataClient>** 
-
-## 
-
-Settings for the handler
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Announcement](#announcement)>** 
 
 ## services
 

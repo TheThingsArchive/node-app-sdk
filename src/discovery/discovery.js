@@ -15,14 +15,29 @@ import { wrap, MODERN_CIPHER_SUITES } from "../utils"
 // Necessary to make gRPC work
 process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 
+/**
+ * @typedef DiscoveryOptions
+ * DiscoveryOptions are options to the discovery client
+ *
+ * @prop [address] - The address of the discovery server. Defaults to `discovery.thethingsnetwork.org:1900`.
+ * @prop [insecure] - Wether or not to connect securely to the discovery server. Defaults to `false`.
+ * @prop [certificate] - An optional certificate to accept from the discovery server.  Use this if the discovery server uses a self-signed certificate.
+ */
 export type DiscoveryOptions = {
   address? : string,
   insecure? : boolean,
   certificate? : Buffer,
 }
 
+/**
+ * Service is an enum of the possible services types to get from the discovery
+ * server.
+ */
 export type Service = "router" | "broker" | "handler"
 
+/**
+ * Announcement is an announcement on the discovery server.
+ */
 export type Announcement = {
   id : string,
   serviceName: Service,
