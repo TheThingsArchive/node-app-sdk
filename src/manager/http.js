@@ -83,7 +83,7 @@ class HTTP {
   }
 
   setApplication (app_id, app = {}) {
-    return this._request('POST', `/applications/${appID}`, { app_id, ...app })
+    return this._request('POST', `/applications/${app_id}`, { app_id, ...app })
   }
 
   deleteApplication (appID) {
