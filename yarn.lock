@@ -1765,9 +1765,9 @@ escodegen@^1.6.1:
   optionalDependencies:
     source-map "~0.2.0"
 
-eslint-config-ttn@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-ttn/-/eslint-config-ttn-1.3.1.tgz#c48571ada545499989f8b63abb92d6e0c321e27c"
+eslint-config-ttn@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-ttn/-/eslint-config-ttn-1.3.2.tgz#62fb6ec5990ae5265e743e878cd5bf88cf46af7b"
   dependencies:
     babel-eslint "^7.1.1"
     eslint-plugin-babel "^4.0.1"

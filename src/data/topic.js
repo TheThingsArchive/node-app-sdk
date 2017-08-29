@@ -23,16 +23,17 @@ const validIDOrWildcard = function (str : string = "", type : string = "") : voi
   return validID(str, type)
 }
 
+const collapse = function (t : string) : string {
+  return t.replace(/#.*/g, "#")
+}
+
+
 /**
  * @private
  * Build a topic.
  */
 export const topic = function (...parts : Array<string | void>) : string {
   return collapse(parts.filter(part => Boolean(part)).join("/"))
-}
-
-const collapse = function (t : string) : string {
-  return t.replace(/#.*/g, "#")
 }
 
 /**
@@ -94,6 +95,49 @@ export const downlinkTopic = function (appID : string, devID : string) : string 
   return topic(appID, "devices", devID, "down")
 }
 
+
+const valid = function (topic) {
+  const parts = topic.split("/")
+  return parts.length >= 4 && parts[0] !== "#" && parts[1] === "devices" && parts[2] !== "#" && (parts[3] === "up" || parts[3] === "events")
+}
+
+const unique = function (value, index, self) {
+  return self.indexOf(value) === index
+}
+
+const combos = function (a : Array<string>, b : Array<string>) : Array<Array<string>> {
+  if (a.length === 0) {
+    return b.map(el => [ el ])
+  }
+
+  if (b.length === 0) {
+    return a.map(el => [ el ])
+  }
+
+  return a.reduce(function (acc, ael) {
+    return [
+      ...acc,
+      ...b.map(bel => [ ael, bel ]),
+    ]
+  }, [])
+}
+
+const allcombos = function (first : Array<string>, ...args : Array<Array<string>>) : Array<string> {
+  if (args.length === 0) {
+    return first
+  }
+
+  const [ fst, ...rest ] = args
+  const cc = combos(first, fst).map(el => topic(...el)).filter(unique)
+
+  return allcombos(cc, ...rest)
+}
+
+
+export const devID = function (t : string) : string {
+  return t.split("/")[2] || "+"
+}
+
 /**
  * @private
  * Generate all wildcard possibilities for a given topic.
@@ -126,11 +170,6 @@ export const wildcards = function (t : string) : Array<string> {
   return allcombos(...l).filter(unique)
 }
 
-const valid = function (topic) {
-  const parts = topic.split("/")
-  return parts.length >= 4 && parts[0] !== "#" && parts[1] === "devices" && parts[2] !== "#" && (parts[3] === "up" || parts[3] === "events")
-}
-
 /**
  * @private
  * Same as `wildcards` but filters the ouput on valid topics for The Things
@@ -141,38 +180,3 @@ export const validWildcards = function (t : string) : Array<string> {
 }
 
 
-const unique = function (value, index, self) {
-  return self.indexOf(value) === index
-}
-
-const allcombos = function (first : Array<string>, ...args : Array<Array<string>>) : Array<string> {
-  if (args.length === 0) {
-    return first
-  }
-
-  const [ fst, ...rest ] = args
-  const cc = combos(first, fst).map(el => topic(...el)).filter(unique)
-
-  return allcombos(cc, ...rest)
-}
-
-const combos = function (a : Array<string>, b : Array<string>) : Array<Array<string>> {
-  if (a.length === 0) {
-    return b.map(el => [ el ])
-  }
-
-  if (b.length === 0) {
-    return a.map(el => [ el ])
-  }
-
-  return a.reduce(function (acc, ael) {
-    return [
-      ...acc,
-      ...b.map(bel => [ ael, bel ]),
-    ]
-  }, [])
-}
-
-export const devID = function (t : string) : string {
-  return t.split("/")[2] || "+"
-}
