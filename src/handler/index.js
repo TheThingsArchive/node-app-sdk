@@ -3,4 +3,4 @@
 
 // @flow
 
-export { Handler } from "./handler"
+export { HandlerClient } from "./handler"

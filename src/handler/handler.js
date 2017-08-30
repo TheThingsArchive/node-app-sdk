@@ -15,12 +15,15 @@ import { MODERN_CIPHER_SUITES } from "../utils"
 process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 
 /**
- * A client for The Things Network handler APIs.
+ * `Handler` is a  client for The Things Network handler APIs.
+ * It can be used to get data from an application or to manage devices.
  *
- * Handler can be used to get data from an application
- * or to manage devices.
+ * Example:
+ * ```
+ * const handler = new Handler("my-app-id", "my-app-access-key")
+ * ```
  */
-export class Handler {
+export class HandlerClient {
   /** @private */
   appID : string
 
@@ -42,7 +45,7 @@ export class Handler {
   /**
    * `open` opens the client to the handler.
    */
-  async open () : Promise<Handler> {
+  async open () : Promise<HandlerClient> {
     if (this.announcement) {
       return this
     }

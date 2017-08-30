@@ -4,6 +4,9 @@
 
 export type PayloadFormat = "custom" | "cayenne"
 
+/**
+ * Application is an application on the network.
+ */
 export type Application = {
   appId : string,
   payloadFormat : PayloadFormat,
@@ -14,6 +17,10 @@ export type Application = {
   registerOnJoinAccessKey? : string,
 }
 
+/**
+ * PayloadFunctions is an object that bundles the payload functions of an
+ * application.
+ */
 export type PayloadFunctions = {
   decoder? : string,
   converter? : string,
@@ -21,6 +28,9 @@ export type PayloadFunctions = {
   encoder? : string,
 }
 
+/**
+ * ApplicationSettings hold the settings of an application.
+ */
 export type ApplicationSettings = {
   payloadFormat? : PayloadFormat,
   registerOnJoinAccessKey? : string,
@@ -31,6 +41,9 @@ export type ApplicationUpdates = {
   ...PayloadFunctions,
 }
 
+/*
+ * Device is a device on the network.
+ */
 export type Device = {
   appId : string,
   devId : string,

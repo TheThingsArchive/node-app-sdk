@@ -2,14 +2,12 @@
 
 ### Table of Contents
 
+-   [Application](#application)
 -   [key](#key)
 -   [is-token](#is-token)
 -   [setup](#setup)
--   [Handler](#handler)
-    -   [open](#open)
-    -   [data](#data)
-    -   [application](#application)
--   [open](#open-1)
+-   [PayloadFunctions](#payloadfunctions)
+-   [open](#open)
 -   [ApplicationClient](#applicationclient)
     -   [constructor](#constructor)
     -   [get](#get)
@@ -23,6 +21,10 @@
     -   [updateDevice](#updatedevice)
     -   [deleteDevice](#deletedevice)
 -   [DiscoveryOptions](#discoveryoptions)
+-   [HandlerClient](#handlerclient)
+    -   [open](#open-1)
+    -   [data](#data)
+    -   [application](#application-1)
 -   [DataClient](#dataclient)
     -   [constructor](#constructor-1)
     -   [close](#close)
@@ -30,7 +32,8 @@
     -   [on](#on)
     -   [off](#off)
     -   [send](#send)
--   [application](#application-1)
+-   [ApplicationSettings](#applicationsettings)
+-   [application](#application-2)
 -   [Service](#service)
 -   [Announcement](#announcement)
 -   [app](#app)
@@ -41,9 +44,25 @@
     -   [get](#get-1)
     -   [getByAppID](#getbyappid)
 -   [services](#services)
-    -   [Handler](#handler-1)
+    -   [Handler](#handler)
     -   [Router](#router)
     -   [Broker](#broker)
+
+## Application
+
+Application is an application on the network.
+
+Type: {appId: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), payloadFormat: PayloadFormat, decoder: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, converter: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, validator: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, encoder: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, registerOnJoinAccessKey: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?}
+
+**Properties**
+
+-   `appId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `payloadFormat` **PayloadFormat** 
+-   `decoder` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `converter` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `validator` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `encoder` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `registerOnJoinAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
 ## key
 
@@ -74,41 +93,23 @@ A token that can register ApplicationSettings
 Setup function that prepares the environment with the required
 application and devices for testing.
 
-## Handler
+## PayloadFunctions
 
-A client for The Things Network handler APIs.
-
-Handler can be used to get data from an application
-or to manage devices.
-
-**Parameters**
-
--   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
-
-### open
-
-`open` opens the client to the handler.
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
-
-### data
-
-Open a data client that can be used to receive live application data
-
-Returns **[DataClient](#dataclient)** 
-
-### application
-
-Open a application manager that can be used to manage the settings and devices of the
+PayloadFunctions is an object that bundles the payload functions of an
 application.
 
-Returns **[ApplicationClient](#applicationclient)** 
+Type: {decoder: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, converter: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, validator: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, encoder: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?}
+
+**Properties**
+
+-   `decoder` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `converter` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `validator` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `encoder` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
 ## open
 
-Create and open a HandlerClient.
+`open` creates and opens a HandlerClient for the application with the specified ID.
 
 **Parameters**
 
@@ -117,7 +118,7 @@ Create and open a HandlerClient.
 -   `opts` **[DiscoveryOptions](#discoveryoptions)?** Optional options to pass to the Discovery client.
 -   `tokenOrKey`  The Access Token or Access Key used to authenticate.
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Handler](#handler)>** 
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[HandlerClient](#handlerclient)>** 
 
 ## ApplicationClient
 
@@ -148,7 +149,7 @@ Returns **void**
 
 Get the application
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Application>** 
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Application](#application)>** 
 
 ### setPayloadFormat
 
@@ -167,7 +168,7 @@ to custom.
 
 **Parameters**
 
--   `fns` **PayloadFunctions**  (optional, default `{}`)
+-   `fns` **[PayloadFunctions](#payloadfunctions)**  (optional, default `{}`)
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
 
@@ -244,6 +245,40 @@ Type: {address: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript
 -   `address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 -   `insecure` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** 
 -   `certificate` **[Buffer](https://nodejs.org/api/buffer.html)?** 
+
+## HandlerClient
+
+`Handler` is a  client for The Things Network handler APIs.
+It can be used to get data from an application or to manage devices.
+
+Example:
+
+    const handler = new Handler("my-app-id", "my-app-access-key")
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
+
+### open
+
+`open` opens the client to the handler.
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[HandlerClient](#handlerclient)>** 
+
+### data
+
+Open a data client that can be used to receive live application data
+
+Returns **[DataClient](#dataclient)** 
+
+### application
+
+Open a application manager that can be used to manage the settings and devices of the
+application.
+
+Returns **[ApplicationClient](#applicationclient)** 
 
 ## DataClient
 
@@ -372,16 +407,26 @@ Send a message to the device with the specified device ID.
 -   `payload` **(PayloadArray | PayloadRaw | PayloadFields)** 
 -   `port` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  (optional, default `1`)
 
+## ApplicationSettings
+
+ApplicationSettings hold the settings of an application.
+
+Type: {payloadFormat: PayloadFormat?, registerOnJoinAccessKey: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?}
+
+**Properties**
+
+-   `payloadFormat` **PayloadFormat?** 
+-   `registerOnJoinAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
 ## application
 
-Create and open an ApplicationClient.
+`application` creates and opens an ApplicationClient for the application with the specified ID.
 
 **Parameters**
 
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
--   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `accessKeyOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Access Token or Access Key used to authenticate
 -   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
--   `tokenOrKey`  The Access Token or Access Key used to authenticate
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[ApplicationClient](#applicationclient)>** 
 
@@ -391,10 +436,6 @@ Service is an enum of the possible services types to get from the discovery
 server.
 
 Type: (`"router"` \| `"broker"` \| `"handler"`)
-
-## 
-
-Settings for the discovery server
 
 ## Announcement
 
@@ -417,20 +458,23 @@ Type: {id: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 -   `certificate` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 -   `metadataList` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any>?** 
 
+## 
+
+Settings for the discovery server
+
 ## app
 
 The app used for testing
 
 ## data
 
-Create and open a DataClient.
+`data` creates and opens an DataClient for the application with the specified ID.
 
 **Parameters**
 
 -   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The ID of the application you want to manage
--   `accessKerOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `accessKeyOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Access Token or Access Key used to authenticate
 -   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
--   `tokenOrKey`  The Access Token or Access Key used to authenticate
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[DataClient](#dataclient)>** 
 

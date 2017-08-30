@@ -9,11 +9,11 @@
 import setup from "../../test/setup"
 import { discovery, app } from "../../test/stubs"
 
-import { Handler } from "."
+import { HandlerClient } from "."
 
 beforeEach(setup)
 
 test("Handler constructor", async () => {
-  const client = new Handler(app.appId, app.accessToken, discovery)
+  const client = new HandlerClient(app.appId, app.accessToken, discovery)
   await client.open()
 })

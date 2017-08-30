@@ -36,6 +36,19 @@ data(appID, accessKey)
     console.error(err)
     process.exit(1)
   })
+
+// discover handler and open application manager client
+application(appID, accessKey)
+  .then(function (client) {
+    return client.get()
+  })
+  .then(function (app) {
+    console.log("Got app", app)
+  })
+  .catch(function (err) {
+    console.error(err)
+    process.exit(1)
+  })
 ```
 
 There are more examples in the [`examples/`](examples) directory. For examples

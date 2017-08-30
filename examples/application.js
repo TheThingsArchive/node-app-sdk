@@ -3,13 +3,13 @@
 
 // @flow
 
-import { application as apps, key } from "../src"
+import { application as App, key } from "../src"
 
 const appID = "foo"
 const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
 const main = async function () {
-  const application = await apps(appID, accessKey)
+  const application = await App(appID, accessKey)
 
   // set the payload functions
   await application.setCustomPayloadFunctions({
