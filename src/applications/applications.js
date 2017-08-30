@@ -253,27 +253,27 @@ export class ApplicationClient {
     req.setDevId(devID)
 
     if ("appEui" in device) {
-      req.setAppEui(new Buffer(device.appEui, "hex"))
+      req.setAppEui(new Uint8Array(new Buffer(device.appEui, "hex")))
     }
 
     if ("devEui" in device) {
-      req.setDevEui(new Buffer(device.devEui, "hex"))
+      req.setDevEui(new Uint8Array(new Buffer(device.devEui, "hex")))
     }
 
     if ("devAddr" in device) {
-      req.setDevAddr(new Buffer(device.devAddr, "hex"))
+      req.setDevAddr(new Uint8Array(new Buffer(device.devAddr, "hex")))
     }
 
     if ("nwkSKey" in device) {
-      req.setNwkSKey(new Buffer(device.nwkSKey, "hex"))
+      req.setNwkSKey(new Uint8Array(new Buffer(device.nwkSKey, "hex")))
     }
 
     if ("appSKey" in device) {
-      req.setAppSKey(new Buffer(device.appSKey, "hex"))
+      req.setAppSKey(new Uint8Array(new Buffer(device.appSKey, "hex")))
     }
 
     if ("appKey" in device) {
-      req.setAppKey(new Buffer(device.appKey, "hex"))
+      req.setAppKey(new Uint8Array(new Buffer(device.appKey, "hex")))
     }
 
     if ("fCntUp" in device) {
