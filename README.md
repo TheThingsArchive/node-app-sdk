@@ -53,7 +53,7 @@ application(appID, accessKey)
 
 There are more examples in the [`examples/`](examples) directory. For examples
 written in ES5 (instead of ES2015), check the [`examples/es5/`](examples/es5)
-directory.
+directory. 
 
 ## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
@@ -75,7 +75,7 @@ make typecheck
 
 To run the linter:
 ```
-make lint
+make quality
 ```
 
 ## Build
