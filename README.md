@@ -86,8 +86,3 @@ To build the repository and transpile to ES5, run:
 make build
 ```
 
-## TODO's
-
-- [x] Rewrite the API part to use gRPC.
-- [x] Discover the handler based on the `app ID`
-- [x] Add tests for MQTT
