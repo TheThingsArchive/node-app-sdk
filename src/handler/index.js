@@ -3,5 +3,4 @@
 
 // @flow
 
-export { DataClient } from "./data"
-export { wildcard } from "./topic"
+export { HandlerClient } from "./handler"

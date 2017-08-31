@@ -14,17 +14,75 @@ npm install --save ttn
 ## Documentation
 
 * [The Things Network Documentation / Arduino](https://www.thethingsnetwork.org/docs/applications/nodejs/)
-* [API Reference](https://www.thethingsnetwork.org/docs/applications/nodejs/api.html)
+* [API Reference](DOCUMENTATION.md)
 
 ## Example
 
-An [example](src/example.js) is included and can be run directly in the browser via [Tonic](https://tonicdev.com/npm/ttn).
+```js
+import { data } from "ttn"
+
+const appID = "foo"
+const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
+
+// discover handler and open mqtt connection
+data(appID, accessKey)
+  .then(function (client) {
+    client.on("uplink", function (devID, payload) {
+      console.log("Received uplink from ", devID)
+      console.log(payload)
+    })
+  })
+  .catch(function (err) {
+    console.error(err)
+    process.exit(1)
+  })
+
+// discover handler and open application manager client
+application(appID, accessKey)
+  .then(function (client) {
+    return client.get()
+  })
+  .then(function (app) {
+    console.log("Got app", app)
+  })
+  .catch(function (err) {
+    console.error(err)
+    process.exit(1)
+  })
+```
+
+There are more examples in the [`examples/`](examples) directory. For examples
+written in ES5 (instead of ES2015), check the [`examples/es5/`](examples/es5)
+directory.
 
 ## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
 To run the [tests](test):
 
 ```bash
-npm install
-npm test
+yarn install
+make test
 ```
+
+## Quality
+
+The code is written in ES7 using [`flowtype`](https://flowtype.org) type annotations.
+
+To run the typechecker:
+```
+make typecheck 
+```
+
+To run the linter:
+```
+make lint
+```
+
+## Build
+
+To build the repository and transpile to ES5, run:
+
+```
+make build
+```
+

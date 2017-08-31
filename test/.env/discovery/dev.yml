@@ -1,0 +1,10 @@
+id: dev
+debug: true
+discovery-address: "localhost:1900"
+auth-servers:
+  local: "file://.env/discovery/server.pub"
+tls: true
+key-dir: "./.env/discovery/"
+discovery:
+  master-auth-servers:
+  - local
