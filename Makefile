@@ -1,6 +1,6 @@
 
 PRE_COMMIT = quality-staged
-HEADER ?= "// Copyright © 2017 The Things Network\n// Use of this source code is governed by the MIT license that can be found in the LICENCE file."
+HEADER ?= "// Copyright © 2017 The Things Network\n// Use of this source code is governed by the MIT license that can be found in the LICENSE file."
 
 JS_FILES ?= $(ALL_FILES) | $(only_js) | $(not_flowtyped)
 JS_STAGED_FILES = $(STAGED_FILES) | $(only_js) | $(not_flowtyped)
