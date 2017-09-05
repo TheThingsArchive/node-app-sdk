@@ -19,7 +19,7 @@ npm install --save ttn
 ## Example
 
 ```js
-import { data } from "ttn"
+import { data, application } from "ttn"
 
 const appID = "foo"
 const accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
@@ -53,7 +53,7 @@ application(appID, accessKey)
 
 There are more examples in the [`examples/`](examples) directory. For examples
 written in ES5 (instead of ES2015), check the [`examples/es5/`](examples/es5)
-directory. 
+directory.
 
 ## Test [![Build Status](https://travis-ci.org/TheThingsNetwork/node-app-sdk.svg?branch=master)](https://travis-ci.org/TheThingsNetwork/node-app-sdk)
 
