@@ -1,6 +1,6 @@
 {
   "name": "ttn",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "The Things Network Client",
   "main": "dist/index.js",
   "scripts": {
