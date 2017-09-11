@@ -195,7 +195,12 @@ export class DataClient {
   }
 
   /**
-   * Send a message to the device with the specified device ID.
+   * Send a downlink message to the device with the specified device ID.
+   *
+   * @param devID - The device ID of the device to send the downlink to.
+   * @param payload - The raw payload as a Buffer or an Array or an object of payload fields.
+   * @param port - The port to send the message on.
+   * @param confirmed - Set to true for confirmed downlink.
    */
   send (devID : DeviceID, payload : PayloadArray | PayloadRaw | PayloadFields, port : number = 1, confirmed : boolean = false) {
     const t = downlinkTopic(this.appID, devID)
