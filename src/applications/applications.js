@@ -45,10 +45,10 @@ export class ApplicationClient {
    * @param netAddress - The gRPC address of the handler where the application is registered
    * @param certificate - An optional certificate used to connect to the handler securely
    */
-  constructor (appID : string, tokenOrKey : string, netAddress : string, certificate : ?Buffer) : void {
+  constructor (appID : string, tokenOrKey : string, netAddress : string, certificate : ?(Buffer | string)) : void {
     const credentials =
       certificate
-        ? grpc.credentials.createSsl(certificate)
+        ? grpc.credentials.createSsl(certificate && new Buffer(certificate))
         : grpc.credentials.createInsecure()
 
     this.client = new handler.ApplicationManagerClient(netAddress, credentials)
