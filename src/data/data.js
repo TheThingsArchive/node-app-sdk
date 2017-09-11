@@ -23,6 +23,7 @@ type DownlinkMessage = {
   port : number,
   payload_raw? : string,
   payload_fields? : PayloadFields,
+  confirmed? : boolean,
 }
 
 /**
@@ -196,10 +197,11 @@ export class DataClient {
   /**
    * Send a message to the device with the specified device ID.
    */
-  send (devID : DeviceID, payload : PayloadArray | PayloadRaw | PayloadFields, port : number = 1) {
+  send (devID : DeviceID, payload : PayloadArray | PayloadRaw | PayloadFields, port : number = 1, confirmed : boolean = false) {
     const t = downlinkTopic(this.appID, devID)
     const message : DownlinkMessage = {
       port,
+      confirmed,
     }
 
     if (Array.isArray(payload)) {
