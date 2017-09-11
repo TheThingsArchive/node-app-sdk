@@ -26,7 +26,7 @@ process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
 export type DiscoveryOptions = {
   address? : string,
   insecure? : boolean,
-  certificate? : Buffer,
+  certificate? : Buffer | string,
 }
 
 /**
@@ -75,7 +75,7 @@ export class Discovery {
     const credentials =
       insecure
         ? grpc.credentials.createInsecure()
-        : grpc.credentials.createSsl(certificate)
+        : grpc.credentials.createSsl(certificate && new Buffer(certificate))
 
     this.client = new discovery.DiscoveryClient(address, credentials)
   }
