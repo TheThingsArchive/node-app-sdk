@@ -198,11 +198,11 @@ export class DataClient {
    * Send a downlink message to the device with the specified device ID.
    *
    * @param devID - The device ID of the device to send the downlink to.
-   * @param payload - The raw payload as a Buffer or an Array or an object of payload fields.
+   * @param payload - The raw payload as a Buffer, an Array of numbers, a hex string  or an object of payload fields.
    * @param port - The port to send the message on.
    * @param confirmed - Set to true for confirmed downlink.
    */
-  send (devID : DeviceID, payload : PayloadArray | PayloadRaw | PayloadFields, port : number = 1, confirmed : boolean = false) {
+  send (devID : DeviceID, payload : PayloadArray | PayloadRaw | String | PayloadFields, port : number = 1, confirmed : boolean = false) {
     const t = downlinkTopic(this.appID, devID)
     const message : DownlinkMessage = {
       port,
@@ -210,9 +210,11 @@ export class DataClient {
     }
 
     if (Array.isArray(payload)) {
-      message.payload_raw = new Buffer(payload).toString()
+      message.payload_raw = new Buffer(payload).toString("base64")
     } else if (Buffer.isBuffer(payload)) {
-      message.payload_raw = payload.toString()
+      message.payload_raw = payload.toString("base64")
+    } else if (typeof payload === "string") {
+      message.payload_raw = new Buffer(payload, "hex").toString("base64")
     } else {
       message.payload_fields = payload
     }
