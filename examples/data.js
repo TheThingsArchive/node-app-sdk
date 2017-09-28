@@ -15,6 +15,9 @@ const main = async function () {
     .on("uplink", function (devID, payload) {
       console.log("Received uplink from ", devID)
       console.log(payload)
+
+      // send downlink
+      client.send("airbnb", new Buffer([ 0x0f, 0xaf ]))
     })
 }
 
