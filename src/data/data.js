@@ -18,13 +18,16 @@ type Connack = {
 type PayloadArray = Array<number>
 type PayloadRaw = Buffer
 type PayloadFields = { [string]: any }
+type Schedule = "replace" | "first" | "last"
 
 type DownlinkMessage = {
   port : number,
   payload_raw? : string,
   payload_fields? : PayloadFields,
   confirmed? : boolean,
+  schedule? : Schedule,
 }
+
 
 /**
  * DataClient is a client for The Things Network data API.
@@ -201,12 +204,14 @@ export class DataClient {
    * @param payload - The raw payload as a Buffer, an Array of numbers, a hex string  or an object of payload fields.
    * @param port - The port to send the message on.
    * @param confirmed - Set to true for confirmed downlink.
+   * @param schedule - Set to the scheduling you want to use (first, last or replace).
    */
-  send (devID : DeviceID, payload : PayloadArray | PayloadRaw | String | PayloadFields, port : number = 1, confirmed : boolean = false) {
+  send (devID : DeviceID, payload : PayloadArray | PayloadRaw | String | PayloadFields, port : number = 1, confirmed : boolean = false, schedule : Schedule = "replace") {
     const t = downlinkTopic(this.appID, devID)
     const message : DownlinkMessage = {
       port,
       confirmed,
+      schedule,
     }
 
     if (Array.isArray(payload)) {
