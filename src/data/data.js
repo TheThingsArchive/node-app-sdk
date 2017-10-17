@@ -211,7 +211,7 @@ export class DataClient {
 
     if (Array.isArray(payload)) {
       message.payload_raw = new Buffer(payload).toString("base64")
-    } else if (Buffer.isBuffer(payload)) {
+    } else if (payload instanceof Buffer) {
       message.payload_raw = payload.toString("base64")
     } else if (typeof payload === "string") {
       message.payload_raw = new Buffer(payload, "hex").toString("base64")
