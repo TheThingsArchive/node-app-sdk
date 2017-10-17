@@ -5,12 +5,9 @@
 
 var ttn = require("../../dist")
 
-// var appID = "foo"
-// var accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
+var appID = "foo"
+var accessKey = "ttn-account.eiPq8mEeYRL_PNBZsOpPy-O3ABJXYWulODmQGR5PZzg"
 
-var appID = "appathon"
-var accessKey = "ttn-account-v2.01rhOb1kdiTTphSyy3StikJ2Ul_tLArKlzZ8iRsS9Es"
-//
 ttn.data(appID, accessKey)
   .then(function (client) {
     client.on("uplink", function (devID, payload) {
