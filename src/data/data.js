@@ -175,6 +175,7 @@ export class DataClient {
       t = eventTopic(...rest)
       break
     case "activation":
+    case "activations":
       const [ devID = wildcard ] = rest
       t = eventTopic(devID, "activations")
       break
