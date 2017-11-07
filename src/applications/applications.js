@@ -4,6 +4,7 @@
 // @flow
 
 import grpc from "grpc"
+import request from "request-promise-native"
 
 import proto from "ttnapi/handler/handler_pb"
 import lorawan from "ttnapi/protocol/lorawan/device_pb"
@@ -293,5 +294,17 @@ export class ApplicationClient {
     }
 
     return req
+  }
+
+  async getEUIs (accountServer : string = "https://account.thethingsnetwork.org") {
+    const authHeader = this.appAccessKey
+      ? `Key ${this.appAccessKey}`
+      : `Bearer ${this.appAccessToken}`
+
+    return await request({
+      url: `${accountServer}/applications/${this.appID}/euis`,
+      headers: { Authorization: authHeader },
+      json: true,
+    })
   }
 }

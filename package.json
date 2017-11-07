@@ -37,6 +37,7 @@
     "grpc": "^1.4.1",
     "jsonwebtoken": "^7.4.1",
     "mqtt": "^2.9.1",
+    "request-promise-native": "^1.0.5",
     "source-map-support": "^0.4.17",
     "ttnapi": "https://github.com/thethingsnetwork/api"
   },

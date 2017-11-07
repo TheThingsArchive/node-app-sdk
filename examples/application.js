@@ -24,10 +24,15 @@ const main = async function () {
   const app = await application.get()
   console.log(app)
 
+  // additional information (name, EUIs) is stored on the Account Server,
+  // so we need to retrieve this information separately.
+  // there is a shorthand for an application to get the EUIs:
+  const euis = await application.getEUIs()
+
   // register a new device
   await application.registerDevice("foo", {
     description: "Description",
-    appEui: "0011223344556677",
+    appEui: euis[0],
     devEui: "9988776655443322",
     devAddr: "11223344",
     nwkSKey: key(16),
