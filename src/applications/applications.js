@@ -4,7 +4,6 @@
 // @flow
 
 import grpc from "grpc"
-import request from "request-promise-native"
 
 import proto from "ttnapi/handler/handler_pb"
 import lorawan from "ttnapi/protocol/lorawan/device_pb"
@@ -12,6 +11,7 @@ import handler from "ttnapi/handler/handler_grpc_pb"
 
 import { wrap, MODERN_CIPHER_SUITES } from "../utils"
 import isToken from "../utils/is-token"
+import { AccountClient } from "../account"
 
 import normalize from "./normalize"
 
@@ -37,6 +37,9 @@ export class ApplicationClient {
   /** @private */
   client : any
 
+  /** @private */
+  accountClient : AccountClient
+
   /**
    * Create and open an application manager client that can be used for
    * retreiving and updating an application and its devices.
@@ -60,6 +63,8 @@ export class ApplicationClient {
     } else {
       this.appAccessKey = tokenOrKey
     }
+
+    this.accountClient = new AccountClient(tokenOrKey)
   }
 
   /** @private */
@@ -296,15 +301,9 @@ export class ApplicationClient {
     return req
   }
 
-  async getEUIs (accountServer : string = "https://account.thethingsnetwork.org") {
-    const authHeader = this.appAccessKey
-      ? `Key ${this.appAccessKey}`
-      : `Bearer ${this.appAccessToken}`
+  async getEUIs () : Promise<Array<string>> {
+    const appInfo = await this.accountClient.getApplication(this.appID)
 
-    return await request({
-      url: `${accountServer}/applications/${this.appID}/euis`,
-      headers: { Authorization: authHeader },
-      json: true,
-    })
+    return appInfo.euis
   }
 }
