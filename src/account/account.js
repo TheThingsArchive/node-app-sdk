@@ -53,7 +53,11 @@ export class AccountClient {
     return res.json()
   }
 
-  getAllApplications () : Promise<Array<Application>> {
+  /**
+   * Gets metadata about all applications that are accessible with
+   * the given accessToken
+   */
+  getAllApplications () : Promise<Array<AccountApplication>> {
     return this.makeRequest("applications")
   }
 
@@ -63,36 +67,57 @@ export class AccountClient {
    * The properties that can be retrieved depend on the rights of
    * the used authorization mechanism.
    */
-  getApplication (appID : string) : Promise<Application> {
+  getApplication (appID : string) : Promise<AccountApplication> {
     return this.makeRequest(`applications/${appID}`)
   }
 
-  createApplication (app : MinimalApplication) : Promise<any> {
+  /**
+   * Creates a new application on the account server.
+   */
+  createApplication (app : MinimalAccApplication) : Promise<any> {
     return this.makeRequest("applications", "POST", app)
   }
 
+  /**
+   * Removes an application from the account server.
+   */
   deleteApplication (appID : string) : Promise<any> {
     return this.makeRequest(`applications/${appID}`, "DELETE")
   }
 
-  addCollaborator (appID : string, collaborator : string, rights : Array<AccessRights>) : Promise<any> {
+  /**
+   * Adds a collaborator with a set of access rights to the given application.
+   */
+  addCollaborator (appID : string, collaborator : string, rights : Array<AppAccessRights>) : Promise<any> {
     return this.makeRequest(`applications/${appID}/collaborators/${collaborator}`, "PUT", rights)
   }
 
+  /**
+   * Removes a collaborator by her username from an application
+   */
   deleteCollaborator (appID : string, collaborator : string) : Promise<any> {
     return this.makeRequest(`applications/${appID}/collaborators/${collaborator}`, "DELETE")
   }
 
+  /**
+   * Adds an EUI to the given application. Must be hexadecimal with a length of 16.
+   */
   addEUI (appID : string, eui : string) : Promise<any> {
     return this.makeRequest(`applications/${appID}/euis/${eui}`, "PUT")
   }
 
+  /**
+   * Removes an EUI from the given application.
+   */
   deleteEUI (appID : string, eui : string) : Promise<any> {
     return this.makeRequest(`applications/${appID}/euis/${eui}`, "DELETE")
   }
 }
 
-type AccessRights = "settings"
+/**
+ * AppAccessRights
+ */
+type AppAccessRights = "settings"
   | "delete"
   | "collaborators"
   | "devices"
@@ -100,12 +125,21 @@ type AccessRights = "settings"
   | "messages:up:w"
   | "messages:down:w"
 
-type MinimalApplication = {
+/**
+ * The minimal payload for to the POST /applications route
+ * of the account server
+ */
+type MinimalAccApplication = {
   id: string,
   name: string,
 }
 
-type Application = MinimalApplication & {
+/**
+ * AccountApplication contains the metadata of an application
+ * returned by the account server. Presence of optional fields
+ * depends on the [access rights](#appaccessrights) of the used accessKey / -token.
+ */
+type AccountApplication = MinimalAccApplication & {
   euis: Array<string>,
   created: string,
   rights: Array<string>,
