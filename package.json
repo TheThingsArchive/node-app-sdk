@@ -4,7 +4,8 @@
   "description": "The Things Network Client",
   "main": "dist/index.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "prepare": "flow-typed install"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "eslint": "^4.1.1",
     "eslint-config-ttn": "^1.3.2",
     "flow-bin": "^0.55.0",
+    "flow-typed": "^2.2.3",
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
     "jest-preset-ttn": "^0.0.3",
@@ -32,7 +34,6 @@
   },
   "dependencies": {
     "debug": "^2.6.8",
-    "flow-typed": "^2.1.5",
     "google-protobuf": "^3.3.0",
     "grpc": "^1.4.1",
     "jsonwebtoken": "^7.4.1",
