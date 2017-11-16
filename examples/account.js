@@ -15,39 +15,50 @@ const main = async function () {
   // or via an Access Key for a single application. The latter method only
   // works for a subset of queries (GET operations on the given application)
   // to aquire them, see https://www.thethingsnetwork.org/docs/network/account/authentication.html
-  const clientJWToken = account(accessToken)
-  const clientAppKey = account(accessKey)
 
-  // 1) show all applications that can be accessed with this key
-  const allApps = await clientJWToken.getAllApplications()
-  const allApps2 = await clientAppKey.getAllApplications()
+  await exampleAppKey(appID, accessKey)
+  await exampleAccessToken(appID, accessToken)
+}
 
-  console.log(`${allApps.length} apps on this account.`)
-  console.log(`only ${allApps2.length} app (${allApps2[0].id}) accessible through this access key.`)
 
-  // 2) get the EUIs of the app, which can be used to register devices using the ApplicationManagerClient
-  let myApp = await clientAppKey.getApplication(appID)
+async function exampleAppKey (appID, key) {
+  // when authorized with an app key, the only working query is getApplication().
+  // this is still useful to get the applications EUI:
+  const client = account(key)
+
+  // get the EUIs of the app, which can be used to register devices using the ApplicationManagerClient
+  const myApp = await client.getApplication(appID)
   console.log(myApp.euis)
 
-  // the following methods require a JWT with correct access rights!
+  try {
+    await client.getAllApplications()
+  } catch (err) {
+    console.log(`can't get all apps when authorized with app key: ${err}`)
+  }
+}
 
-  // 3) create a new app
-  const newAppID = "mynewcustomapp"
+
+async function exampleAccessToken (appID, accessToken) {
+  const client = account(accessToken)
+
+  // show all applications that can be accessed with this key
+  const allApps = await client.getAllApplications()
+  console.log(`${allApps.length} apps on this account.`)
+
+  // create a new app
   const newApp = {
-    id: newAppID,
+    id: "mynewcustomapp",
     name: "this is a test app",
   }
 
-  await clientJWToken.createApplication(newApp)
-  console.log(await clientJWToken.getApplication(newApp.id))
+  await client.createApplication(newApp)
+  console.log(await client.getApplication(newApp.id))
 
-  // 4) add an EUI to the app
-  await clientJWToken.addEUI(newApp.id, "0011223344556677")
-  myApp = await clientJWToken.getApplication(newApp.id)
-  console.log(myApp)
+  // add an EUI to the app
+  await client.addEUI(newApp.id, "0011223344556677")
 
-  // 5) add a collaborator to the app
-  await clientJWToken.addCollaborator(newApp.id, "username", [
+  // add a collaborator to the app
+  await client.addCollaborator(newApp.id, "username", [
     // "settings",
     // "delete",
     // "collaborators",
@@ -57,10 +68,10 @@ const main = async function () {
     "messages:down:w",
   ])
 
-  console.log(await clientJWToken.getApplication(newApp.id))
+  console.log(await client.getApplication(newApp.id))
 
-  // 6) delete the test app again
-  await clientJWToken.deleteApplication(newApp.id)
+  // delete the test app again
+  await client.deleteApplication(newApp.id)
 }
 
 main().catch(function (err) {

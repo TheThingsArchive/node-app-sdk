@@ -3,7 +3,7 @@
 
 // @flow
 
-import request from "request-promise-native"
+import fetch from "node-fetch"
 
 import { MODERN_CIPHER_SUITES } from "../utils"
 import isToken from "../utils/is-token"
@@ -40,17 +40,21 @@ export class AccountClient {
 
   /** @private */
   async makeRequest (url : string, method : string = "GET", body : ?any) : Promise<any> {
-    return await request({
+    const res = await fetch(`${this.serverAddress}/${url}`, {
       method,
-      url: `${this.serverAddress}/${url}`,
-      headers: { Authorization: this.authHeader },
-      json: true,
       body,
+      headers: { Authorization: this.authHeader },
     })
+
+    if (res.status >= 400) {
+      throw new Error(`${res.status} ${res.statusText}`)
+    }
+
+    return res.json()
   }
 
-  async getAllApplications () : Promise<Array<Application>> {
-    return await this.makeRequest("applications")
+  getAllApplications () : Promise<Array<Application>> {
+    return this.makeRequest("applications")
   }
 
   /**
@@ -59,32 +63,32 @@ export class AccountClient {
    * The properties that can be retrieved depend on the rights of
    * the used authorization mechanism.
    */
-  async getApplication (appID : string) : Promise<Application> {
-    return await this.makeRequest(`applications/${appID}`)
+  getApplication (appID : string) : Promise<Application> {
+    return this.makeRequest(`applications/${appID}`)
   }
 
-  async createApplication (app : MinimalApplication) : Promise<any> {
-    return await this.makeRequest("applications", "POST", app)
+  createApplication (app : MinimalApplication) : Promise<any> {
+    return this.makeRequest("applications", "POST", app)
   }
 
-  async deleteApplication (appID : string) : Promise<any> {
-    return await this.makeRequest(`applications/${appID}`, "DELETE")
+  deleteApplication (appID : string) : Promise<any> {
+    return this.makeRequest(`applications/${appID}`, "DELETE")
   }
 
-  async addCollaborator (appID : string, collaborator : string, rights : Array<AccessRights>) : Promise<any> {
-    return await this.makeRequest(`applications/${appID}/collaborators/${collaborator}`, "PUT", rights)
+  addCollaborator (appID : string, collaborator : string, rights : Array<AccessRights>) : Promise<any> {
+    return this.makeRequest(`applications/${appID}/collaborators/${collaborator}`, "PUT", rights)
   }
 
-  async deleteCollaborator (appID : string, collaborator : string) : Promise<any> {
-    return await this.makeRequest(`applications/${appID}/collaborators/${collaborator}`, "DELETE")
+  deleteCollaborator (appID : string, collaborator : string) : Promise<any> {
+    return this.makeRequest(`applications/${appID}/collaborators/${collaborator}`, "DELETE")
   }
 
-  async addEUI (appID : string, eui : string) : Promise<any> {
-    return await this.makeRequest(`applications/${appID}/euis/${eui}`, "PUT")
+  addEUI (appID : string, eui : string) : Promise<any> {
+    return this.makeRequest(`applications/${appID}/euis/${eui}`, "PUT")
   }
 
-  async deleteEUI (appID : string, eui : string) : Promise<any> {
-    return await this.makeRequest(`applications/${appID}/euis/${eui}`, "DELETE")
+  deleteEUI (appID : string, eui : string) : Promise<any> {
+    return this.makeRequest(`applications/${appID}/euis/${eui}`, "DELETE")
   }
 }
 
