@@ -86,3 +86,11 @@ To build the repository and transpile to ES5, run:
 make build
 ```
 
+## Install git hooks
+
+To avoid checking in code with type- and linter-errors, install commit hooks via
+
+```
+make git.hooks
+```
+
