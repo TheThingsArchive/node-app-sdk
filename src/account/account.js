@@ -42,8 +42,11 @@ export class AccountClient {
   async makeRequest (url : string, method : string = "GET", body : ?any) : Promise<any> {
     const res = await fetch(`${this.serverAddress}/${url}`, {
       method,
-      body,
-      headers: { Authorization: this.authHeader },
+      body: JSON.stringify(body),
+      headers: {
+        authorization: this.authHeader,
+        "content-type": "application/json",
+      },
     })
 
     if (res.status >= 400) {
