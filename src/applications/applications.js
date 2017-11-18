@@ -301,6 +301,9 @@ export class ApplicationClient {
     return req
   }
 
+  /**
+   * Returns the EUI(s) for this application from the account server.
+   */
   async getEUIs () : Promise<Array<string>> {
     const appInfo = await this.accountClient.getApplication(this.appID)
 
