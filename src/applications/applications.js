@@ -11,6 +11,7 @@ import handler from "ttnapi/handler/handler_grpc_pb"
 
 import { wrap, MODERN_CIPHER_SUITES } from "../utils"
 import isToken from "../utils/is-token"
+import { AccountClient } from "../account"
 
 import normalize from "./normalize"
 
@@ -36,6 +37,9 @@ export class ApplicationClient {
   /** @private */
   client : any
 
+  /** @private */
+  accountClient : AccountClient
+
   /**
    * Create and open an application manager client that can be used for
    * retreiving and updating an application and its devices.
@@ -59,6 +63,8 @@ export class ApplicationClient {
     } else {
       this.appAccessKey = tokenOrKey
     }
+
+    this.accountClient = new AccountClient(tokenOrKey)
   }
 
   /** @private */
@@ -293,5 +299,14 @@ export class ApplicationClient {
     }
 
     return req
+  }
+
+  /**
+   * Returns the EUI(s) for this application from the account server.
+   */
+  async getEUIs () : Promise<Array<string>> {
+    const appInfo = await this.accountClient.getApplication(this.appID)
+
+    return appInfo.euis
   }
 }

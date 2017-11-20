@@ -4,6 +4,7 @@
 // @flow
 
 import { HandlerClient } from "./handler"
+import { AccountClient } from "./account"
 import { ApplicationClient } from "./applications"
 import { DataClient } from "./data"
 import type { DiscoveryOptions } from "./discovery"
@@ -47,4 +48,14 @@ export const application = async function (appID : string, accessKeyOrToken : st
 export const data = async function (appID : string, accessKeyOrToken : string, opts : ?DiscoveryOptions) : Promise<DataClient> {
   const handler = await open(appID, accessKeyOrToken, opts)
   return handler.data()
+}
+
+/**
+ * `account` creates an AccountClient for the user associated to the specified key or token.
+ *
+ * @param accessKeyOrToken  - The Access Token or Access Key used to authenticate
+ * @param serverAddress  - The URL to the account server to use. Defaults to "https://account.thethingsnetwork.org"
+ */
+export const account = function (accessKeyOrToken : string, serverAddress? : string) : AccountClient {
+  return new AccountClient(accessKeyOrToken, serverAddress)
 }

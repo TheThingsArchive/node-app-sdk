@@ -8,6 +8,19 @@
 -   [setup](#setup)
 -   [PayloadFunctions](#payloadfunctions)
 -   [open](#open)
+-   [AccountClient](#accountclient)
+    -   [getAllApplications](#getallapplications)
+    -   [getApplication](#getapplication)
+    -   [createApplication](#createapplication)
+    -   [deleteApplication](#deleteapplication)
+    -   [addCollaborator](#addcollaborator)
+    -   [deleteCollaborator](#deletecollaborator)
+    -   [addEUI](#addeui)
+    -   [deleteEUI](#deleteeui)
+-   [HandlerClient](#handlerclient)
+    -   [open](#open-1)
+    -   [data](#data)
+    -   [application](#application-1)
 -   [ApplicationClient](#applicationclient)
     -   [constructor](#constructor)
     -   [get](#get)
@@ -20,11 +33,8 @@
     -   [device](#device)
     -   [updateDevice](#updatedevice)
     -   [deleteDevice](#deletedevice)
+    -   [getEUIs](#geteuis)
 -   [DiscoveryOptions](#discoveryoptions)
--   [HandlerClient](#handlerclient)
-    -   [open](#open-1)
-    -   [data](#data)
-    -   [application](#application-1)
 -   [ApplicationSettings](#applicationsettings)
 -   [DataClient](#dataclient)
     -   [constructor](#constructor-1)
@@ -33,20 +43,24 @@
     -   [on](#on)
     -   [off](#off)
     -   [send](#send)
--   [application](#application-2)
 -   [Service](#service)
+-   [application](#application-2)
 -   [app](#app)
 -   [Announcement](#announcement)
 -   [data](#data-1)
+-   [account](#account)
 -   [Discovery](#discovery)
     -   [constructor](#constructor-2)
     -   [getAll](#getall)
     -   [get](#get-1)
     -   [getByAppID](#getbyappid)
+-   [AppAccessRights](#appaccessrights)
 -   [services](#services)
     -   [Handler](#handler)
     -   [Router](#router)
     -   [Broker](#broker)
+-   [MinimalAccApplication](#minimalaccapplication)
+-   [AccountApplication](#accountapplication)
 
 ## Application
 
@@ -119,6 +133,142 @@ Type: {decoder: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript
 -   `tokenOrKey`  The Access Token or Access Key used to authenticate.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[HandlerClient](#handlerclient)>** 
+
+## AccountClient
+
+`Account` is a client for The Things Network account server API.
+It can be used to manage applications and their EUIs, as well as gateways.
+Either a Bearer Token or an Application Access Key can be used for
+authentication. The latter method allows to use the `getApplication()`
+function only.
+
+Example:
+
+    const account = new Account("accesKeyOrToken", "https://customserveradress.org")
+
+**Parameters**
+
+-   `accessKeyOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `serverAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"https://account.thethingsnetwork.org"`)
+
+### getAllApplications
+
+Gets metadata about all applications that are accessible with
+the given accessToken
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[AccountApplication](#accountapplication)>>** 
+
+### getApplication
+
+Gets the information that is stored about a given application.
+This includes the EUIs, name access keys, collaborators.
+The properties that can be retrieved depend on the rights of
+the used authorization mechanism.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[AccountApplication](#accountapplication)>** 
+
+### createApplication
+
+Creates a new application on the account server.
+
+**Parameters**
+
+-   `app` **[MinimalAccApplication](#minimalaccapplication)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any>** 
+
+### deleteApplication
+
+Removes an application from the account server.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any>** 
+
+### addCollaborator
+
+Adds a collaborator with a set of access rights to the given application.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `collaborator` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `rights` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[AppAccessRights](#appaccessrights)>** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any>** 
+
+### deleteCollaborator
+
+Removes a collaborator by her username from an application
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `collaborator` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any>** 
+
+### addEUI
+
+Adds an EUI to the given application. Must be hexadecimal with a length of 16.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `eui` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any>** 
+
+### deleteEUI
+
+Removes an EUI from the given application.
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `eui` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any>** 
+
+## HandlerClient
+
+`Handler` is a  client for The Things Network handler APIs.
+It can be used to get data from an application or to manage devices.
+
+Example:
+
+    const handler = new Handler("my-app-id", "my-app-access-key")
+
+**Parameters**
+
+-   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
+
+### open
+
+`open` opens the client to the handler.
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[HandlerClient](#handlerclient)>** 
+
+### data
+
+Open a data client that can be used to receive live application data
+
+Returns **[DataClient](#dataclient)** 
+
+### application
+
+Open a application manager that can be used to manage the settings and devices of the
+application.
+
+Returns **[ApplicationClient](#applicationclient)** 
 
 ## ApplicationClient
 
@@ -236,6 +386,12 @@ Delete the specified device.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;void>** 
 
+### getEUIs
+
+Returns the EUI(s) for this application from the account server.
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>>** 
+
 ## DiscoveryOptions
 
 Type: {address: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?, insecure: [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?, certificate: ([Buffer](https://nodejs.org/api/buffer.html) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))?}
@@ -245,40 +401,6 @@ Type: {address: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript
 -   `address` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 -   `insecure` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** 
 -   `certificate` **([Buffer](https://nodejs.org/api/buffer.html) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))?** 
-
-## HandlerClient
-
-`Handler` is a  client for The Things Network handler APIs.
-It can be used to get data from an application or to manage devices.
-
-Example:
-
-    const handler = new Handler("my-app-id", "my-app-access-key")
-
-**Parameters**
-
--   `appID` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `appAccessKey` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `opts` **[DiscoveryOptions](#discoveryoptions)?** 
-
-### open
-
-`open` opens the client to the handler.
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[HandlerClient](#handlerclient)>** 
-
-### data
-
-Open a data client that can be used to receive live application data
-
-Returns **[DataClient](#dataclient)** 
-
-### application
-
-Open a application manager that can be used to manage the settings and devices of the
-application.
-
-Returns **[ApplicationClient](#applicationclient)** 
 
 ## ApplicationSettings
 
@@ -420,6 +542,13 @@ Send a downlink message to the device with the specified device ID.
 -   `confirmed` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to true for confirmed downlink.
 -   `schedule` **Schedule** Set to the scheduling you want to use (first, last or replace).
 
+## Service
+
+Service is an enum of the possible services types to get from the discovery
+server.
+
+Type: (`"router"` \| `"broker"` \| `"handler"`)
+
 ## application
 
 `application` creates and opens an ApplicationClient for the application with the specified ID.
@@ -432,20 +561,13 @@ Send a downlink message to the device with the specified device ID.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[ApplicationClient](#applicationclient)>** 
 
-## Service
+## app
 
-Service is an enum of the possible services types to get from the discovery
-server.
-
-Type: (`"router"` \| `"broker"` \| `"handler"`)
+The app used for testing
 
 ## 
 
 Settings for the discovery server
-
-## app
-
-The app used for testing
 
 ## Announcement
 
@@ -483,6 +605,17 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 ## 
 
 Settings for the handler
+
+## account
+
+`account` creates an AccountClient for the user associated to the specified key or token.
+
+**Parameters**
+
+-   `accessKeyOrToken` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Access Token or Access Key used to authenticate
+-   `serverAddress` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The URL to the account server to use. Defaults to "<https://account.thethingsnetwork.org>"
+
+Returns **[AccountClient](#accountclient)** 
 
 ## Discovery
 
@@ -536,6 +669,12 @@ It looks up the handler the application is registered to.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Announcement](#announcement)>** 
 
+## AppAccessRights
+
+AppAccessRights
+
+Type: (`"settings"` \| `"delete"` \| `"collaborators"` \| `"devices"` \| `"messages:up:r"` \| `"messages:up:w"` \| `"messages:down:w"`)
+
 ## services
 
 services is a map with the known service names for the discovery server.
@@ -553,3 +692,23 @@ Router is a Router service
 ### Broker
 
 Broker is a Broker service
+
+## MinimalAccApplication
+
+The minimal payload for to the POST /applications route
+of the account server
+
+Type: {id: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), name: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)}
+
+**Properties**
+
+-   `id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## AccountApplication
+
+AccountApplication contains the metadata of an application
+returned by the account server. Presence of optional fields
+depends on the [access rights](#appaccessrights) of the used accessKey / -token.
+
+Type: any
