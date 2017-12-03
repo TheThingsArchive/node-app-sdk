@@ -64,6 +64,7 @@ export class DataClient {
     this.mqtt.on("connect", this.onConnect.bind(this))
     this.mqtt.on("message", this.onMessage.bind(this))
     this.mqtt.on("reconnect", this.onReconnect.bind(this))
+    this.mqtt.on("offline", this.onDisconnect.bind(this))
     this.mqtt.on("close", this.onClose.bind(this))
   }
 
@@ -88,7 +89,7 @@ export class DataClient {
   /**
    * Starts listening to events.
    *
-   * Possible events are:
+   * Possible events (application messages):
    *
    * - `uplink` (or `message`): Messages sent by the devices to the appliction.
    * - `activation`: An alias for the `activations` (see `event`)
@@ -107,6 +108,15 @@ export class DataClient {
    *
    * See [The MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)
    * for more information about these events and what their payloads look like.
+   *
+   * MQTT connection events:
+   *
+   * - `error`: An error occured / the initial connection failed.
+   * - `connect`: A connection to the MQTT broker was established.
+   * - `disconnect`: The connection to the MQTT broker was lost.
+   * - `reconnect`: A reconnect to the MQTT broker is attempted.
+   * - `close`: A connection (attempt) failed.
+   *
    *
    * @param event - The name of the event to listen to.
    * @param [devID] - An optional devID. If not passed will subscribe to the event for all devices.
@@ -182,6 +192,7 @@ export class DataClient {
     case "error":
     case "connect":
     case "reconnect":
+    case "disconnect":
     case "close":
       this.emitter.on(event, cb)
       return
@@ -255,6 +266,16 @@ export class DataClient {
   onReconnect () : void {
     debug("mqtt client reconnecting")
     this.emitter.emit("reconnect", undefined)
+  }
+
+  /**
+   * @private
+   * `onDisconnect` is called whenever the MQTT client lost its connection,
+   * after the keepalive has timed out.
+   */
+  onDisconnect () : void {
+    debug("mqtt client disconnected")
+    this.emitter.emit("disconnect", undefined)
   }
 
   /**

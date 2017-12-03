@@ -457,7 +457,7 @@ Same as close (for backwards compatibility).
 
 Starts listening to events.
 
-Possible events are:
+Possible events (application messages):
 
 -   `uplink` (or `message`): Messages sent by the devices to the appliction.
 -   `activation`: An alias for the `activations` (see `event`)
@@ -476,6 +476,14 @@ Possible events are:
 
 See [The MQTT API Reference](https://www.thethingsnetwork.org/docs/applications/mqtt/api.html)
 for more information about these events and what their payloads look like.
+
+MQTT connection events:
+
+-   `error`: An error occured / the initial connection failed.
+-   `connect`: A connection to the MQTT broker was established.
+-   `disconnect`: The connection to the MQTT broker was lost.
+-   `reconnect`: A reconnect to the MQTT broker is attempted.
+-   `close`: A connection (attempt) failed.
 
 **Parameters**
 
