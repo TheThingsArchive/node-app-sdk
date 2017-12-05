@@ -26,7 +26,7 @@ services:
       - /var/lib/rabbitmq
 
   discovery:
-    image: thethingsnetwork/ttn
+    image: thethingsnetwork/ttn:v2.8.1
     hostname: discovery
     working_dir: /root
     command: discovery --config ./.env/discovery/dev.yml
@@ -41,7 +41,7 @@ services:
       - "./.env/:/root/.env/"
 
   router:
-    image: thethingsnetwork/ttn
+    image: thethingsnetwork/ttn:v2.8.1
     hostname: router
     working_dir: /root
     command: router --config ./.env/router/dev.yml
@@ -57,7 +57,7 @@ services:
       - "./.env/:/root/.env/"
 
   broker:
-    image: thethingsnetwork/ttn
+    image: thethingsnetwork/ttn:v2.8.1
     hostname: broker
     working_dir: /root
     command: broker --config ./.env/broker/dev.yml
@@ -75,7 +75,7 @@ services:
       - "./.env/:/root/.env/"
 
   networkserver:
-    image: thethingsnetwork/ttn
+    image: thethingsnetwork/ttn:v2.8.1
     hostname: networkserver
     working_dir: /root
     command: networkserver --config ./.env/networkserver/dev.yml
@@ -91,7 +91,7 @@ services:
       - "./.env/:/root/.env/"
 
   handler:
-    image: thethingsnetwork/ttn
+    image: thethingsnetwork/ttn:v2.8.1
     hostname: handler
     working_dir: /root
     command: handler --config ./.env/handler/dev.yml
