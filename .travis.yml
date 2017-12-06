@@ -21,7 +21,7 @@ before_install:
 
 before_script:
   - npm install --unsafe-perm
-  - cd test/ && docker-compose up -d && cd -
+  - cd test/ && docker-compose up -d && sleep 10 && docker-compose up -d handler && cd -
 
 script:
   - make type-deps
