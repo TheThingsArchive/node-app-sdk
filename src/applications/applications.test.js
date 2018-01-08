@@ -149,3 +149,9 @@ test("ApplicationClient devices management", async () => {
   expect(after).toHaveLength(0)
 })
 
+test("ApplicationClient getDeviceAddress()", async () => {
+  const client = new ApplicationClient(stubs.app.appId, stubs.app.accessToken, stubs.handlerAddress, stubs.handler.certificate)
+
+  const addr = await client.getDeviceAddress()
+  expect(addr).not.toBeUndefined()
+})
