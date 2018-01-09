@@ -8,6 +8,8 @@ import grpc from "grpc"
 import proto from "ttnapi/handler/handler_pb"
 import lorawan from "ttnapi/protocol/lorawan/device_pb"
 import handler from "ttnapi/handler/handler_grpc_pb"
+import addr from "ttnapi/protocol/lorawan/device_address_grpc_pb"
+import devaddr from "ttnapi/protocol/lorawan/device_address_pb"
 
 import { wrap, MODERN_CIPHER_SUITES } from "../utils"
 import isToken from "../utils/is-token"
@@ -16,6 +18,8 @@ import { AccountClient } from "../account"
 import normalize from "./normalize"
 
 import type { Device, Application, ApplicationUpdates, PayloadFunctions, DeviceUpdates, LorawanDeviceUpdates, PayloadFormat } from "./types"
+
+type Usage = "otaa" | "abp" | "world" | "local" | "private" | "testing"
 
 // Necessary to make gRPC work
 process.env.GRPC_SSL_CIPHER_SUITES = MODERN_CIPHER_SUITES
@@ -40,6 +44,12 @@ export class ApplicationClient {
   /** @private */
   accountClient : AccountClient
 
+  /** @private */
+  credentials : any
+
+  /** @private */
+  netAddress : string
+
   /**
    * Create and open an application manager client that can be used for
    * retreiving and updating an application and its devices.
@@ -56,6 +66,8 @@ export class ApplicationClient {
         : grpc.credentials.createInsecure()
 
     this.client = new handler.ApplicationManagerClient(netAddress, credentials)
+    this.credentials = credentials
+    this.netAddress = netAddress
     this.appID = appID
 
     if (isToken(tokenOrKey)) {
@@ -309,4 +321,21 @@ export class ApplicationClient {
 
     return appInfo.euis
   }
+
+  /**
+   * Return a device address for the given constraints.
+   *
+   * @param usage - The list for wich the address will be used.
+   * @returns address - A buffer containing the address.
+   */
+  async getDeviceAddress (usage : Array<Usage> = [ "abp" ]) : Promise<Buffer> {
+    const client = new addr.DevAddrManagerClient(this.netAddress, this.credentials)
+    const req = new devaddr.DevAddrRequest()
+    req.setUsageList(usage)
+
+    const res = await this.exec(client.getDevAddr, req)
+
+    return new Buffer(res.devAddr, "base64")
+  }
 }
+
