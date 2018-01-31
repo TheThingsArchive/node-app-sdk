@@ -94,3 +94,13 @@ To avoid checking in code with type- and linter-errors, install commit hooks via
 make git.hooks
 ```
 
+## Releasing
+
+Tags are released through travis automatically. If you want to release manually
+run:
+
+```
+$ npm publish
+```
+
+
