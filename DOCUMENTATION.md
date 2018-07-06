@@ -239,12 +239,12 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## HandlerClient
 
-`Handler` is a  client for The Things Network handler APIs.
+`HandlerClient` is a  client for The Things Network handler APIs.
 It can be used to get data from an application or to manage devices.
 
 Example:
 
-    const handler = new Handler("my-app-id", "my-app-access-key")
+    const handlerClient = new HandlerClient("my-app-id", "my-app-access-key")
 
 **Parameters**
 
