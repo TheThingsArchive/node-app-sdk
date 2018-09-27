@@ -26,7 +26,7 @@
     "eslint": "4.6.1",
     "eslint-config-ttn": "^1.3.5",
     "flow-bin": "^0.55.0",
-    "flow-typed": "^2.2.3",
+    "flow-typed": "^2.5.1",
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
     "jest-preset-ttn": "^0.0.3",
