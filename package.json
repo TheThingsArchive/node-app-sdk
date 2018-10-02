@@ -40,6 +40,7 @@
     "jsonwebtoken": "^8.3.0",
     "mqtt": "^2.18.8",
     "node-fetch": "^1.7.3",
+    "node-pre-gyp": "^0.11.0",
     "source-map-support": "^0.4.17",
     "ttnapi": "https://github.com/thethingsnetwork/api"
   },
